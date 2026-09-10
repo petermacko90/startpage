@@ -14,7 +14,7 @@ export default function AddCategory({
   const dispatch = useDispatchContext();
   const [title, setTitle] = useState("");
 
-  function handleCategorySave(title: string) {
+  function handleCategorySave() {
     dispatch({
       type: "category added",
       payload: {
@@ -27,7 +27,7 @@ export default function AddCategory({
     });
 
     setTitle("");
-    dialogRef.current?.close();
+    setTimeout(() => dialogRef.current?.close());
   }
 
   return (
@@ -50,12 +50,10 @@ export default function AddCategory({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleCategorySave()}
             maxLength={20}
           />
-          <button
-            onClick={() => handleCategorySave(title)}
-            className="save-button"
-          >
+          <button onClick={() => handleCategorySave()} className="save-button">
             Save
           </button>
         </div>

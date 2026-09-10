@@ -1,21 +1,27 @@
 .category {
+  position: relative;
   display: grid;
   justify-items: center;
   height: var(--category-size);
   width: var(--category-size);
   background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
-  border: none;
   border-radius: var(--border-radius-m);
   box-shadow: var(--box-shadow-m);
 }
 
-.category:hover,
-.category:focus {
-  transition: all var(--hover-duration);
-  transform: scale(var(--hover-scale));
+.category:hover {
+  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
 }
 
-.category:focus {
+.category-button {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: var(--border-radius-m);
+  background-color: transparent;
+}
+
+.category-button:focus {
   outline: var(--border-m) solid var(--color-primary);
 }
 
@@ -31,4 +37,23 @@
   padding-right: var(--spacing-xs);
   color: var(--color-light-1);
   font-size: var(--font-size-m);
+}
+
+.delete-category {
+  position: absolute;
+  top: calc(var(--spacing-s) * -1);
+  right: calc(var(--spacing-s) * -1);
+  z-index: 1;
+  height: 2rem;
+  width: 2rem;
+  background-color: var(--color-red);
+  color: var(--color-light-1);
+  font-size: 1.25rem;
+  border: none;
+  border-radius: var(--border-radius-s);
+}
+
+.delete-category:hover,
+.delete-category:focus {
+  outline: var(--border-m) solid var(--color-light-1);
 }
