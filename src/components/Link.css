@@ -1,0 +1,45 @@
+.link {
+  height: 8rem;
+  width: var(--link-width);
+  color: var(--color-light-1);
+  text-decoration: none;
+  border-radius: var(--border-radius-m);
+}
+
+.link:hover,
+.link:focus {
+  transition: all var(--hover-duration);
+  transform: scale(var(--hover-scale));
+}
+
+.link:focus {
+  outline: var(--border-m) solid var(--color-primary);
+}
+
+.link-icon-container {
+  display: grid;
+  place-items: center;
+  height: 4rem;
+  width: var(--link-width);
+  border-radius: var(--border-radius-m);
+  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
+}
+
+.link-icon {
+  height: 2rem;
+  width: 2rem;
+  background-color: white;
+}
+
+.link-title {
+  display: block;
+  height: 4rem;
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  color: var(--color-light-1);
+  font-size: var(--font-size-s);
+  text-align: center;
+  white-space: wrap;
+  overflow: hidden;
+  word-break: break-word;
+}

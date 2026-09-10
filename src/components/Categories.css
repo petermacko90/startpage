@@ -1,0 +1,44 @@
+main {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: var(--spacing-m);
+}
+
+@media screen and (min-width: 30rem) {
+  main {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  main {
+    grid-template-columns: repeat(6, auto);
+  }
+}
+
+@media screen and (min-width: 80rem) {
+  main {
+    grid-template-columns: repeat(8, auto);
+  }
+}
+
+.add-category {
+  height: var(--category-size);
+  width: var(--category-size);
+  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
+  color: var(--color-light-1);
+  font-size: 4rem;
+  border: none;
+  border-radius: var(--border-radius-m);
+  box-shadow: var(--box-shadow-m);
+}
+
+.add-category:hover,
+.add-category:focus {
+  transition: all var(--hover-duration);
+  transform: scale(var(--hover-scale));
+}
+
+.add-category:focus {
+  outline: var(--border-m) solid var(--color-primary);
+}

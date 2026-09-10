@@ -1,0 +1,148 @@
+:root {
+  --color-dark-1: #2e3440;
+  --color-dark-2: #3b4252;
+  --color-dark-3: #434c5e;
+  --color-dark-4: #4c566a;
+  --color-light-1: #eceff4;
+  --color-primary: #8fbcbb;
+  --color-red: #bf616a;
+
+  --border-s: 0.0625rem;
+  --border-m: 0.125rem;
+
+  --spacing-xs: 0.25rem;
+  --spacing-s: 0.5rem;
+  --spacing-m: 1rem;
+
+  --border-radius-m: 0.5rem;
+  --border-radius-s: 0.25rem;
+
+  --font-size-m: 0.875rem;
+  --font-size-s: 0.781rem;
+
+  --category-size: 6rem;
+  --link-width: 4rem;
+
+  --hover-duration: 300ms;
+  --hover-scale: 1.125;
+
+  --box-shadow-m:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-dark-1);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+button {
+  cursor: pointer;
+}
+
+.overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+dialog {
+  width: 90vw;
+  max-height: 90vh;
+  padding: 0;
+  border: var(--border-s) solid var(--color-dark-4);
+  outline: none;
+  border-radius: var(--border-radius-m);
+  background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
+}
+
+@media screen and (min-width: 30rem) {
+  dialog {
+    width: 24rem;
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  dialog {
+    width: 40rem;
+  }
+}
+
+@media screen and (min-width: 80rem) {
+  dialog {
+    width: 60rem;
+  }
+}
+
+dialog:focus {
+  outline: var(--border-m) solid var(--color-primary);
+}
+
+dialog::backdrop {
+  background-color: color-mix(in srgb, var(--color-dark-2) 75%, transparent);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  background-color: color-mix(in srgb, var(--color-dark-1) 90%, transparent);
+}
+
+.dialog-title {
+  margin-left: var(--spacing-m);
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+}
+
+.close-button {
+  --close-button-size: 2rem;
+
+  margin-right: var(--spacing-s);
+  height: var(--close-button-size);
+  width: var(--close-button-size);
+  border: none;
+  border-radius: var(--close-button-size);
+  background-color: transparent;
+  font-size: 1.25rem;
+  color: var(--color-light-1);
+}
+
+.close-button:hover {
+  background-color: var(--color-red);
+}
+
+.close-button:focus {
+  background-color: var(--color-red);
+  outline: var(--border-m) solid var(--color-light-1);
+}
+
+.dialog-content {
+  padding: var(--spacing-m);
+}

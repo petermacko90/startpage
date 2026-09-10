@@ -1,0 +1,24 @@
+.links-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--link-width));
+  gap: var(--spacing-m);
+  justify-content: space-between;
+}
+
+.add-link {
+  padding: var(--spacing-m);
+  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
+  color: var(--color-light-1);
+  border: none;
+  border-radius: var(--border-radius-m);
+}
+
+.add-link:hover,
+.add-link:focus {
+  transition: all var(--hover-duration);
+  transform: scale(var(--hover-scale));
+}
+
+.add-link:focus {
+  outline: var(--border-m) solid var(--color-primary);
+}

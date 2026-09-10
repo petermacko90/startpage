@@ -1,0 +1,46 @@
+.edit-button {
+  position: absolute;
+  left: var(--spacing-m);
+  top: var(--spacing-m);
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-dark-2);
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+  border: none;
+  border-radius: var(--border-radius-s);
+}
+
+.edit-button:hover {
+  background-color: var(--color-dark-3);
+}
+
+.edit-button:focus {
+  outline: var(--border-m) solid var(--color-primary);
+}
+
+.edit-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  width: 2.25rem;
+}
+
+.edit-button-text {
+  display: inline-block;
+  max-width: 0;
+  font-size: var(--font-size-m);
+  white-space: nowrap;
+  overflow: hidden;
+  transition:
+    max-width var(--hover-duration),
+    margin-left var(--hover-duration);
+}
+
+.edit-button:hover .edit-button-text,
+.edit-button:focus .edit-button-text {
+  max-width: 3rem;
+  margin-left: var(--spacing-s);
+  margin-right: var(--spacing-s);
+}
