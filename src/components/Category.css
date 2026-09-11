@@ -55,15 +55,22 @@
   border-radius: var(--border-radius-s);
 }
 
+.edit-category {
+  left: calc(var(--spacing-s) * -1);
+  background-color: var(--color-tertiary);
+}
+
+.edit-category:hover {
+  background-color: color-mix(in srgb, var(--color-tertiary) 80%, white);
+}
+
 .delete-category {
   right: calc(var(--spacing-s) * -1);
   background-color: var(--color-red);
 }
 
-.edit-category {
-  left: calc(var(--spacing-s) * -1);
-  background-color: var(--color-primary);
-  color: var(--color-dark-1);
+.delete-category:hover {
+  background-color: color-mix(in srgb, var(--color-red) 80%, white);
 }
 
 .edit-category:focus,
