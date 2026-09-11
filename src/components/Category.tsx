@@ -1,8 +1,11 @@
 import { useRef } from "react";
+import { Edit } from "@material-symbols-svg/react/icons/edit";
+import { Delete } from "@material-symbols-svg/react/icons/delete";
 import type { Category } from "../reducer/models";
 import Links from "./Links";
 import "./Category.css";
 import { useDispatchContext } from "../context";
+import AddEditCategory from "./AddEditCategory";
 
 export default function Category({
   category,
@@ -12,11 +15,21 @@ export default function Category({
   isEditMode: boolean;
 }) {
   const dispatch = useDispatchContext();
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const linksRef = useRef<HTMLDialogElement>(null);
+  const editCategoryRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
       <div className="category">
+        {isEditMode && (
+          <button
+            className="edit-category"
+            title="Edit"
+            onClick={() => editCategoryRef.current?.showModal()}
+          >
+            <Edit />
+          </button>
+        )}
         {isEditMode && (
           <button
             className="delete-category"
@@ -25,12 +38,12 @@ export default function Category({
               dispatch({ type: "category deleted", payload: category.id })
             }
           >
-            &times;
+            <Delete />
           </button>
         )}
         <button
           className="category-button"
-          onClick={() => dialogRef.current?.showModal()}
+          onClick={() => linksRef.current?.showModal()}
           title={category.title || "No title"}
         >
           <span className="category-icon">{category.icon}</span>
@@ -38,10 +51,11 @@ export default function Category({
         </button>
       </div>
       <Links
-        dialogRef={dialogRef}
+        dialogRef={linksRef}
         title={category.title}
         links={category.items}
       />
+      <AddEditCategory category={category} dialogRef={editCategoryRef} />
     </>
   );
 }

@@ -1,7 +1,5 @@
 .category {
   position: relative;
-  display: grid;
-  justify-items: center;
   height: var(--category-size);
   width: var(--category-size);
   background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
@@ -14,6 +12,9 @@
 }
 
 .category-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100%;
   width: 100%;
   border: none;
@@ -39,21 +40,33 @@
   font-size: var(--font-size-m);
 }
 
+.edit-category,
 .delete-category {
   position: absolute;
   top: calc(var(--spacing-s) * -1);
-  right: calc(var(--spacing-s) * -1);
   z-index: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   height: 2rem;
   width: 2rem;
-  background-color: var(--color-red);
   color: var(--color-light-1);
-  font-size: 1.25rem;
   border: none;
   border-radius: var(--border-radius-s);
 }
 
-.delete-category:hover,
+.delete-category {
+  right: calc(var(--spacing-s) * -1);
+  background-color: var(--color-red);
+}
+
+.edit-category {
+  left: calc(var(--spacing-s) * -1);
+  background-color: var(--color-primary);
+  color: var(--color-dark-1);
+}
+
+.edit-category:focus,
 .delete-category:focus {
   outline: var(--border-m) solid var(--color-light-1);
 }

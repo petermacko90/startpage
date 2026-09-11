@@ -2,38 +2,57 @@ import { useContext, useState, type RefObject } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { StateContext, useDispatchContext } from "../context";
 import { selectCategoriesCount } from "../reducer/selectors";
-import "./AddCategory.css";
+import type { Category } from "../reducer/models";
+import "./AddEditCategory.css";
 
-export default function AddCategory({
+export default function AddEditCategory({
+  category,
   dialogRef,
 }: {
+  category: Category | null;
   dialogRef: RefObject<HTMLDialogElement | null>;
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
   const dispatch = useDispatchContext();
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(category ? category.title : "");
 
   function handleCategorySave() {
-    dispatch({
-      type: "category added",
-      payload: {
-        icon: "",
-        id: uuidv4(),
-        items: [],
-        order: categoriesCount + 1,
-        title: title.trim(),
-      },
-    });
+    if (category) {
+      dispatch({
+        type: "category edited",
+        payload: {
+          icon: category.icon,
+          id: category.id,
+          items: category.items,
+          order: category.order,
+          title: title.trim(),
+        },
+      });
+    } else {
+      dispatch({
+        type: "category added",
+        payload: {
+          icon: "",
+          id: uuidv4(),
+          items: [],
+          order: categoriesCount + 1,
+          title: title.trim(),
+        },
+      });
 
-    setTitle("");
+      setTitle("");
+    }
+
     setTimeout(() => dialogRef.current?.close());
   }
 
   return (
     <dialog closedby="closerequest" ref={dialogRef}>
       <div className="dialog-header">
-        <div className="dialog-title overflow">Add Category</div>
+        <div className="dialog-title overflow">
+          {category ? "Edit Category" : "Add Category"}
+        </div>
         <button
           title="Close"
           className="close-button"

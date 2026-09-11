@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { StateContext } from "../context";
 import { selectCategoriesCount } from "../reducer/selectors";
 import Category from "./Category";
-import AddCategory from "./AddCategory";
+import AddEditCategory from "./AddEditCategory";
 import "./Categories.css";
 
 export default function Categories({ isEditMode }: { isEditMode: boolean }) {
@@ -28,7 +28,7 @@ export default function Categories({ isEditMode }: { isEditMode: boolean }) {
           +
         </button>
       )}
-      <AddCategory dialogRef={dialogRef} />
+      <AddEditCategory dialogRef={dialogRef} category={null} />
     </main>
   );
 }
