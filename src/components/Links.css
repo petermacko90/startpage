@@ -5,18 +5,22 @@
   justify-content: space-between;
 }
 
+.links-container:not(:empty) {
+  margin-bottom: var(--spacing-m);
+}
+
 .add-link {
-  padding: var(--spacing-m);
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-s);
   background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
   color: var(--color-light-1);
   border: none;
   border-radius: var(--border-radius-m);
 }
 
-.add-link:hover,
-.add-link:focus {
-  transition: all var(--hover-duration);
-  transform: scale(var(--hover-scale));
+.add-link:hover {
+  background-color: color-mix(in srgb, var(--color-dark-4) 90%, transparent);
 }
 
 .add-link:focus {

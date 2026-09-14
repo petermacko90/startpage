@@ -6,10 +6,8 @@
   border-radius: var(--border-radius-m);
 }
 
-.link:hover,
-.link:focus {
-  transition: all var(--hover-duration);
-  transform: scale(var(--hover-scale));
+.link:hover .link-icon-container {
+  background-color: color-mix(in srgb, var(--color-dark-4) 90%, transparent);
 }
 
 .link:focus {
@@ -28,7 +26,7 @@
 .link-icon {
   height: 2rem;
   width: 2rem;
-  background-color: white;
+  background-color: var(--color-dark-4);
 }
 
 .link-title {

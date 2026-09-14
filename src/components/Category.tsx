@@ -50,11 +50,7 @@ export default function Category({
           <span className="category-title overflow">{category.title}</span>
         </button>
       </div>
-      <Links
-        dialogRef={linksRef}
-        title={category.title}
-        links={category.items}
-      />
+      <Links dialogRef={linksRef} category={category} />
       <AddEditCategory category={category} dialogRef={editCategoryRef} />
     </>
   );

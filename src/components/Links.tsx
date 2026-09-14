@@ -1,21 +1,26 @@
-import type { RefObject } from "react";
-import type { Category, Link } from "../reducer/models";
+import { useState, type RefObject } from "react";
+import { KeyboardArrowDown } from "@material-symbols-svg/react/icons/keyboard-arrow-down";
+import { KeyboardArrowUp } from "@material-symbols-svg/react/icons/keyboard-arrow-up";
+import type { Category } from "../reducer/models";
 import LinkComponent from "./Link";
+import AddLink from "./AddLink";
 import "./Links.css";
 
 export default function Links({
-  title,
-  links,
+  category,
   dialogRef,
 }: {
-  title: Category["title"];
-  links: Link[];
+  category: Category;
   dialogRef: RefObject<HTMLDialogElement | null>;
 }) {
+  const [isAddingLink, setIsAddingLink] = useState(false);
+
   return (
     <dialog closedby="any" ref={dialogRef}>
       <div className="dialog-header">
-        <div className="dialog-title overflow">{title}</div>
+        <div className="dialog-title overflow">
+          {category.title || "No title"}
+        </div>
         <button
           title="Close"
           className="close-button"
@@ -26,11 +31,20 @@ export default function Links({
       </div>
       <div className="dialog-content">
         <div className="links-container">
-          {links.map((link) => (
+          {category.items.map((link) => (
             <LinkComponent key={link.id} link={link} />
           ))}
         </div>
-        {links.length === 0 && <button className="add-link">Add Link</button>}
+        <button
+          className="add-link"
+          onClick={() => setIsAddingLink((prev) => !prev)}
+        >
+          <span>Add Link</span>
+          {isAddingLink ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+        </button>
+        {isAddingLink && (
+          <AddLink categoryId={category.id} linkCount={category.items.length} />
+        )}
       </div>
     </dialog>
   );

@@ -3,7 +3,7 @@ import "./Link.css";
 
 export default function Link({ link }: { link: Link }) {
   return (
-    <a href={link.url} className="link">
+    <a href={link.url} className="link" title={link.text}>
       <span className="link-icon-container">
         <span className="link-icon"></span>
       </span>
