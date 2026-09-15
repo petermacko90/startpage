@@ -6,7 +6,7 @@ import LinkComponent from "./Link";
 import AddLink from "./AddLink";
 import Button from "./Button/Button";
 import CloseButton from "./Button/CloseButton";
-import "./Links.css";
+import "./CategoryModal.css";
 
 export default function Links({
   category,
@@ -34,11 +34,7 @@ export default function Links({
         </div>
         <Button action={() => setIsAddingLink((prev) => !prev)}>
           <span>Add Link</span>
-          {isAddingLink ? (
-            <KeyboardArrowUp size={20} />
-          ) : (
-            <KeyboardArrowDown size={20} />
-          )}
+          {isAddingLink ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
         </Button>
         {category.items.length > 0 && (
           <Button action={() => setIsEditMode((prev) => !prev)}>

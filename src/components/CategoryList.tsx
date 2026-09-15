@@ -1,9 +1,9 @@
 import { useContext, useRef } from "react";
 import { StateContext } from "../context";
 import { selectCategoriesCount } from "../reducer/selectors";
-import Category from "./Category";
+import CategoryItem from "./CategoryItem";
 import AddEditCategory from "./AddEditCategory";
-import "./Categories.css";
+import "./CategoryList.css";
 
 export default function Categories({ isEditMode }: { isEditMode: boolean }) {
   const state = useContext(StateContext);
@@ -13,7 +13,7 @@ export default function Categories({ isEditMode }: { isEditMode: boolean }) {
   return (
     <main>
       {Object.values(state.categories).map((category) => (
-        <Category
+        <CategoryItem
           key={category.id}
           category={category}
           isEditMode={isEditMode}

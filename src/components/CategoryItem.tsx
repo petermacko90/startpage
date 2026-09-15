@@ -1,11 +1,12 @@
 import { useRef } from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
-import type { Category } from "../reducer/models";
-import Links from "./Links";
-import "./Category.css";
 import { useDispatchContext } from "../context";
+import type { Category } from "../reducer/models";
+import CategoryModal from "./CategoryModal";
 import AddEditCategory from "./AddEditCategory";
+import "./CategoryItem.css";
+import FloatingButton from "./Button/FloatingButton";
 
 export default function Category({
   category,
@@ -22,24 +23,26 @@ export default function Category({
     <>
       <div className="category">
         {isEditMode && (
-          <button
-            className="edit-category"
-            title="Edit"
-            onClick={() => editCategoryRef.current?.showModal()}
+          <FloatingButton
+            action={() => editCategoryRef.current?.showModal()}
+            position="left"
+            type="edit"
+            tooltip="Edit"
           >
             <Edit />
-          </button>
+          </FloatingButton>
         )}
         {isEditMode && (
-          <button
-            className="delete-category"
-            title="Remove"
-            onClick={() =>
+          <FloatingButton
+            action={() =>
               dispatch({ type: "category deleted", payload: category.id })
             }
+            position="right"
+            type="delete"
+            tooltip="Delete"
           >
             <Delete />
-          </button>
+          </FloatingButton>
         )}
         <button
           className="category-button"
@@ -50,7 +53,7 @@ export default function Category({
           <span className="category-title overflow">{category.title}</span>
         </button>
       </div>
-      <Links dialogRef={linksRef} category={category} />
+      <CategoryModal category={category} dialogRef={linksRef} />
       <AddEditCategory category={category} dialogRef={editCategoryRef} />
     </>
   );
