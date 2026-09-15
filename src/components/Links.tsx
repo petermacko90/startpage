@@ -4,6 +4,8 @@ import { KeyboardArrowUp } from "@material-symbols-svg/react/icons/keyboard-arro
 import type { Category } from "../reducer/models";
 import LinkComponent from "./Link";
 import AddLink from "./AddLink";
+import Button from "./Button/Button";
+import CloseButton from "./Button/CloseButton";
 import "./Links.css";
 
 export default function Links({
@@ -14,6 +16,7 @@ export default function Links({
   dialogRef: RefObject<HTMLDialogElement | null>;
 }) {
   const [isAddingLink, setIsAddingLink] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   return (
     <dialog closedby="any" ref={dialogRef}>
@@ -21,13 +24,7 @@ export default function Links({
         <div className="dialog-title overflow">
           {category.title || "No title"}
         </div>
-        <button
-          title="Close"
-          className="close-button"
-          onClick={() => dialogRef.current?.close()}
-        >
-          &times;
-        </button>
+        <CloseButton action={() => dialogRef.current?.close()} />
       </div>
       <div className="dialog-content">
         <div className="links-container">
@@ -35,13 +32,19 @@ export default function Links({
             <LinkComponent key={link.id} link={link} />
           ))}
         </div>
-        <button
-          className="add-link"
-          onClick={() => setIsAddingLink((prev) => !prev)}
-        >
+        <Button action={() => setIsAddingLink((prev) => !prev)}>
           <span>Add Link</span>
-          {isAddingLink ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-        </button>
+          {isAddingLink ? (
+            <KeyboardArrowUp size={20} />
+          ) : (
+            <KeyboardArrowDown size={20} />
+          )}
+        </Button>
+        {category.items.length > 0 && (
+          <Button action={() => setIsEditMode((prev) => !prev)}>
+            {isEditMode ? "Done" : "Edit Links"}
+          </Button>
+        )}
         {isAddingLink && (
           <AddLink categoryId={category.id} linkCount={category.items.length} />
         )}

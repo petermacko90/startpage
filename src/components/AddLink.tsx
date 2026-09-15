@@ -2,6 +2,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatchContext } from "../context";
 import { type Category } from "../reducer/models.ts";
+import Button from "./Button/Button.tsx";
 import "./AddLink.css";
 
 export default function AddLink({
@@ -78,14 +79,7 @@ export default function AddLink({
           <div className="error-text">{urlError}</div>
         </div>
       </div>
-
-      <button
-        type="button"
-        onClick={() => handleSave()}
-        className="save-button"
-      >
-        Save
-      </button>
+      <Button action={() => handleSave()}>Save</Button>
     </div>
   );
 }

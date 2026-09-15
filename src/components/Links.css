@@ -8,21 +8,3 @@
 .links-container:not(:empty) {
   margin-bottom: var(--spacing-m);
 }
-
-.add-link {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-s);
-  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
-  color: var(--color-light-1);
-  border: none;
-  border-radius: var(--border-radius-m);
-}
-
-.add-link:hover {
-  background-color: color-mix(in srgb, var(--color-dark-4) 90%, transparent);
-}
-
-.add-link:focus {
-  outline: var(--border-m) solid var(--color-primary);
-}

@@ -1,0 +1,21 @@
+.close-button {
+  --close-button-size: 2rem;
+
+  margin-right: var(--spacing-s);
+  height: var(--close-button-size);
+  width: var(--close-button-size);
+  border: none;
+  border-radius: var(--close-button-size);
+  background-color: transparent;
+  font-size: 1.25rem;
+  color: var(--color-light-1);
+}
+
+.close-button:hover {
+  background-color: var(--color-red);
+}
+
+.close-button:focus {
+  background-color: var(--color-red);
+  outline: var(--border-m) solid var(--color-light-1);
+}

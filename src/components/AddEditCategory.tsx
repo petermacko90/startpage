@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import { StateContext, useDispatchContext } from "../context";
 import { selectCategoriesCount } from "../reducer/selectors";
 import type { Category } from "../reducer/models";
+import Button from "./Button/Button";
+import CloseButton from "./Button/CloseButton";
 import "./AddEditCategory.css";
 
 export default function AddEditCategory({
@@ -53,13 +55,7 @@ export default function AddEditCategory({
         <div className="dialog-title overflow">
           {category ? "Edit Category" : "Add Category"}
         </div>
-        <button
-          title="Close"
-          className="close-button"
-          onClick={() => dialogRef.current?.close()}
-        >
-          &times;
-        </button>
+        <CloseButton action={() => dialogRef.current?.close()} />
       </div>
       <div className="dialog-content">
         <div className="form">
@@ -72,9 +68,7 @@ export default function AddEditCategory({
             onKeyDown={(e) => e.key === "Enter" && handleCategorySave()}
             maxLength={20}
           />
-          <button onClick={() => handleCategorySave()} className="save-button">
-            Save
-          </button>
+          <Button action={() => handleCategorySave()}>Save</Button>
         </div>
       </div>
     </dialog>
