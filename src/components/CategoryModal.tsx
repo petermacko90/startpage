@@ -32,15 +32,17 @@ export default function Links({
             <LinkComponent key={link.id} link={link} />
           ))}
         </div>
-        <Button action={() => setIsAddingLink((prev) => !prev)}>
-          <span>Add Link</span>
-          {isAddingLink ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-        </Button>
-        {category.items.length > 0 && (
-          <Button action={() => setIsEditMode((prev) => !prev)}>
-            {isEditMode ? "Done" : "Edit Links"}
+        <div className={`buttons-container${isAddingLink ? " mb" : ""}`}>
+          <Button action={() => setIsAddingLink((prev) => !prev)}>
+            <span>Add Link</span>
+            {isAddingLink ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </Button>
-        )}
+          {category.items.length > 0 && (
+            <Button action={() => setIsEditMode((prev) => !prev)}>
+              {isEditMode ? "Done" : "Edit Links"}
+            </Button>
+          )}
+        </div>
         {isAddingLink && (
           <AddLink categoryId={category.id} linkCount={category.items.length} />
         )}

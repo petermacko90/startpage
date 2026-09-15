@@ -5,6 +5,8 @@ import { selectCategoriesCount } from "../reducer/selectors";
 import type { Category } from "../reducer/models";
 import Button from "./Button/Button";
 import CloseButton from "./Button/CloseButton";
+import Form from "./Form/Form";
+import FormField from "./Form/FormField";
 import "./AddEditCategory.css";
 
 export default function AddEditCategory({
@@ -58,18 +60,17 @@ export default function AddEditCategory({
         <CloseButton action={() => dialogRef.current?.close()} />
       </div>
       <div className="dialog-content">
-        <div className="form">
-          <label htmlFor="title">Title:</label>
-          <input
+        <Form>
+          <FormField
             id="title"
-            type="text"
-            value={title}
+            labelText="Title:"
             onChange={(e) => setTitle(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleCategorySave()}
+            onPressEnter={handleCategorySave}
+            value={title}
             maxLength={20}
           />
           <Button action={() => handleCategorySave()}>Save</Button>
-        </div>
+        </Form>
       </div>
     </dialog>
   );
