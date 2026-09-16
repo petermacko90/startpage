@@ -1,0 +1,53 @@
+dialog {
+  width: 90vw;
+  max-height: 90vh;
+  padding: 0;
+  border: var(--border) solid var(--color-dark-4);
+  outline: none;
+  border-radius: var(--border-radius-m);
+  background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
+}
+
+@media screen and (min-width: 30rem) {
+  dialog {
+    width: 24rem;
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  dialog {
+    width: 40rem;
+  }
+}
+
+@media screen and (min-width: 80rem) {
+  dialog {
+    width: 60rem;
+  }
+}
+
+dialog:focus {
+  outline: var(--outline) solid var(--color-primary);
+}
+
+dialog::backdrop {
+  background-color: color-mix(in srgb, var(--color-dark-2) 75%, transparent);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  background-color: color-mix(in srgb, var(--color-dark-1) 90%, transparent);
+}
+
+.dialog-title {
+  margin-left: var(--spacing-m);
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+}
+
+.dialog-content {
+  padding: var(--spacing-m);
+}

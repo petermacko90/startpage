@@ -16,7 +16,7 @@
 }
 
 .edit-button:focus {
-  outline: var(--border-m) solid var(--color-primary);
+  outline: var(--outline) solid var(--color-primary);
 }
 
 .edit-button-icon {

@@ -1,6 +1,8 @@
 .link {
-  height: 8rem;
   width: var(--link-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--color-light-1);
   text-decoration: none;
   border-radius: var(--border-radius-m);
@@ -11,33 +13,34 @@
 }
 
 .link:focus {
-  outline: var(--border-m) solid var(--color-primary);
+  outline: var(--outline) solid var(--color-primary);
 }
 
 .link-icon-container {
   display: grid;
   place-items: center;
-  height: 4rem;
-  width: var(--link-width);
+  height: var(--link-icon-container-size);
+  width: var(--link-icon-container-size);
   border-radius: var(--border-radius-m);
   background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
 }
 
 .link-icon {
-  height: 2rem;
-  width: 2rem;
+  --icon-size: 2rem;
+
+  height: var(--icon-size);
+  width: var(--icon-size);
   background-color: var(--color-dark-4);
 }
 
 .link-title {
-  display: block;
-  height: 4rem;
-  padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
+  width: var(--link-width);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding-block: var(--spacing-xs);
   color: var(--color-light-1);
   font-size: var(--font-size-s);
   text-align: center;
-  white-space: wrap;
-  overflow: hidden;
-  word-break: break-word;
 }

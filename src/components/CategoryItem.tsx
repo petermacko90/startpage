@@ -5,8 +5,8 @@ import { useDispatchContext } from "../context";
 import type { Category } from "../reducer/models";
 import CategoryModal from "./CategoryModal";
 import AddEditCategory from "./AddEditCategory";
-import "./CategoryItem.css";
 import FloatingButton from "./Button/FloatingButton";
+import "./CategoryItem.css";
 
 export default function Category({
   category,

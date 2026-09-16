@@ -1,7 +1,61 @@
 import type { State } from "./models";
 import type { Action } from "./actions";
 
-export const initialState: State = { categories: {} };
+export const initialState: State = {
+  categories: {
+    ["1"]: {
+      icon: "",
+      id: "1",
+      items: [
+        {
+          icon: "",
+          id: "1",
+          order: 1,
+          text: "NHL.com",
+          url: "https://nhl.com",
+        },
+        {
+          icon: "",
+          id: "2",
+          order: 2,
+          text: "F1 Calendar",
+          url: "https://f1calendar.com",
+        },
+      ],
+      order: 1,
+      title: "Sport",
+    },
+    ["2"]: {
+      icon: "",
+      id: "2",
+      items: [
+        {
+          icon: "",
+          id: "1",
+          order: 1,
+          text: "Steam",
+          url: "https://store.steampowered.com/",
+        },
+        {
+          icon: "",
+          id: "2",
+          order: 2,
+          text: "GOG.com",
+          url: "https://www.gog.com/en/",
+        },
+        {
+          icon: "",
+          id: "3",
+          order: 3,
+          text: "Epic Games Store",
+          url: "https://store.epicgames.com/en-US",
+        },
+      ],
+      order: 2,
+      title: "Gaming",
+    },
+  },
+};
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
