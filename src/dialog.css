@@ -2,7 +2,7 @@ dialog {
   width: 90vw;
   max-height: 90vh;
   padding: 0;
-  border: var(--border) solid var(--color-dark-4);
+  border: var(--border-width) solid var(--color-dark-4);
   outline: none;
   border-radius: var(--border-radius-m);
   background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);

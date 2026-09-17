@@ -54,6 +54,7 @@ export default function AddEditCategory({
   return (
     <dialog closedby="closerequest" ref={dialogRef}>
       <div className="dialog-header">
+        <div></div>
         <div className="dialog-title overflow">
           {category ? "Edit Category" : "Add Category"}
         </div>

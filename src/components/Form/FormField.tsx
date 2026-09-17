@@ -30,7 +30,7 @@ export default function FormField({
           onKeyDown={(e) => e.key === "Enter" && onPressEnter()}
           maxLength={maxLength}
         />
-        <div className="error-text">{error}</div>
+        {error && <div className="error-text">{error}</div>}
       </div>
     </div>
   );
