@@ -3,6 +3,7 @@ import { initialState, reducer } from "./reducer/reducer";
 import { StateContext, StateDispatchContext } from "./context";
 import EditButton from "./components/Button/EditButton";
 import CategoryList from "./components/CategoryList";
+import "./App.css";
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -13,7 +14,7 @@ export default function App() {
       <StateDispatchContext value={dispatch}>
         <EditButton isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
         <CategoryList isEditMode={isEditMode} />
-        <div></div>
+        <div className="spacer"></div>
       </StateDispatchContext>
     </StateContext>
   );

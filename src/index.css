@@ -27,6 +27,7 @@
   --link-icon-container-size: 4rem;
   --link-width: calc(var(--link-icon-container-size) + var(--spacing-s));
   --form-field-height: 2rem;
+  --edit-button-size: 2.25rem;
 
   --hover-duration: 300ms;
 

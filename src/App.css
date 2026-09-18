@@ -1,0 +1,3 @@
+.spacer {
+  height: calc(var(--edit-button-size) + var(--spacing-m));
+}
