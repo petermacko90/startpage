@@ -1,18 +1,20 @@
-import { useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
 import type { Category, Link } from "../reducer/models";
 import { useDispatchContext } from "../context";
+import { UNDO_TIMEOUT } from "../constants";
 import LinkComponent from "./Link";
 import AddEditLink from "./AddEditLink";
 import Button from "./Button/Button";
 import CloseButton from "./Button/CloseButton";
 import FloatingButton from "./Button/FloatingButton";
+import UndoToast from "./UndoToast/UndoToast";
 import "./CategoryModal.css";
 
-export default function Links({
+export default function CategoryModal({
   category,
   dialogRef,
 }: {
@@ -23,6 +25,33 @@ export default function Links({
   const [isAddingLink, setIsAddingLink] = useState(false);
   const [editLinkId, setEditLinkId] = useState<Link["id"] | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const [isShowUndo, setIsShowUndo] = useState(false);
+  const undoTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    };
+  }, []);
+
+  function deleteLink(linkId: Link["id"]) {
+    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+
+    dispatch({
+      type: "link deleted",
+      payload: { categoryId: category.id, linkId: linkId },
+    });
+
+    setIsShowUndo(true);
+    undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
+  }
+
+  function undo() {
+    dispatch({ type: "undo" });
+    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    setIsShowUndo(false);
+  }
 
   return (
     <dialog closedby="any" ref={dialogRef}>
@@ -52,12 +81,7 @@ export default function Links({
               )}
               {isEditMode && (
                 <FloatingButton
-                  action={() =>
-                    dispatch({
-                      type: "link deleted",
-                      payload: { categoryId: category.id, linkId: link.id },
-                    })
-                  }
+                  action={() => deleteLink(link.id)}
                   position="right"
                   tooltip="Delete"
                   type="delete"
@@ -112,6 +136,7 @@ export default function Links({
             cancel={() => setEditLinkId(null)}
           />
         )}
+        {isShowUndo && <UndoToast text="Link deleted" undo={undo} />}
       </div>
     </dialog>
   );

@@ -1,21 +1,21 @@
 import { useRef } from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
-import { useDispatchContext } from "../context";
 import type { Category } from "../reducer/models";
 import CategoryModal from "./CategoryModal";
 import AddEditCategory from "./AddEditCategory";
 import FloatingButton from "./Button/FloatingButton";
 import "./CategoryItem.css";
 
-export default function Category({
+export default function CategoryItem({
   category,
   isEditMode,
+  deleteCategory,
 }: {
   category: Category;
   isEditMode: boolean;
+  deleteCategory: (categoryId: Category["id"]) => void;
 }) {
-  const dispatch = useDispatchContext();
   const linksRef = useRef<HTMLDialogElement>(null);
   const editCategoryRef = useRef<HTMLDialogElement>(null);
 
@@ -34,9 +34,7 @@ export default function Category({
         )}
         {isEditMode && (
           <FloatingButton
-            action={() =>
-              dispatch({ type: "category deleted", payload: category.id })
-            }
+            action={() => deleteCategory(category.id)}
             position="right"
             type="delete"
             tooltip="Delete"

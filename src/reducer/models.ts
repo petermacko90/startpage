@@ -18,4 +18,5 @@ type CategoryRecord = Record<Category["id"], Category>;
 
 export type State = {
   categories: CategoryRecord;
+  undoState?: CategoryRecord;
 };

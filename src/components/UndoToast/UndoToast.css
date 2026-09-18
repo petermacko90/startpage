@@ -1,0 +1,19 @@
+.undo-toast {
+  position: fixed;
+  z-index: 2;
+  bottom: 4rem;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spacing-m);
+  padding: var(--spacing-s);
+  background-color: var(--color-dark-2);
+  border: var(--border-width) solid var(--color-dark-4);
+  border-radius: var(--border-radius-s);
+  box-shadow: var(--box-shadow-m);
+}
+
+.undo-text {
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+}

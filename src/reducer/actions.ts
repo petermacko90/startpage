@@ -14,4 +14,5 @@ export type Action =
   | {
       type: "link deleted";
       payload: { categoryId: Category["id"]; linkId: Link["id"] };
-    };
+    }
+  | { type: "undo" };

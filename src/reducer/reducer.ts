@@ -80,7 +80,7 @@ export function reducer(state: State, action: Action): State {
     case "category deleted": {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [action.payload]: _, ...restCategories } = state.categories;
-      return { categories: restCategories };
+      return { categories: restCategories, undoState: state.categories };
     }
     case "link added":
       return {
@@ -127,6 +127,14 @@ export function reducer(state: State, action: Action): State {
             ),
           },
         },
+        undoState: state.categories,
       };
+    case "undo": {
+      if (!state.undoState) return state;
+      return {
+        ...state,
+        categories: state.undoState,
+      };
+    }
   }
 }
