@@ -136,7 +136,7 @@ export default function CategoryModal({
             cancel={() => setEditLinkId(null)}
           />
         )}
-        {isShowUndo && <UndoToast text="Link deleted" undo={undo} />}
+        <UndoToast show={isShowUndo} text="Link deleted" undo={undo} />
       </div>
     </dialog>
   );

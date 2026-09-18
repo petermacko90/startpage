@@ -56,7 +56,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
         </button>
       )}
       <AddEditCategory dialogRef={dialogRef} category={null} />
-      {isShowUndo && <UndoToast text="Category deleted" undo={undo} />}
+      <UndoToast show={isShowUndo} text="Category deleted" undo={undo} />
     </main>
   );
 }
