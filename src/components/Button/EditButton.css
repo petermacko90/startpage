@@ -1,7 +1,7 @@
 .edit-button {
-  position: absolute;
-  left: var(--spacing-m);
-  top: var(--spacing-m);
+  align-self: flex-start;
+  margin-left: var(--spacing-m);
+  margin-top: var(--spacing-m);
   display: inline-flex;
   align-items: center;
   background-color: var(--color-dark-2);
