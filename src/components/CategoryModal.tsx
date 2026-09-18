@@ -17,9 +17,11 @@ import "./CategoryModal.css";
 export default function CategoryModal({
   category,
   dialogRef,
+  close,
 }: {
   category: Category;
   dialogRef: RefObject<HTMLDialogElement | null>;
+  close: () => void;
 }) {
   const dispatch = useDispatchContext();
   const [isAddingLink, setIsAddingLink] = useState(false);
@@ -54,13 +56,13 @@ export default function CategoryModal({
   }
 
   return (
-    <dialog closedby="any" ref={dialogRef}>
+    <dialog closedby="any" ref={dialogRef} onClose={close}>
       <div className="dialog-header">
         <div></div>
         <div className="dialog-title overflow">
           {category.title || "No title"}
         </div>
-        <CloseButton action={() => dialogRef.current?.close()} />
+        <CloseButton action={() => close()} />
       </div>
       <div className="dialog-content">
         <div className="links-container">

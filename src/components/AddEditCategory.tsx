@@ -12,9 +12,13 @@ import "./AddEditCategory.css";
 export default function AddEditCategory({
   category,
   dialogRef,
+  inputRef,
+  close,
 }: {
   category: Category | null;
   dialogRef: RefObject<HTMLDialogElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
+  close: () => void;
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
@@ -48,17 +52,17 @@ export default function AddEditCategory({
       setTitle("");
     }
 
-    setTimeout(() => dialogRef.current?.close());
+    setTimeout(() => close());
   }
 
   return (
-    <dialog closedby="closerequest" ref={dialogRef}>
+    <dialog closedby="closerequest" ref={dialogRef} onClose={close}>
       <div className="dialog-header">
         <div></div>
         <div className="dialog-title overflow">
           {category ? "Edit Category" : "Add Category"}
         </div>
-        <CloseButton action={() => dialogRef.current?.close()} />
+        <CloseButton action={() => close()} />
       </div>
       <div className="dialog-content">
         <Form>
@@ -69,6 +73,7 @@ export default function AddEditCategory({
             onPressEnter={handleCategorySave}
             value={title}
             maxLength={20}
+            inputRef={inputRef}
           />
           <Button action={() => handleCategorySave()}>Save</Button>
         </Form>

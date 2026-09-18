@@ -1,4 +1,4 @@
-import type { ChangeEventHandler } from "react";
+import type { ChangeEventHandler, RefObject } from "react";
 import "./FormField.css";
 
 export default function FormField({
@@ -9,6 +9,7 @@ export default function FormField({
   onPressEnter,
   error,
   maxLength,
+  inputRef,
 }: {
   id: string;
   labelText: string;
@@ -17,6 +18,7 @@ export default function FormField({
   onPressEnter: () => void;
   error?: string;
   maxLength?: number;
+  inputRef?: RefObject<HTMLInputElement | null>;
 }) {
   return (
     <div className="form-field">
@@ -29,6 +31,7 @@ export default function FormField({
           onChange={onChange}
           onKeyDown={(e) => e.key === "Enter" && onPressEnter()}
           maxLength={maxLength}
+          ref={inputRef}
         />
         {error && <div className="error-text">{error}</div>}
       </div>
