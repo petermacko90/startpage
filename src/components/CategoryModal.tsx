@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
@@ -55,7 +56,7 @@ export default function CategoryModal({
     setIsShowUndo(false);
   }
 
-  return (
+  return createPortal(
     <dialog closedby="any" ref={dialogRef} onClose={close}>
       <div className="dialog-header">
         <div></div>
@@ -140,6 +141,7 @@ export default function CategoryModal({
         )}
         <UndoToast show={isShowUndo} text="Link deleted" undo={undo} />
       </div>
-    </dialog>
+    </dialog>,
+    document.body,
   );
 }

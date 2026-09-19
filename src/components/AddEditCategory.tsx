@@ -1,4 +1,5 @@
 import { useContext, useState, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 import { StateContext, useDispatchContext } from "../context";
 import { selectCategoriesCount } from "../reducer/selectors";
@@ -55,7 +56,7 @@ export default function AddEditCategory({
     setTimeout(() => close());
   }
 
-  return (
+  return createPortal(
     <dialog closedby="closerequest" ref={dialogRef} onClose={close}>
       <div className="dialog-header">
         <div></div>
@@ -78,6 +79,7 @@ export default function AddEditCategory({
           <Button action={() => handleCategorySave()}>Save</Button>
         </Form>
       </div>
-    </dialog>
+    </dialog>,
+    document.body,
   );
 }
