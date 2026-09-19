@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { StateContext, useDispatchContext } from "../context";
+import { StateContext } from "../context";
 import type { Category } from "../reducer/models";
 import { selectCategoriesCount } from "../reducer/selectors";
 import { UNDO_TIMEOUT } from "../constants";
@@ -7,11 +7,11 @@ import CategoryItem from "./CategoryItem";
 import AddEditCategory from "./AddEditCategory";
 import UndoToast from "./UndoToast/UndoToast";
 import "./CategoryList.css";
+import { getState, setState } from "../storage";
 
 export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
-  const dispatch = useDispatchContext();
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const addCategoryInputRef = useRef<HTMLInputElement | null>(null);
@@ -39,13 +39,28 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
 
   function deleteCategory(categoryId: Category["id"]) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
-    dispatch({ type: "category deleted", payload: categoryId });
+
+    getState().then((state) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [categoryId]: _, ...restCategories } = state.categories;
+      setState({
+        categories: restCategories,
+        undoState: state.categories,
+      });
+    });
+
     setIsShowUndo(true);
     undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
   }
 
   function undo() {
-    dispatch({ type: "undo" });
+    getState().then((state) => {
+      if (!state.undoState) return;
+      setState({
+        categories: state.undoState,
+      });
+    });
+
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     setIsShowUndo(false);
   }

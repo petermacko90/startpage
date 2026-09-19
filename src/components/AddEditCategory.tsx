@@ -1,9 +1,10 @@
 import { useContext, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
-import { StateContext, useDispatchContext } from "../context";
+import { StateContext } from "../context";
 import { selectCategoriesCount } from "../reducer/selectors";
 import type { Category } from "../reducer/models";
+import { getState, setState } from "../storage";
 import Button from "./Button/Button";
 import CloseButton from "./Button/CloseButton";
 import Form from "./Form/Form";
@@ -23,31 +24,38 @@ export default function AddEditCategory({
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
-  const dispatch = useDispatchContext();
   const [title, setTitle] = useState(category ? category.title : "");
 
   function handleCategorySave() {
     if (category) {
-      dispatch({
-        type: "category edited",
-        payload: {
-          icon: category.icon,
-          id: category.id,
-          items: category.items,
-          order: category.order,
-          title: title.trim(),
-        },
+      getState().then((state) => {
+        setState({
+          ...state,
+          categories: {
+            ...state.categories,
+            [category.id]: {
+              ...state.categories[category.id],
+              title: title.trim(),
+            },
+          },
+        });
       });
     } else {
-      dispatch({
-        type: "category added",
-        payload: {
-          icon: "",
-          id: uuidv4(),
-          items: [],
-          order: categoriesCount + 1,
-          title: title.trim(),
-        },
+      getState().then((state) => {
+        const id = uuidv4();
+        setState({
+          ...state,
+          categories: {
+            ...state.categories,
+            [id]: {
+              icon: "",
+              id,
+              items: [],
+              order: categoriesCount + 1,
+              title: title.trim(),
+            },
+          },
+        });
       });
 
       setTitle("");

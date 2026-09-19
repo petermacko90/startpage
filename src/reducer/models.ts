@@ -14,7 +14,7 @@ export type Category = {
   order: number;
 };
 
-type CategoryRecord = Record<Category["id"], Category>;
+export type CategoryRecord = Record<Category["id"], Category>;
 
 export type State = {
   categories: CategoryRecord;

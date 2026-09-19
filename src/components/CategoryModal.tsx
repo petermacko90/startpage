@@ -5,7 +5,7 @@ import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
 import type { Category, Link } from "../reducer/models";
-import { useDispatchContext } from "../context";
+import { getState, setState } from "../storage";
 import { UNDO_TIMEOUT } from "../constants";
 import LinkComponent from "./Link";
 import AddEditLink from "./AddEditLink";
@@ -24,7 +24,6 @@ export default function CategoryModal({
   dialogRef: RefObject<HTMLDialogElement | null>;
   close: () => void;
 }) {
-  const dispatch = useDispatchContext();
   const [isAddingLink, setIsAddingLink] = useState(false);
   const [editLinkId, setEditLinkId] = useState<Link["id"] | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -41,9 +40,20 @@ export default function CategoryModal({
   function deleteLink(linkId: Link["id"]) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
 
-    dispatch({
-      type: "link deleted",
-      payload: { categoryId: category.id, linkId: linkId },
+    getState().then((state) => {
+      setState({
+        ...state,
+        categories: {
+          ...state.categories,
+          [category.id]: {
+            ...state.categories[category.id],
+            items: state.categories[category.id].items.filter((item) => {
+              return item.id !== linkId;
+            }),
+          },
+        },
+        undoState: state.categories,
+      });
     });
 
     setIsShowUndo(true);
@@ -51,7 +61,13 @@ export default function CategoryModal({
   }
 
   function undo() {
-    dispatch({ type: "undo" });
+    getState().then((state) => {
+      if (!state.undoState) return;
+      setState({
+        categories: state.undoState,
+      });
+    });
+
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     setIsShowUndo(false);
   }
