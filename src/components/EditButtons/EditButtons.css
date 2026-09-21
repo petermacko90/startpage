@@ -1,7 +1,14 @@
-.edit-button {
+.edit-buttons-container {
   align-self: flex-start;
   margin-left: var(--spacing-m);
   margin-top: var(--spacing-m);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-m);
+}
+
+.edit-button {
   display: inline-flex;
   align-items: center;
   padding: 0;

@@ -3,7 +3,7 @@ import { initialState, reducer } from "./reducer/reducer";
 import type { CategoryRecord } from "./reducer/models";
 import { StateContext } from "./context";
 import { getState } from "./storage";
-import EditButton from "./components/Button/EditButton";
+import EditButtons from "./components/EditButtons/EditButtons";
 import CategoryList from "./components/CategoryList";
 import "./App.css";
 
@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <StateContext value={state}>
-      <EditButton isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
+      <EditButtons isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
       <CategoryList isEditMode={isEditMode} />
       <div className="spacer"></div>
     </StateContext>
