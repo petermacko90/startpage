@@ -25,14 +25,6 @@
   background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
 }
 
-.link-icon {
-  --icon-size: 2rem;
-
-  height: var(--icon-size);
-  width: var(--icon-size);
-  background-color: var(--color-dark-4);
-}
-
 .link-title {
   width: var(--link-width);
   display: -webkit-box;
