@@ -27,10 +27,14 @@
 }
 
 .category-icon {
-  height: 4rem;
-  width: 4rem;
-  background-color: var(--color-dark-3);
-  font-size: 3rem;
+  --category-icon-size: 4rem;
+
+  height: var(--category-icon-size);
+  width: var(--category-icon-size);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
 }
 
 .category-title {

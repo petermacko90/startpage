@@ -1,6 +1,12 @@
 import { useState, type SyntheticEvent } from "react";
 
-export default function PageIcon({ domain }: { domain: string }) {
+export default function PageIcon({
+  domain,
+  size = "32px",
+}: {
+  domain: string;
+  size?: "32px" | "24px";
+}) {
   const placeholderImage = "globe.svg";
 
   const [imgSrc, setImgSrc] = useState(
@@ -17,7 +23,7 @@ export default function PageIcon({ domain }: { domain: string }) {
   return (
     <img
       src={imgSrc}
-      style={{ width: "32px", height: "32px" }}
+      style={{ width: size, height: size }}
       alt={`${domain} icon`}
       onError={() => {
         if (imgSrc !== placeholderImage) {

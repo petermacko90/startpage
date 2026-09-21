@@ -5,6 +5,7 @@ import type { Category } from "../reducer/models";
 import CategoryModal from "./CategoryModal";
 import AddEditCategory from "./AddEditCategory";
 import FloatingButton from "./Button/FloatingButton";
+import PageIcon from "./PageIcon/PageIcon";
 import "./CategoryItem.css";
 
 export default function CategoryItem({
@@ -70,7 +71,15 @@ export default function CategoryItem({
           onClick={() => setShowLinks(true)}
           title={category.title || "No title"}
         >
-          <span className="category-icon">{category.icon}</span>
+          <span className="category-icon">
+            {category.items.slice(0, 4).map((link) => (
+              <PageIcon
+                key={link.id}
+                domain={new URL(link.url).hostname}
+                size="24px"
+              />
+            ))}
+          </span>
           <span className="category-title overflow">{category.title}</span>
         </button>
       </div>
