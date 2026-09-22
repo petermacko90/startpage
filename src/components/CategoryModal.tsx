@@ -73,7 +73,12 @@ export default function CategoryModal({
   }
 
   return createPortal(
-    <dialog closedby="any" ref={dialogRef} onClose={close}>
+    <dialog
+      closedby="any"
+      ref={dialogRef}
+      onClose={close}
+      className="category-modal"
+    >
       <div className="dialog-header">
         <div></div>
         <div className="dialog-title overflow">

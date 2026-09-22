@@ -14,18 +14,6 @@ dialog {
   }
 }
 
-@media screen and (min-width: 48rem) {
-  dialog {
-    width: 40rem;
-  }
-}
-
-@media screen and (min-width: 80rem) {
-  dialog {
-    width: 60rem;
-  }
-}
-
 dialog:focus {
   outline: var(--outline) solid var(--color-primary);
 }
