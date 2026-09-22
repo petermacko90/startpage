@@ -12,7 +12,7 @@ import AddEditLink from "./AddEditLink";
 import Button from "./Button/Button";
 import CloseButton from "./Button/CloseButton";
 import FloatingButton from "./Button/FloatingButton";
-import UndoToast from "./UndoToast/UndoToast";
+import Toast from "./Toast/Toast";
 import "./CategoryModal.css";
 
 export default function CategoryModal({
@@ -155,7 +155,7 @@ export default function CategoryModal({
             cancel={() => setEditLinkId(null)}
           />
         )}
-        <UndoToast show={isShowUndo} text="Link deleted" undo={undo} />
+        <Toast type="undo" show={isShowUndo} text="Link deleted" undo={undo} />
       </div>
     </dialog>,
     document.body,

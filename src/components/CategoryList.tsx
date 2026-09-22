@@ -6,7 +6,7 @@ import { getState, setState } from "../storage";
 import { UNDO_TIMEOUT } from "../constants";
 import CategoryItem from "./CategoryItem";
 import AddEditCategory from "./AddEditCategory";
-import UndoToast from "./UndoToast/UndoToast";
+import Toast from "./Toast/Toast";
 import "./CategoryList.css";
 
 export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
@@ -92,7 +92,12 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
           close={() => setShowDialog(false)}
         />
       )}
-      <UndoToast show={isShowUndo} text="Category deleted" undo={undo} />
+      <Toast
+        type="undo"
+        show={isShowUndo}
+        text="Category deleted"
+        undo={undo}
+      />
     </main>
   );
 }

@@ -72,7 +72,7 @@ export default function EditButtons({
           <span className="edit-button-icon">
             <Wallpaper />
           </span>
-          <span>Upload Background</span>
+          <span>Set Background</span>
         </Button>
       )}
       {showDialog && (
