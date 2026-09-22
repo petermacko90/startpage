@@ -41,6 +41,12 @@
 
 html {
   height: 100%;
+}
+
+html,
+input,
+::file-selector-button,
+button {
   font-family:
     system-ui,
     -apple-system,
@@ -81,4 +87,9 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+::selection {
+  color: var(--color-dark-1);
+  background-color: var(--color-primary);
 }
