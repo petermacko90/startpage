@@ -42,7 +42,6 @@ export default function CategoryModal({
 
     getState().then((state) => {
       setState({
-        ...state,
         categories: {
           ...state.categories,
           [category.id]: {
@@ -65,6 +64,7 @@ export default function CategoryModal({
       if (!state.undoState) return;
       setState({
         categories: state.undoState,
+        undoState: undefined,
       });
     });
 

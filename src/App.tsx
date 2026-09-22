@@ -20,11 +20,14 @@ export default function App() {
       changes: { [key: string]: chrome.storage.StorageChange },
       areaName: chrome.storage.AreaName,
     ) => {
-      if (areaName === "local" && changes.categories) {
+      if (areaName === "local" && (changes.categories || changes.undoState)) {
         dispatch({
           type: "fetched",
           payload: {
             categories: changes.categories.newValue as CategoryRecord,
+            undoState: changes.undoState?.newValue as
+              | CategoryRecord
+              | undefined,
           },
         });
       }

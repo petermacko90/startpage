@@ -69,7 +69,6 @@ export default function AddEditLink({
         });
 
         setState({
-          ...state,
           categories: {
             ...state.categories,
             [categoryId]: {
@@ -77,6 +76,7 @@ export default function AddEditLink({
               items: updatedItems,
             },
           },
+          undoState: undefined,
         });
       });
 
@@ -84,7 +84,6 @@ export default function AddEditLink({
     } else {
       getState().then((state) => {
         setState({
-          ...state,
           categories: {
             ...state.categories,
             [categoryId]: {
@@ -101,6 +100,7 @@ export default function AddEditLink({
               ],
             },
           },
+          undoState: undefined,
         });
       });
 

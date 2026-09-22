@@ -30,7 +30,6 @@ export default function AddEditCategory({
     if (category) {
       getState().then((state) => {
         setState({
-          ...state,
           categories: {
             ...state.categories,
             [category.id]: {
@@ -38,13 +37,13 @@ export default function AddEditCategory({
               title: title.trim(),
             },
           },
+          undoState: undefined,
         });
       });
     } else {
       getState().then((state) => {
         const id = uuidv4();
         setState({
-          ...state,
           categories: {
             ...state.categories,
             [id]: {
@@ -55,6 +54,7 @@ export default function AddEditCategory({
               title: title.trim(),
             },
           },
+          undoState: undefined,
         });
       });
 

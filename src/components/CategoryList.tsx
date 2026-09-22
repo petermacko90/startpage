@@ -58,6 +58,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
       if (!state.undoState) return;
       setState({
         categories: state.undoState,
+        undoState: undefined,
       });
     });
 
