@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { StateContext } from "../context.ts";
 import { type Category, type Link } from "../reducer/models.ts";
+import { LOCALHOST } from "../constants.ts";
 import { selectLink } from "../reducer/selectors.ts";
 import { getState, setState } from "../storage.ts";
 import Button from "./Button/Button.tsx";
@@ -31,13 +32,27 @@ export default function AddEditLink({
   const [url, setUrl] = useState(link ? link.url : "");
   const [urlError, setUrlError] = useState("");
 
+  function isValidUrl(url: string): boolean {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   function handleSave() {
-    if (!url) {
+    if (!url.trim()) {
       setUrlError("URL is required");
       return;
     }
 
     const formattedUrl = formatUrl(url.trim());
+
+    if (!isValidUrl(formattedUrl)) {
+      setUrlError("URL is not valid");
+      return;
+    }
 
     if (link) {
       const updatedLink: Link = {
@@ -96,9 +111,19 @@ export default function AddEditLink({
   }
 
   function formatUrl(url: string): string {
-    const prefix = "https://";
-    if (url.startsWith(prefix)) return url;
-    return `${prefix}${url}`;
+    const https = "https://";
+    const http = "http://";
+
+    if (
+      url.startsWith(https) ||
+      url.startsWith(http) ||
+      url.startsWith("about:")
+    ) {
+      return url;
+    }
+
+    if (url.startsWith(`${LOCALHOST}:`)) return `${http}${url}`;
+    return `${https}${url}`;
   }
 
   return (

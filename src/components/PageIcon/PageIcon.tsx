@@ -1,4 +1,5 @@
 import { useState, type SyntheticEvent } from "react";
+import { LOCALHOST } from "../../constants";
 
 export default function PageIcon({
   domain,
@@ -10,8 +11,15 @@ export default function PageIcon({
   const placeholderImage = "globe.svg";
 
   const [imgSrc, setImgSrc] = useState(
-    `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+    shouldFetchIcon(domain)
+      ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+      : placeholderImage,
   );
+
+  function shouldFetchIcon(domain: string): boolean {
+    if (domain === "" || domain === LOCALHOST) return false;
+    return true;
+  }
 
   function replacePlaceholderIcon(e: SyntheticEvent<HTMLImageElement, Event>) {
     const img = e.currentTarget;
