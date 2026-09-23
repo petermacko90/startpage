@@ -5,7 +5,7 @@
   justify-content: space-between;
 }
 
-.links-container:not(:empty) {
+.links-container.not-empty {
   margin-bottom: var(--spacing-m);
 }
 

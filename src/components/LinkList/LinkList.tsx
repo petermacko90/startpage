@@ -71,7 +71,9 @@ export default function LinkList({
   }
 
   return (
-    <div className="links-container">
+    <div
+      className={`links-container${category.items.length === 0 ? "" : " not-empty"}`}
+    >
       {category.items.map((link) => (
         <div key={link.id} className="link-container">
           {isEditMode && (
