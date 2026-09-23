@@ -1,0 +1,14 @@
+.links-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--link-width));
+  gap: var(--spacing-m);
+  justify-content: space-between;
+}
+
+.links-container:not(:empty) {
+  margin-bottom: var(--spacing-m);
+}
+
+.link-container {
+  position: relative;
+}

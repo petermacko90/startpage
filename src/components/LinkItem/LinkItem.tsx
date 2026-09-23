@@ -1,8 +1,8 @@
 import type { Link } from "../../reducer/models";
 import PageIcon from "../PageIcon/PageIcon";
-import "./Link.css";
+import "./LinkItem.css";
 
-export default function Link({ link }: { link: Link }) {
+export default function LinkItem({ link }: { link: Link }) {
   return (
     <a href={link.url} className="link" title={link.text}>
       <span className="link-icon-container">
