@@ -49,7 +49,7 @@ export default function AddEditCategory({
               icon: "",
               id,
               items: [],
-              order: categoriesCount + 1,
+              order: categoriesCount,
               title: title.trim(),
             },
           },

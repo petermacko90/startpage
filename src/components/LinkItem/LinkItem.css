@@ -6,6 +6,9 @@
   color: var(--color-light-1);
   text-decoration: none;
   border-radius: var(--border-radius-m);
+  transition:
+    background-color 0.15s,
+    opacity 0.15s;
 }
 
 .link:hover .link-icon-container {
@@ -14,6 +17,16 @@
 
 .link:focus {
   outline: var(--outline) solid var(--color-primary);
+}
+
+.link.is-over {
+  background-color: var(--color-dark-4);
+  outline: var(--outline) solid var(--color-primary);
+}
+
+.link.is-dragging {
+  opacity: 0.2;
+  box-shadow: var(--box-shadow-m);
 }
 
 .link-icon-container {

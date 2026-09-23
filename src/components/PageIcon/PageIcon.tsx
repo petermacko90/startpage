@@ -33,6 +33,7 @@ export default function PageIcon({
       src={imgSrc}
       style={{ width: size, height: size }}
       alt={`${domain} icon`}
+      draggable="false"
       onError={() => {
         if (imgSrc !== placeholderImage) {
           setImgSrc(placeholderImage);

@@ -93,7 +93,7 @@ export default function AddEditLink({
                 {
                   icon: "",
                   id: uuidv4(),
-                  order: linkCount + 1,
+                  order: linkCount,
                   text: text.trim() || formattedUrl,
                   url: formattedUrl,
                 },
