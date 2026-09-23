@@ -1,15 +1,14 @@
 import { useContext, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
-import { StateContext } from "../context";
-import { selectCategoriesCount } from "../reducer/selectors";
-import type { Category } from "../reducer/models";
-import { getState, setState } from "../storage";
-import Button from "./Button/Button";
-import CloseButton from "./Button/CloseButton";
-import Form from "./Form/Form";
-import FormField from "./Form/FormField";
-import "./AddEditCategory.css";
+import { StateContext } from "../../context";
+import { selectCategoriesCount } from "../../reducer/selectors";
+import type { Category } from "../../reducer/models";
+import { getState, setState } from "../../storage";
+import Button from "../Button/Button";
+import CloseButton from "../Button/CloseButton";
+import Form from "../Form/Form";
+import FormField from "../Form/FormField";
 
 export default function AddEditCategory({
   category,

@@ -1,5 +1,5 @@
-import type { Link } from "../reducer/models";
-import PageIcon from "./PageIcon/PageIcon";
+import type { Link } from "../../reducer/models";
+import PageIcon from "../PageIcon/PageIcon";
 import "./Link.css";
 
 export default function Link({ link }: { link: Link }) {

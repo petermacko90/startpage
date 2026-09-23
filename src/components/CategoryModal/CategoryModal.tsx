@@ -4,15 +4,15 @@ import { Add } from "@material-symbols-svg/react/icons/add";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
-import type { Category, Link } from "../reducer/models";
-import { getState, setState } from "../storage";
-import { UNDO_TIMEOUT } from "../constants";
-import LinkComponent from "./Link";
-import AddEditLink from "./AddEditLink";
-import Button from "./Button/Button";
-import CloseButton from "./Button/CloseButton";
-import FloatingButton from "./Button/FloatingButton";
-import Toast from "./Toast/Toast";
+import type { Category, Link } from "../../reducer/models";
+import { getState, setState } from "../../storage";
+import { UNDO_TIMEOUT } from "../../constants";
+import LinkComponent from "../Link/Link";
+import AddEditLink from "../AddEditLink/AddEditLink";
+import Button from "../Button/Button";
+import CloseButton from "../Button/CloseButton";
+import FloatingButton from "../Button/FloatingButton";
+import Toast from "../Toast/Toast";
 import "./CategoryModal.css";
 
 export default function CategoryModal({

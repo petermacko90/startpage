@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
-import type { Category } from "../reducer/models";
-import CategoryModal from "./CategoryModal";
-import AddEditCategory from "./AddEditCategory";
-import FloatingButton from "./Button/FloatingButton";
-import PageIcon from "./PageIcon/PageIcon";
+import type { Category } from "../../reducer/models";
+import CategoryModal from "../CategoryModal/CategoryModal";
+import AddEditCategory from "../AddEditCategory/AddEditCategory";
+import FloatingButton from "../Button/FloatingButton";
+import PageIcon from "../PageIcon/PageIcon";
 import "./CategoryItem.css";
 
 export default function CategoryItem({

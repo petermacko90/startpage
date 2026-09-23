@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { StateContext } from "../context";
-import type { Category } from "../reducer/models";
-import { selectCategoriesCount } from "../reducer/selectors";
-import { getState, setState } from "../storage";
-import { UNDO_TIMEOUT } from "../constants";
-import CategoryItem from "./CategoryItem";
-import AddEditCategory from "./AddEditCategory";
-import Toast from "./Toast/Toast";
+import { StateContext } from "../../context";
+import type { Category } from "../../reducer/models";
+import { selectCategoriesCount } from "../../reducer/selectors";
+import { getState, setState } from "../../storage";
+import { UNDO_TIMEOUT } from "../../constants";
+import CategoryItem from "../CategoryItem/CategoryItem";
+import AddEditCategory from "../AddEditCategory/AddEditCategory";
+import Toast from "../Toast/Toast";
 import "./CategoryList.css";
 
 export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {

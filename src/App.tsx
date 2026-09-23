@@ -4,7 +4,7 @@ import type { CategoryRecord } from "./reducer/models";
 import { StateContext } from "./context";
 import { getState } from "./storage";
 import EditButtons from "./components/EditButtons/EditButtons";
-import CategoryList from "./components/CategoryList";
+import CategoryList from "./components/CategoryList/CategoryList";
 import "./App.css";
 
 export default function App() {
