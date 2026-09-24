@@ -10,7 +10,7 @@ import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import type { Category, Link } from "../../reducer/models";
 import { UNDO_TIMEOUT } from "../../constants";
-import { getState, setState } from "../../storage/localStorage";
+import { deleteLink, undoState, updateLinks } from "../../storage/localStorage";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import FloatingButton from "../Button/FloatingButton";
 import LinkItem from "../LinkItem/LinkItem";
@@ -37,37 +37,15 @@ export default function LinkList({
     };
   }, []);
 
-  function deleteLink(linkId: Link["id"]) {
+  function handleDeleteLink(linkId: Link["id"]) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
-
-    getState().then((state) => {
-      setState({
-        categories: {
-          ...state.categories,
-          [category.id]: {
-            ...state.categories[category.id],
-            items: state.categories[category.id].items.filter((item) => {
-              return item.id !== linkId;
-            }),
-          },
-        },
-        undoState: state.categories,
-      });
-    });
-
+    deleteLink(category.id, linkId);
     setIsShowUndo(true);
     undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
   }
 
   function undo() {
-    getState().then((state) => {
-      if (!state.undoState) return;
-      setState({
-        categories: state.undoState,
-        undoState: undefined,
-      });
-    });
-
+    undoState();
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     setIsShowUndo(false);
   }
@@ -107,18 +85,7 @@ export default function LinkList({
             order: index,
           }));
 
-          getState().then((state) => {
-            setState({
-              categories: {
-                ...state.categories,
-                [category.id]: {
-                  ...state.categories[category.id],
-                  items: updatedItems,
-                },
-              },
-              undoState: undefined,
-            });
-          });
+          updateLinks(category.id, updatedItems);
         }
       },
     });
@@ -146,7 +113,7 @@ export default function LinkList({
           )}
           {isEditMode && (
             <FloatingButton
-              action={() => deleteLink(link.id)}
+              action={() => handleDeleteLink(link.id)}
               position="right"
               tooltip="Delete"
               type="delete"

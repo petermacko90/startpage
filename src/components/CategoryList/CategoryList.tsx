@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { StateContext } from "../../context";
 import type { Category } from "../../reducer/models";
 import { selectCategoriesCount } from "../../reducer/selectors";
-import { getState, setState } from "../../storage/localStorage";
+import { deleteCategory, undoState } from "../../storage/localStorage";
 import { UNDO_TIMEOUT } from "../../constants";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import AddEditCategory from "../AddEditCategory/AddEditCategory";
@@ -37,31 +37,15 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
     }
   }, [showDialog]);
 
-  function deleteCategory(categoryId: Category["id"]) {
+  function handleDeleteCategory(categoryId: Category["id"]) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
-
-    getState().then((state) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { [categoryId]: _, ...restCategories } = state.categories;
-      setState({
-        categories: restCategories,
-        undoState: state.categories,
-      });
-    });
-
+    deleteCategory(categoryId);
     setIsShowUndo(true);
     undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
   }
 
   function undo() {
-    getState().then((state) => {
-      if (!state.undoState) return;
-      setState({
-        categories: state.undoState,
-        undoState: undefined,
-      });
-    });
-
+    undoState();
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     setIsShowUndo(false);
   }
@@ -73,7 +57,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
           key={category.id}
           category={category}
           isEditMode={isEditMode}
-          deleteCategory={deleteCategory}
+          deleteCategory={handleDeleteCategory}
         />
       ))}
       {(categoriesCount === 0 || isEditMode) && (
