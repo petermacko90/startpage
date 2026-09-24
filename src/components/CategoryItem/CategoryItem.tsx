@@ -44,45 +44,43 @@ export default function CategoryItem({
   }, [showEditCategory]);
 
   return (
-    <>
-      <div className="category">
-        {isEditMode && (
-          <FloatingButton
-            action={() => setShowEditCategory(true)}
-            position="left"
-            type="edit"
-            tooltip="Edit"
-          >
-            <Edit />
-          </FloatingButton>
-        )}
-        {isEditMode && (
-          <FloatingButton
-            action={() => deleteCategory(category.id)}
-            position="right"
-            type="delete"
-            tooltip="Delete"
-          >
-            <Delete />
-          </FloatingButton>
-        )}
-        <button
-          className="category-button"
-          onClick={() => setShowLinks(true)}
-          title={category.title || "No title"}
+    <div className="category">
+      {isEditMode && (
+        <FloatingButton
+          action={() => setShowEditCategory(true)}
+          position="left"
+          type="edit"
+          tooltip="Edit"
         >
-          <span className="category-icon">
-            {category.items.slice(0, 4).map((link) => (
-              <PageIcon
-                key={link.id}
-                domain={new URL(link.url).hostname}
-                size="24px"
-              />
-            ))}
-          </span>
-          <span className="category-title overflow">{category.title}</span>
-        </button>
-      </div>
+          <Edit />
+        </FloatingButton>
+      )}
+      {isEditMode && (
+        <FloatingButton
+          action={() => deleteCategory(category.id)}
+          position="right"
+          type="delete"
+          tooltip="Delete"
+        >
+          <Delete />
+        </FloatingButton>
+      )}
+      <button
+        className="category-button"
+        onClick={() => setShowLinks(true)}
+        title={category.title || "No title"}
+      >
+        <span className="category-icon">
+          {category.items.slice(0, 4).map((link) => (
+            <PageIcon
+              key={link.id}
+              domain={new URL(link.url).hostname}
+              size="24px"
+            />
+          ))}
+        </span>
+        <span className="category-title overflow">{category.title}</span>
+      </button>
       {showLinks && (
         <CategoryModal
           category={category}
@@ -98,6 +96,6 @@ export default function CategoryItem({
           close={() => setShowEditCategory(false)}
         />
       )}
-    </>
+    </div>
   );
 }
