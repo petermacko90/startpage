@@ -9,15 +9,22 @@ export default function Dialog({
   onClose,
   title,
   children,
+  className,
 }: {
   closedby: DialogHTMLAttributes<HTMLDialogElement>["closedby"];
   ref: RefObject<HTMLDialogElement | null>;
   onClose: () => void;
   title: string;
   children: ReactNode;
+  className?: string;
 }) {
   return createPortal(
-    <dialog closedby={closedby} ref={ref} onClose={onClose}>
+    <dialog
+      closedby={closedby}
+      ref={ref}
+      onClose={onClose}
+      className={className}
+    >
       <div className="dialog-header">
         <div></div>
         <div className="dialog-title overflow">{title}</div>

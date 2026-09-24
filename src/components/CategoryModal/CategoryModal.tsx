@@ -28,6 +28,7 @@ export default function CategoryModal({
       onClose={close}
       ref={dialogRef}
       title={category.title || "No title"}
+      className="category-modal"
     >
       <LinkList
         category={category}
