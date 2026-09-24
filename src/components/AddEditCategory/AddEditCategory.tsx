@@ -1,14 +1,13 @@
 import { useContext, useState, type RefObject } from "react";
-import { createPortal } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 import { StateContext } from "../../context";
 import { selectCategoriesCount } from "../../reducer/selectors";
 import type { Category } from "../../reducer/models";
 import { getState, setState } from "../../storage";
 import Button from "../Button/Button";
-import CloseButton from "../Button/CloseButton";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
+import Dialog from "../Dialog/Dialog";
 
 export default function AddEditCategory({
   category,
@@ -63,30 +62,25 @@ export default function AddEditCategory({
     setTimeout(() => close());
   }
 
-  return createPortal(
-    <dialog closedby="closerequest" ref={dialogRef} onClose={close}>
-      <div className="dialog-header">
-        <div></div>
-        <div className="dialog-title overflow">
-          {category ? "Edit Category" : "Add Category"}
-        </div>
-        <CloseButton action={() => close()} />
-      </div>
-      <div className="dialog-content">
-        <Form>
-          <FormField
-            id="title"
-            labelText="Title:"
-            onChange={(e) => setTitle(e.target.value)}
-            onPressEnter={handleCategorySave}
-            value={title}
-            maxLength={20}
-            inputRef={inputRef}
-          />
-          <Button action={() => handleCategorySave()}>Save</Button>
-        </Form>
-      </div>
-    </dialog>,
-    document.body,
+  return (
+    <Dialog
+      closedby="closerequest"
+      onClose={close}
+      ref={dialogRef}
+      title={category ? "Edit Category" : "Add Category"}
+    >
+      <Form>
+        <FormField
+          id="title"
+          labelText="Title:"
+          onChange={(e) => setTitle(e.target.value)}
+          onPressEnter={handleCategorySave}
+          value={title}
+          maxLength={20}
+          inputRef={inputRef}
+        />
+        <Button action={() => handleCategorySave()}>Save</Button>
+      </Form>
+    </Dialog>
   );
 }

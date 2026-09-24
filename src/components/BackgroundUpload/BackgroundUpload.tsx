@@ -7,13 +7,12 @@ import {
   type RefObject,
   type SetStateAction,
 } from "react";
-import { createPortal } from "react-dom";
 import { removeImage, saveImage } from "../../indexedDB";
 import { BACKGROUND_KEY, ERROR_TIMEOUT } from "../../constants";
 import Button from "../Button/Button";
-import CloseButton from "../Button/CloseButton";
 import Form from "../Form/Form";
 import Toast from "../Toast/Toast";
+import Dialog from "../Dialog/Dialog";
 import "./BackgroundUpload.css";
 
 export default function BackgroundUpload({
@@ -100,29 +99,26 @@ export default function BackgroundUpload({
     }
   }
 
-  return createPortal(
-    <dialog closedby="any" ref={dialogRef} onClose={close}>
-      <div className="dialog-header">
-        <div></div>
-        <div className="dialog-title overflow">Set Background</div>
-        <CloseButton action={() => close()} />
-      </div>
-      <div className="dialog-content">
-        <Form>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleBackgroundUpload(e)}
-          />
-          {backgroundUrl && (
-            <Button action={() => handleBackgroundRemove()}>
-              Remove Background
-            </Button>
-          )}
-        </Form>
-      </div>
+  return (
+    <Dialog
+      closedby="closerequest"
+      onClose={close}
+      ref={dialogRef}
+      title="Set Background"
+    >
+      <Form>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleBackgroundUpload(e)}
+        />
+        {backgroundUrl && (
+          <Button action={() => handleBackgroundRemove()}>
+            Remove Background
+          </Button>
+        )}
+      </Form>
       <Toast type="error" show={isError} text={errorMessage!} />
-    </dialog>,
-    document.body,
+    </Dialog>
   );
 }
