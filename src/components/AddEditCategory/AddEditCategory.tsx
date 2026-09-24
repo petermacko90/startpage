@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { StateContext } from "../../context";
 import { selectCategoriesCount } from "../../reducer/selectors";
 import type { Category } from "../../reducer/models";
-import { getState, setState } from "../../storage";
+import { getState, setState } from "../../storage/localStorage";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";

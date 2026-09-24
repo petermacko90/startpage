@@ -10,7 +10,7 @@ import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import type { Category, Link } from "../../reducer/models";
 import { UNDO_TIMEOUT } from "../../constants";
-import { getState, setState } from "../../storage";
+import { getState, setState } from "../../storage/localStorage";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import FloatingButton from "../Button/FloatingButton";
 import LinkItem from "../LinkItem/LinkItem";

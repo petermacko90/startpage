@@ -7,7 +7,7 @@ import {
   type RefObject,
   type SetStateAction,
 } from "react";
-import { removeImage, saveImage } from "../../indexedDB";
+import { removeImage, saveImage } from "../../storage/indexedDB";
 import { BACKGROUND_KEY, ERROR_TIMEOUT } from "../../constants";
 import Button from "../Button/Button";
 import Form from "../Form/Form";

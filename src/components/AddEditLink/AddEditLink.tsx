@@ -4,7 +4,7 @@ import { StateContext } from "../../context.ts";
 import { type Category, type Link } from "../../reducer/models.ts";
 import { LOCALHOST } from "../../constants.ts";
 import { selectLink } from "../../reducer/selectors.ts";
-import { getState, setState } from "../../storage.ts";
+import { getState, setState } from "../../storage/localStorage.ts";
 import Button from "../Button/Button.tsx";
 import Form from "../Form/Form.tsx";
 import FormField from "../Form/FormField.tsx";

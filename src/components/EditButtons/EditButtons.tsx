@@ -9,7 +9,7 @@ import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
 import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
-import { getImage } from "../../indexedDB";
+import { getImage } from "../../storage/indexedDB";
 import Button from "../Button/Button";
 import BackgroundUpload from "../BackgroundUpload/BackgroundUpload";
 import "./EditButtons.css";

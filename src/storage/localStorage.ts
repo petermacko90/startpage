@@ -1,4 +1,4 @@
-import type { State } from "./reducer/models";
+import type { State } from "../reducer/models";
 
 export function setState(state: State) {
   browser.storage.local.set(state);
