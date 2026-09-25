@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { StateContext } from "../../context";
 import type { Category } from "../../reducer/models";
-import { selectCategoriesCount } from "../../reducer/selectors";
 import { deleteCategory, undoState } from "../../storage/localStorage";
 import { UNDO_TIMEOUT } from "../../constants";
 import CategoryItem from "../CategoryItem/CategoryItem";
@@ -11,7 +10,6 @@ import "./CategoryList.css";
 
 export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
   const state = useContext(StateContext);
-  const categoriesCount = selectCategoriesCount(state);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const addCategoryInputRef = useRef<HTMLInputElement | null>(null);
@@ -60,15 +58,13 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
           deleteCategory={handleDeleteCategory}
         />
       ))}
-      {(categoriesCount === 0 || isEditMode) && (
-        <button
-          className="add-category"
-          onClick={() => setShowDialog(true)}
-          title="Add Category"
-        >
-          +
-        </button>
-      )}
+      <button
+        className="add-category"
+        onClick={() => setShowDialog(true)}
+        title="Add Category"
+      >
+        +
+      </button>
       {showDialog && (
         <AddEditCategory
           category={null}
