@@ -92,11 +92,7 @@ export function createLink(
     } else {
       const items = [...state.categories[categoryId].items];
       items.splice(order, 0, newItem);
-
-      updatedItems = items.map((item, index) => ({
-        ...item,
-        order: index,
-      }));
+      updatedItems = reorderItems(items);
     }
 
     setState({
@@ -129,7 +125,7 @@ export function updateLink(
       return item.id === id ? updatedLink : item;
     });
 
-    const reorderedItems = reorderItems(
+    const reorderedItems = reorderItemsOnUpdate(
       state,
       categoryId,
       id,
@@ -150,27 +146,6 @@ export function updateLink(
   });
 }
 
-function reorderItems(
-  state: State,
-  categoryId: Category["id"],
-  linkId: Link["id"],
-  order: Link["order"],
-  items: Link[],
-): Link[] {
-  const link = selectLink(state)(categoryId, linkId);
-  if (order === link?.order) return items;
-
-  const links = selectLinks(state)(categoryId);
-  const oldIndex = links.findIndex((link) => link.id === linkId);
-  const [movedItem] = items.splice(oldIndex, 1);
-  items.splice(order, 0, movedItem);
-
-  return items.map((item, index) => ({
-    ...item,
-    order: index,
-  }));
-}
-
 export function updateLinks(categoryId: Category["id"], items: Link[]) {
   getState().then((state) => {
     setState({
@@ -188,14 +163,18 @@ export function updateLinks(categoryId: Category["id"], items: Link[]) {
 
 export function deleteLink(categoryId: Category["id"], linkId: Link["id"]) {
   getState().then((state) => {
+    const filteredItems = state.categories[categoryId].items.filter((item) => {
+      return item.id !== linkId;
+    });
+
+    const reorderedItems = reorderItems(filteredItems);
+
     setState({
       categories: {
         ...state.categories,
         [categoryId]: {
           ...state.categories[categoryId],
-          items: state.categories[categoryId].items.filter((item) => {
-            return item.id !== linkId;
-          }),
+          items: reorderedItems,
         },
       },
       undoState: state.categories,
@@ -211,4 +190,28 @@ export function undoState() {
       undoState: undefined,
     });
   });
+}
+
+export function reorderItems(items: Link[]): Link[] {
+  return items.map((item, index) => ({
+    ...item,
+    order: index,
+  }));
+}
+
+function reorderItemsOnUpdate(
+  state: State,
+  categoryId: Category["id"],
+  linkId: Link["id"],
+  order: Link["order"],
+  items: Link[],
+): Link[] {
+  const link = selectLink(state)(categoryId, linkId);
+  if (order === link?.order) return items;
+
+  const links = selectLinks(state)(categoryId);
+  const oldIndex = links.findIndex((link) => link.id === linkId);
+  const [movedItem] = items.splice(oldIndex, 1);
+  items.splice(order, 0, movedItem);
+  return reorderItems(items);
 }

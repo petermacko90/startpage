@@ -11,7 +11,12 @@ import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import type { Category, Link } from "../../reducer/models";
 import { UNDO_TIMEOUT } from "../../constants";
-import { deleteLink, undoState, updateLinks } from "../../storage/localStorage";
+import {
+  deleteLink,
+  reorderItems,
+  undoState,
+  updateLinks,
+} from "../../storage/localStorage";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import FloatingButton from "../Button/FloatingButton";
 import LinkItem from "../LinkItem/LinkItem";
@@ -79,15 +84,10 @@ export default function LinkList({
 
         if (oldIndex !== -1 && newIndex !== -1) {
           captureFirst();
-          const reorderedArray = Array.from(category.items);
-          const [movedItem] = reorderedArray.splice(oldIndex, 1);
-          reorderedArray.splice(newIndex, 0, movedItem);
-
-          const updatedItems = reorderedArray.map((item, index) => ({
-            ...item,
-            order: index,
-          }));
-
+          const items = [...category.items];
+          const [movedItem] = items.splice(oldIndex, 1);
+          items.splice(newIndex, 0, movedItem);
+          const updatedItems = reorderItems(items);
           updateLinks(category.id, updatedItems);
         }
       },
