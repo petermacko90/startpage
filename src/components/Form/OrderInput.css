@@ -1,0 +1,9 @@
+.order-input {
+  display: flex;
+  gap: var(--spacing-s);
+  align-items: baseline;
+}
+
+.hint {
+  color: var(--color-light-1);
+}

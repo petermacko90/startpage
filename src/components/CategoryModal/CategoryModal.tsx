@@ -64,6 +64,7 @@ export default function CategoryModal({
       </div>
       {isAddingLink && (
         <AddEditLink
+          key={category.items.length}
           categoryId={category.id}
           linkCount={category.items.length}
           linkId={null}

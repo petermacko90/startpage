@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import Dialog from "../Dialog/Dialog";
+import TextInput from "../Form/TextInput";
 
 export default function AddEditCategory({
   category,
@@ -42,15 +43,16 @@ export default function AddEditCategory({
       title={category ? "Edit Category" : "Add Category"}
     >
       <Form>
-        <FormField
-          id="title"
-          labelText="Title:"
-          onChange={(e) => setTitle(e.target.value)}
-          onPressEnter={handleCategorySave}
-          value={title}
-          maxLength={20}
-          inputRef={inputRef}
-        />
+        <FormField id="title" labelText="Title:">
+          <TextInput
+            id="title"
+            onChange={(e) => setTitle(e.target.value)}
+            onPressEnter={handleCategorySave}
+            value={title}
+            maxLength={20}
+            inputRef={inputRef}
+          />
+        </FormField>
         <Button action={() => handleCategorySave()}>Save</Button>
       </Form>
     </Dialog>

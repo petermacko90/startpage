@@ -11,20 +11,6 @@ label {
   font-size: var(--font-size-m);
 }
 
-input[type="text"] {
-  height: var(--form-field-height);
-  width: 100%;
-  background-color: var(--color-dark-3);
-  color: var(--color-light-1);
-  border: var(--border-width) solid var(--color-dark-4);
-  border-radius: var(--border-radius-s);
-  font-size: var(--font-size-m);
-}
-
-input[type="text"]:focus {
-  outline: var(--outline) solid var(--color-primary);
-}
-
 .error-text {
   color: var(--color-red);
 }

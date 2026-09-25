@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import { StateContext } from "../../context.ts";
 import { type Category, type Link } from "../../reducer/models.ts";
 import { LOCALHOST } from "../../constants.ts";
-import { selectLink } from "../../reducer/selectors.ts";
+import { selectLink, selectLinks } from "../../reducer/selectors.ts";
 import { createLink, updateLink } from "../../storage/localStorage.ts";
 import Button from "../Button/Button.tsx";
 import Form from "../Form/Form.tsx";
 import FormField from "../Form/FormField.tsx";
+import TextInput from "../Form/TextInput.tsx";
+import OrderInput from "../Form/OrderInput.tsx";
 import "./AddEditLink.css";
 
 export default function AddEditLink({
@@ -21,6 +23,7 @@ export default function AddEditLink({
   cancel: () => void;
 }) {
   const state = useContext(StateContext);
+  const links = selectLinks(state)(categoryId);
 
   let link: Link | undefined = undefined;
   if (linkId) {
@@ -29,6 +32,7 @@ export default function AddEditLink({
 
   const [text, setText] = useState(link ? link.text : "");
   const [url, setUrl] = useState(link ? link.url : "");
+  const [order, setOrder] = useState(link ? link.order : linkCount);
   const [urlError, setUrlError] = useState("");
 
   function isValidUrl(url: string): boolean {
@@ -57,7 +61,7 @@ export default function AddEditLink({
       updateLink(categoryId, {
         icon: link.icon,
         id: link.id,
-        order: link.order,
+        order,
         text: text.trim() || formattedUrl,
         url: formattedUrl,
       });
@@ -66,13 +70,15 @@ export default function AddEditLink({
     } else {
       createLink(
         categoryId,
-        linkCount,
+        order,
         text.trim() || formattedUrl,
         formattedUrl,
+        linkCount,
       );
 
       setText("");
       setUrl("");
+      setOrder(linkCount);
       setUrlError("");
     }
   }
@@ -99,24 +105,36 @@ export default function AddEditLink({
         {link ? "Edit Link" : "Add Link"}
       </h1>
       <Form>
-        <FormField
-          id="text"
-          labelText="Text:"
-          onChange={(e) => setText(e.target.value)}
-          onPressEnter={handleSave}
-          value={text}
-        />
-        <FormField
-          id="url"
-          labelText="URL:"
-          onChange={(e) => {
-            setUrl(e.target.value);
-            setUrlError("");
-          }}
-          onPressEnter={handleSave}
-          value={url}
-          error={urlError}
-        />
+        <FormField id="text" labelText="Text:">
+          <TextInput
+            id="text"
+            onChange={(e) => setText(e.target.value)}
+            onPressEnter={handleSave}
+            value={text}
+          />
+        </FormField>
+        <FormField id="url" labelText="URL:" error={urlError}>
+          <TextInput
+            id="url"
+            onChange={(e) => {
+              setUrl(e.target.value);
+              setUrlError("");
+            }}
+            onPressEnter={handleSave}
+            value={url}
+          />
+        </FormField>
+        <FormField id="order" labelText="Order:">
+          <OrderInput
+            id="order"
+            value={order}
+            max={link ? linkCount - 1 : linkCount}
+            setValue={setOrder}
+            links={[...links]}
+            linkId={linkId}
+            isEditing={link ? true : false}
+          />
+        </FormField>
       </Form>
       <div className="add-edit-link-actions">
         <Button action={() => handleSave()}>Save</Button>

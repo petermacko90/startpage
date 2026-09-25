@@ -81,6 +81,11 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .overflow {
   white-space: nowrap;
   overflow: hidden;

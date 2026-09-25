@@ -10,3 +10,7 @@ export const selectLink =
       (item) => item.id === linkId,
     );
   };
+
+export const selectLinks = (state: State) => (categoryId: Category["id"]) => {
+  return state.categories[categoryId].items;
+};
