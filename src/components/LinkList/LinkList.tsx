@@ -3,6 +3,7 @@ import {
   useRef,
   useState,
   type Dispatch,
+  type RefObject,
   type SetStateAction,
 } from "react";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
@@ -22,11 +23,13 @@ export default function LinkList({
   isEditMode,
   setIsAddingLink,
   setEditLinkId,
+  textInputRef,
 }: {
   category: Category;
   isEditMode: boolean;
   setIsAddingLink: Dispatch<SetStateAction<boolean>>;
   setEditLinkId: Dispatch<SetStateAction<Link["id"] | null>>;
+  textInputRef: RefObject<HTMLInputElement | null>;
 }) {
   const [isShowUndo, setIsShowUndo] = useState(false);
   const undoTimerRef = useRef<number | null>(null);
@@ -91,6 +94,12 @@ export default function LinkList({
     });
   }, [category.items, category.id, captureFirst]);
 
+  function handleEditLink(linkId: Link["id"]) {
+    setIsAddingLink(false);
+    setEditLinkId(linkId);
+    setTimeout(() => textInputRef.current?.focus());
+  }
+
   return (
     <div
       className={`links-container${category.items.length === 0 ? "" : " not-empty"}`}
@@ -100,10 +109,7 @@ export default function LinkList({
         <div key={link.id} className="link-container">
           {isEditMode && (
             <FloatingButton
-              action={() => {
-                setIsAddingLink(false);
-                setEditLinkId(link.id);
-              }}
+              action={() => handleEditLink(link.id)}
               position="left"
               tooltip="Edit"
               type="edit"

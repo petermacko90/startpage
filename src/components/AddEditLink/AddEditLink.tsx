@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, type RefObject } from "react";
 import { StateContext } from "../../context.ts";
 import { type Category, type Link } from "../../reducer/models.ts";
 import { LOCALHOST } from "../../constants.ts";
@@ -16,11 +16,13 @@ export default function AddEditLink({
   linkCount,
   linkId,
   cancel,
+  textInputRef,
 }: {
   categoryId: Category["id"];
   linkCount: number;
   linkId: Link["id"] | null;
   cancel: () => void;
+  textInputRef: RefObject<HTMLInputElement | null>;
 }) {
   const state = useContext(StateContext);
   const links = selectLinks(state)(categoryId);
@@ -111,6 +113,7 @@ export default function AddEditLink({
             onChange={(e) => setText(e.target.value)}
             onPressEnter={handleSave}
             value={text}
+            inputRef={textInputRef}
           />
         </FormField>
         <FormField id="url" labelText="URL:" error={urlError}>

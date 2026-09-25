@@ -1,4 +1,4 @@
-import { useState, type RefObject } from "react";
+import { useRef, useState, type RefObject } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
@@ -21,6 +21,13 @@ export default function CategoryModal({
   const [isAddingLink, setIsAddingLink] = useState(false);
   const [editLinkId, setEditLinkId] = useState<Link["id"] | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const textInputRef = useRef<HTMLInputElement | null>(null);
+
+  function handleAddLink() {
+    setEditLinkId(null);
+    setIsAddingLink(true);
+    setTimeout(() => textInputRef.current?.focus());
+  }
 
   return (
     <Dialog
@@ -35,16 +42,12 @@ export default function CategoryModal({
         isEditMode={isEditMode}
         setIsAddingLink={setIsAddingLink}
         setEditLinkId={setEditLinkId}
+        textInputRef={textInputRef}
       />
       <div
         className={`buttons-container${isAddingLink || editLinkId ? " mb" : ""}`}
       >
-        <Button
-          action={() => {
-            setEditLinkId(null);
-            setIsAddingLink(true);
-          }}
-        >
+        <Button action={() => handleAddLink()}>
           <Add />
           <span>Add Link</span>
         </Button>
@@ -69,6 +72,7 @@ export default function CategoryModal({
           linkCount={category.items.length}
           linkId={null}
           cancel={() => setIsAddingLink(false)}
+          textInputRef={textInputRef}
         />
       )}
       {editLinkId && (
@@ -78,6 +82,7 @@ export default function CategoryModal({
           linkCount={category.items.length}
           linkId={editLinkId}
           cancel={() => setEditLinkId(null)}
+          textInputRef={textInputRef}
         />
       )}
     </Dialog>
