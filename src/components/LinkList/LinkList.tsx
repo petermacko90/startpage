@@ -9,7 +9,7 @@ import {
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
-import type { Category, Link } from "../../reducer/models";
+import type { Category, Link } from "../../state/models";
 import { UNDO_TIMEOUT } from "../../constants";
 import {
   deleteLink,

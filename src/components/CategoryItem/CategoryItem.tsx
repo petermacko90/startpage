@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
-import type { Category } from "../../reducer/models";
+import type { Category } from "../../state/models";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import AddEditCategory from "../AddEditCategory/AddEditCategory";
 import FloatingButton from "../Button/FloatingButton";

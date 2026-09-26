@@ -2,7 +2,7 @@ import { useRef, useState, type RefObject } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
-import type { Category, Link } from "../../reducer/models";
+import type { Category, Link } from "../../state/models";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
 import LinkList from "../LinkList/LinkList";

@@ -5,7 +5,7 @@ import {
   dropTargetForElements,
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
-import type { Link } from "../../reducer/models";
+import type { Link } from "../../state/models";
 import PageIcon from "../PageIcon/PageIcon";
 import "./LinkItem.css";
 

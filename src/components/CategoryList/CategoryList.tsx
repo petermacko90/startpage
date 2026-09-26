@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { StateContext } from "../../context";
-import type { Category } from "../../reducer/models";
+import { StateContext } from "../../state/context";
+import type { Category } from "../../state/models";
 import { deleteCategory, undoState } from "../../storage/localStorage";
 import { UNDO_TIMEOUT } from "../../constants";
 import CategoryItem from "../CategoryItem/CategoryItem";

@@ -1,8 +1,8 @@
 import { useContext, useState, type RefObject } from "react";
-import { StateContext } from "../../context.ts";
-import { type Category, type Link } from "../../reducer/models.ts";
+import { StateContext } from "../../state/context.ts";
+import { type Category, type Link } from "../../state/models.ts";
 import { LOCALHOST } from "../../constants.ts";
-import { selectLink, selectLinks } from "../../reducer/selectors.ts";
+import { selectLink, selectLinks } from "../../state/selectors.ts";
 import { createLink, updateLink } from "../../storage/localStorage.ts";
 import Button from "../Button/Button.tsx";
 import Form from "../Form/Form.tsx";

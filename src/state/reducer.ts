@@ -1,5 +1,6 @@
 import type { State } from "./models";
-import type { Action } from "./actions";
+
+type Action = { type: "fetched"; payload: State };
 
 export const initialState: State = {
   categories: [],

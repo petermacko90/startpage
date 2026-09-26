@@ -1,7 +1,7 @@
 import { useContext, useState, type RefObject } from "react";
-import { StateContext } from "../../context";
-import { selectCategoriesCount } from "../../reducer/selectors";
-import type { Category } from "../../reducer/models";
+import { StateContext } from "../../state/context";
+import { selectCategoriesCount } from "../../state/selectors";
+import type { Category } from "../../state/models";
 import { updateCategory, createCategory } from "../../storage/localStorage";
 import Button from "../Button/Button";
 import Form from "../Form/Form";

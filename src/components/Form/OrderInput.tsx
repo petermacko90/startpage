@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "@material-symbols-svg/react/icons/chevron-left";
 import { ChevronRight } from "@material-symbols-svg/react/icons/chevron-right";
-import type { Link } from "../../reducer/models";
+import type { Link } from "../../state/models";
 import Button from "../Button/Button";
 import "./OrderInput.css";
 

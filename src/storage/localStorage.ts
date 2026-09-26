@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import type { Category, Link, State } from "../reducer/models";
-import { selectLink, selectLinks } from "../reducer/selectors";
+import type { Category, Link, State } from "../state/models";
+import { selectLink, selectLinks } from "../state/selectors";
 
 export function setState(state: State) {
   browser.storage.local.set(state);

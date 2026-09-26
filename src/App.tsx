@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
-import { initialState, reducer } from "./reducer/reducer";
-import type { Category } from "./reducer/models";
-import { StateContext } from "./context";
+import { initialState, reducer } from "./state/reducer";
+import type { Category } from "./state/models";
+import { StateContext } from "./state/context";
 import { getState } from "./storage/localStorage";
 import EditButtons from "./components/EditButtons/EditButtons";
 import CategoryList from "./components/CategoryList/CategoryList";
