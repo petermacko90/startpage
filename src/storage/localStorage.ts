@@ -52,6 +52,13 @@ export function updateCategory(
   });
 }
 
+export function updateCategories(categories: Category[]) {
+  setState({
+    categories,
+    undoState: undefined,
+  });
+}
+
 export function deleteCategory(categoryId: Category["id"]) {
   getState().then((state) => {
     const filteredCategories = state.categories.filter((category) => {
@@ -176,7 +183,7 @@ export function undoState() {
   });
 }
 
-export function reorderItems(items: Link[]): Link[] {
+export function reorderItems<T extends Category | Link>(items: T[]): T[] {
   return items.map((item, index) => ({
     ...item,
     order: index,

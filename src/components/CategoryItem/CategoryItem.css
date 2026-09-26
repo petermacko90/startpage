@@ -11,6 +11,16 @@
   background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
 }
 
+.category.is-over {
+  background-color: var(--color-dark-4);
+  outline: var(--outline) solid var(--color-primary);
+}
+
+.category.is-dragging {
+  opacity: 0.2;
+  box-shadow: var(--box-shadow-m);
+}
+
 .category-button {
   display: flex;
   flex-direction: column;
