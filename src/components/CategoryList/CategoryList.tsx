@@ -50,7 +50,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
 
   return (
     <main>
-      {Object.values(state.categories).map((category) => (
+      {state.categories.map((category) => (
         <CategoryItem
           key={category.id}
           category={category}

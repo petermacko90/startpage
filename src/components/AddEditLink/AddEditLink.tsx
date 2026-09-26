@@ -133,7 +133,7 @@ export default function AddEditLink({
             value={order}
             max={link ? linkCount - 1 : linkCount}
             setValue={setOrder}
-            links={[...links]}
+            links={[...links!]}
             linkId={linkId}
             isEditing={link ? true : false}
           />

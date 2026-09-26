@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import { initialState, reducer } from "./reducer/reducer";
-import type { CategoryRecord } from "./reducer/models";
+import type { Category } from "./reducer/models";
 import { StateContext } from "./context";
 import { getState } from "./storage/localStorage";
 import EditButtons from "./components/EditButtons/EditButtons";
@@ -24,10 +24,8 @@ export default function App() {
         dispatch({
           type: "fetched",
           payload: {
-            categories: changes.categories.newValue as CategoryRecord,
-            undoState: changes.undoState?.newValue as
-              | CategoryRecord
-              | undefined,
+            categories: changes.categories.newValue as Category[],
+            undoState: changes.undoState?.newValue as Category[] | undefined,
           },
         });
       }

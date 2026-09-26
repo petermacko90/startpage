@@ -14,9 +14,7 @@ export type Category = {
   order: number;
 };
 
-export type CategoryRecord = Record<Category["id"], Category>;
-
 export type State = {
-  categories: CategoryRecord;
-  undoState?: CategoryRecord;
+  categories: Category[];
+  undoState?: Category[];
 };
