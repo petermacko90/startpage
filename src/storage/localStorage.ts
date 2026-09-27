@@ -15,40 +15,57 @@ export async function getState(): Promise<State> {
 export function createCategory(
   order: Category["order"],
   title: Category["title"],
+  categoriesCount: number,
 ) {
   getState().then((state) => {
-    setState({
-      categories: [
-        ...state.categories,
-        {
-          icon: "",
-          id: uuidv4(),
-          items: [],
-          order,
-          title,
-        },
-      ],
-    });
+    const newCategory: Category = {
+      icon: "",
+      id: uuidv4(),
+      items: [],
+      order,
+      title,
+    };
+
+    let updatedCategories: Category[];
+
+    if (order === categoriesCount) {
+      updatedCategories = [...state.categories, newCategory];
+    } else {
+      const categories = [...state.categories];
+      categories.splice(order, 0, newCategory);
+      updatedCategories = reorderItems(categories);
+    }
+
+    updateCategories(updatedCategories);
   });
 }
 
 export function updateCategory(
   categoryId: Category["id"],
   title: Category["title"],
+  order: Category["order"],
 ) {
   getState().then((state) => {
     const index = getCategoryIndex(state, categoryId);
 
     const updatedCategories = state.categories.map((category) => {
       return category.id === categoryId
-        ? { ...state.categories[index], title }
+        ? { ...state.categories[index], title, order }
         : category;
     });
 
-    setState({
-      categories: updatedCategories,
-      undoState: undefined,
-    });
+    let reorderedCategories: Category[];
+
+    if (order === state.categories[index].order) {
+      reorderedCategories = updatedCategories;
+    } else {
+      const categories = [...state.categories];
+      const [movedCateogory] = categories.splice(index, 1);
+      categories.splice(order, 0, movedCateogory);
+      reorderedCategories = reorderItems(categories);
+    }
+
+    updateCategories(reorderedCategories);
   });
 }
 
@@ -65,8 +82,10 @@ export function deleteCategory(categoryId: Category["id"]) {
       return category.id !== categoryId;
     });
 
+    const reorderedCategories = reorderItems(filteredCategories);
+
     setState({
-      categories: filteredCategories,
+      categories: reorderedCategories,
       undoState: state.categories,
     });
   });
@@ -75,22 +94,20 @@ export function deleteCategory(categoryId: Category["id"]) {
 export function createLink(
   categoryId: Category["id"],
   order: Link["order"],
-  text: Link["text"],
+  title: Link["title"],
   url: Link["url"],
   linkCount: number,
 ) {
   getState().then((state) => {
-    const id = uuidv4();
-    let updatedItems: Link[];
-
     const newItem: Link = {
       icon: "",
-      id,
+      id: uuidv4(),
       order,
-      text,
+      title,
       url,
     };
 
+    let updatedItems: Link[];
     const index = getCategoryIndex(state, categoryId);
 
     if (order === linkCount) {
@@ -113,13 +130,13 @@ export function createLink(
 
 export function updateLink(
   categoryId: Category["id"],
-  { icon, id, order, text, url }: Link,
+  { icon, id, order, title, url }: Link,
 ) {
   const updatedLink: Link = {
     icon,
     id,
     order,
-    text,
+    title,
     url,
   };
 

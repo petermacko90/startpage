@@ -1,25 +1,25 @@
 import type { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "@material-symbols-svg/react/icons/chevron-left";
 import { ChevronRight } from "@material-symbols-svg/react/icons/chevron-right";
-import type { Link } from "../../state/models";
+import type { Category, Link } from "../../state/models";
 import Button from "../Button/Button";
 import "./OrderInput.css";
 
-export default function OrderInput({
+export default function OrderInput<T extends Category | Link>({
   id,
   value,
   max,
   setValue,
-  links,
-  linkId,
+  items,
+  itemId,
   isEditing,
 }: {
   id: string;
   value: number;
   max: number;
   setValue: Dispatch<SetStateAction<number>>;
-  links: Link[];
-  linkId: Link["id"] | null;
+  items: T[];
+  itemId: T["id"] | null;
   isEditing: boolean;
 }) {
   const min = 0;
@@ -29,14 +29,14 @@ export default function OrderInput({
     if (value === max) return "(last)";
 
     if (isEditing) {
-      const oldIndex = links.findIndex((link) => link.id === linkId);
-      links.splice(oldIndex, 1);
+      const oldIndex = items.findIndex((link) => link.id === itemId);
+      items.splice(oldIndex, 1);
     }
 
-    const linkBefore = links[value - 1];
-    const linkAfter = links[value];
+    const linkBefore = items[value - 1];
+    const linkAfter = items[value];
 
-    return `(between ${linkBefore.text} and ${linkAfter.text})`;
+    return `(between ${linkBefore.title} and ${linkAfter.title})`;
   }
 
   return (

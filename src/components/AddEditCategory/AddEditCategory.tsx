@@ -8,6 +8,7 @@ import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import Dialog from "../Dialog/Dialog";
 import TextInput from "../Form/TextInput";
+import OrderInput from "../Form/OrderInput";
 
 export default function AddEditCategory({
   category,
@@ -23,12 +24,15 @@ export default function AddEditCategory({
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
   const [title, setTitle] = useState(category ? category.title : "");
+  const [order, setOrder] = useState(
+    category ? category.order : categoriesCount,
+  );
 
   function handleCategorySave() {
     if (category) {
-      updateCategory(category.id, title.trim());
+      updateCategory(category.id, title.trim(), order);
     } else {
-      createCategory(categoriesCount, title.trim());
+      createCategory(order, title.trim(), categoriesCount);
       setTitle("");
     }
 
@@ -49,8 +53,18 @@ export default function AddEditCategory({
             onChange={(e) => setTitle(e.target.value)}
             onPressEnter={handleCategorySave}
             value={title}
-            maxLength={20}
             inputRef={inputRef}
+          />
+        </FormField>
+        <FormField id="order" labelText="Order:">
+          <OrderInput
+            id="order"
+            value={order}
+            max={category ? categoriesCount - 1 : categoriesCount}
+            setValue={setOrder}
+            items={[...state.categories]}
+            itemId={category?.id ?? null}
+            isEditing={category ? true : false}
           />
         </FormField>
         <Button action={() => handleCategorySave()}>Save</Button>

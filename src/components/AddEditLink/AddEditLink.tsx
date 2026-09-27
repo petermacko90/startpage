@@ -32,7 +32,7 @@ export default function AddEditLink({
     link = selectLink(state)(categoryId, linkId);
   }
 
-  const [text, setText] = useState(link ? link.text : "");
+  const [title, setTitle] = useState(link ? link.title : "");
   const [url, setUrl] = useState(link ? link.url : "");
   const [order, setOrder] = useState(link ? link.order : linkCount);
   const [urlError, setUrlError] = useState("");
@@ -64,7 +64,7 @@ export default function AddEditLink({
         icon: link.icon,
         id: link.id,
         order,
-        text: text.trim() || formattedUrl,
+        title: title.trim() || formattedUrl,
         url: formattedUrl,
       });
 
@@ -73,12 +73,12 @@ export default function AddEditLink({
       createLink(
         categoryId,
         order,
-        text.trim() || formattedUrl,
+        title.trim() || formattedUrl,
         formattedUrl,
         linkCount,
       );
 
-      setText("");
+      setTitle("");
       setUrl("");
       setOrder(linkCount);
       setUrlError("");
@@ -107,12 +107,12 @@ export default function AddEditLink({
         {link ? "Edit Link" : "Add Link"}
       </h1>
       <Form>
-        <FormField id="text" labelText="Text:">
+        <FormField id="title" labelText="Text:">
           <TextInput
-            id="text"
-            onChange={(e) => setText(e.target.value)}
+            id="title"
+            onChange={(e) => setTitle(e.target.value)}
             onPressEnter={handleSave}
-            value={text}
+            value={title}
             inputRef={textInputRef}
           />
         </FormField>
@@ -133,8 +133,8 @@ export default function AddEditLink({
             value={order}
             max={link ? linkCount - 1 : linkCount}
             setValue={setOrder}
-            links={[...links!]}
-            linkId={linkId}
+            items={[...links!]}
+            itemId={linkId}
             isEditing={link ? true : false}
           />
         </FormField>

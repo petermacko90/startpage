@@ -1,7 +1,7 @@
 export type Link = {
   id: string;
   icon: string;
-  text: string;
+  title: string;
   url: string;
   order: number;
 };

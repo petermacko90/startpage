@@ -63,14 +63,14 @@ export default function LinkItem({ link }: { link: Link }) {
     <a
       href={link.url}
       className={`link ${isOver ? "is-over" : ""} ${isDragging ? "is-dragging" : ""}`}
-      title={link.text}
+      title={link.title}
       ref={ref}
       data-flip-id={link.id}
     >
       <span className="link-icon-container">
         <PageIcon domain={new URL(link.url).hostname} />
       </span>
-      <span className="link-title">{link.text}</span>
+      <span className="link-title">{link.title}</span>
     </a>
   );
 }
