@@ -6,17 +6,12 @@ import {
   type RefObject,
   type SetStateAction,
 } from "react";
-import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import type { Category, Link } from "../../state/models";
 import { UNDO_TIMEOUT } from "../../constants";
-import {
-  deleteLink,
-  reorderItems,
-  undoState,
-  updateLinks,
-} from "../../storage/localStorage";
+import { deleteLink, undoState, updateLinks } from "../../storage/localStorage";
+import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import FloatingButton from "../Button/FloatingButton";
 import LinkItem from "../LinkItem/LinkItem";
@@ -64,35 +59,9 @@ export default function LinkList({
 
   const { containerRef, captureFirst } = useFlipAnimation([category.items]);
 
-  useEffect(() => {
-    return monitorForElements({
-      onDrop({ source, location }) {
-        const dropTargets = location.current.dropTargets;
-        if (dropTargets.length === 0) return;
-        const destination = dropTargets[0];
-        const sourceId = source.data.id as string;
-        const destinationId = destination.data.id as string;
-        if (sourceId === destinationId) return;
-
-        const oldIndex = category.items.findIndex(
-          (item) => item.id === sourceId,
-        );
-
-        const newIndex = category.items.findIndex(
-          (item) => item.id === destinationId,
-        );
-
-        if (oldIndex !== -1 && newIndex !== -1) {
-          captureFirst();
-          const items = [...category.items];
-          const [movedItem] = items.splice(oldIndex, 1);
-          items.splice(newIndex, 0, movedItem);
-          const updatedItems = reorderItems(items);
-          updateLinks(category.id, updatedItems);
-        }
-      },
-    });
-  }, [category.items, category.id, captureFirst]);
+  useDropMonitor(category.items, captureFirst, (updatedLinks) =>
+    updateLinks(category.id, updatedLinks),
+  );
 
   function handleEditLink(linkId: Link["id"]) {
     setIsAddingLink(false);
