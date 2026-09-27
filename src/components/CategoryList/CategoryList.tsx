@@ -9,6 +9,7 @@ import {
   updateCategories,
 } from "../../storage/localStorage";
 import { UNDO_TIMEOUT } from "../../constants";
+import { useDialog } from "../../hooks/useDialog";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import AddEditCategory from "../AddEditCategory/AddEditCategory";
@@ -17,10 +18,6 @@ import "./CategoryList.css";
 
 export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
   const state = useContext(StateContext);
-
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const addCategoryInputRef = useRef<HTMLInputElement | null>(null);
-  const [showDialog, setShowDialog] = useState(false);
 
   const [isShowUndo, setIsShowUndo] = useState(false);
   const undoTimerRef = useRef<number | null>(null);
@@ -31,16 +28,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
     };
   }, []);
 
-  useEffect(() => {
-    if (!dialogRef.current) return;
-
-    if (showDialog) {
-      dialogRef.current.showModal();
-      addCategoryInputRef.current?.focus();
-    } else {
-      dialogRef.current.close();
-    }
-  }, [showDialog]);
+  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
 
   function handleDeleteCategory(categoryId: Category["id"]) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
@@ -110,7 +98,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
         <AddEditCategory
           category={null}
           dialogRef={dialogRef}
-          inputRef={addCategoryInputRef}
+          inputRef={focusRef}
           close={() => setShowDialog(false)}
         />
       )}

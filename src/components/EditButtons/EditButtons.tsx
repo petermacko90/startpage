@@ -1,15 +1,10 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
 import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
 import { getImage } from "../../storage/indexedDB";
+import { useDialog } from "../../hooks/useDialog";
 import Button from "../Button/Button";
 import BackgroundUpload from "../BackgroundUpload/BackgroundUpload";
 import "./EditButtons.css";
@@ -43,18 +38,7 @@ export default function EditButtons({
     }
   }, [backgroundUrl]);
 
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const [showDialog, setShowDialog] = useState(false);
-
-  useEffect(() => {
-    if (!dialogRef.current) return;
-
-    if (showDialog) {
-      dialogRef.current.showModal();
-    } else {
-      dialogRef.current.close();
-    }
-  }, [showDialog]);
+  const { dialogRef, setShowDialog, showDialog } = useDialog();
 
   return (
     <div className="edit-buttons-container">

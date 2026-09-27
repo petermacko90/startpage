@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { Delete } from "@material-symbols-svg/react/icons/delete";
 import type { Category } from "../../state/models";
+import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import AddEditCategory from "../AddEditCategory/AddEditCategory";
@@ -18,31 +18,18 @@ export default function CategoryItem({
   isEditMode: boolean;
   deleteCategory: (categoryId: Category["id"]) => void;
 }) {
-  const linksRef = useRef<HTMLDialogElement>(null);
-  const [showLinks, setShowLinks] = useState(false);
+  const {
+    dialogRef: categoryModalRef,
+    setShowDialog: setShowCategoryModal,
+    showDialog: showCategoryModal,
+  } = useDialog();
 
-  const editCategoryRef = useRef<HTMLDialogElement>(null);
-  const editCategoryInputRef = useRef<HTMLInputElement | null>(null);
-  const [showEditCategory, setShowEditCategory] = useState(false);
-
-  useEffect(() => {
-    if (!linksRef.current) return;
-    if (showLinks) {
-      linksRef.current.showModal();
-    } else {
-      linksRef.current.close();
-    }
-  }, [showLinks]);
-
-  useEffect(() => {
-    if (!editCategoryRef.current) return;
-    if (showEditCategory) {
-      editCategoryRef.current.showModal();
-      editCategoryInputRef.current?.focus();
-    } else {
-      editCategoryRef.current.close();
-    }
-  }, [showEditCategory]);
+  const {
+    dialogRef: editCategoryRef,
+    focusRef: editCategoryInputRef,
+    setShowDialog: setShowEditCategory,
+    showDialog: showEditCategory,
+  } = useDialog();
 
   const { isDragging, isOver, ref } = useDragAndDrop<HTMLDivElement>(
     category.id,
@@ -76,7 +63,7 @@ export default function CategoryItem({
       )}
       <button
         className="category-button"
-        onClick={() => setShowLinks(true)}
+        onClick={() => setShowCategoryModal(true)}
         title={category.title || "No title"}
       >
         <span className="category-icon">
@@ -90,11 +77,11 @@ export default function CategoryItem({
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>
-      {showLinks && (
+      {showCategoryModal && (
         <CategoryModal
           category={category}
-          dialogRef={linksRef}
-          close={() => setShowLinks(false)}
+          dialogRef={categoryModalRef}
+          close={() => setShowCategoryModal(false)}
         />
       )}
       {showEditCategory && (
