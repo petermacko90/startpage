@@ -12,7 +12,7 @@
 }
 
 .link:hover .link-icon-container {
-  background-color: color-mix(in srgb, var(--color-dark-4) 90%, transparent);
+  background-color: var(--color-dark-4);
 }
 
 .link:focus {
@@ -35,7 +35,7 @@
   height: var(--link-icon-container-size);
   width: var(--link-icon-container-size);
   border-radius: var(--border-radius-m);
-  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
+  background-color: var(--color-dark-3);
 }
 
 .link-title {

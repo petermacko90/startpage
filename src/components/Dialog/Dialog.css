@@ -30,8 +30,13 @@ dialog::backdrop {
   background-color: color-mix(in srgb, var(--color-dark-1) 90%, transparent);
 }
 
+.dialog-header.justify-center {
+  justify-content: center;
+}
+
 .dialog-title {
   margin-left: var(--spacing-m);
+  margin-right: var(--spacing-m);
   color: var(--color-light-1);
   font-size: var(--font-size-m);
 }

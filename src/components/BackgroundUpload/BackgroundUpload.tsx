@@ -19,11 +19,13 @@ export default function BackgroundUpload({
   backgroundUrl,
   setBackgroundUrl,
   dialogRef,
+  focusRef,
   close,
 }: {
   backgroundUrl: string | null;
   setBackgroundUrl: Dispatch<SetStateAction<string | null>>;
   dialogRef: RefObject<HTMLDialogElement | null>;
+  focusRef: RefObject<HTMLInputElement | null>;
   close: () => void;
 }) {
   const [isError, setIsError] = useState<boolean>(false);
@@ -110,6 +112,7 @@ export default function BackgroundUpload({
         <input
           type="file"
           accept="image/*"
+          ref={focusRef}
           onChange={(e) => handleBackgroundUpload(e)}
         />
         {backgroundUrl && (

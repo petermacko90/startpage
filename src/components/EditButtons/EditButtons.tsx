@@ -5,7 +5,6 @@ import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
 import { getImage } from "../../storage/indexedDB";
 import { useDialog } from "../../hooks/useDialog";
-import Button from "../Button/Button";
 import BackgroundUpload from "../BackgroundUpload/BackgroundUpload";
 import "./EditButtons.css";
 
@@ -38,7 +37,7 @@ export default function EditButtons({
     }
   }, [backgroundUrl]);
 
-  const { dialogRef, setShowDialog, showDialog } = useDialog();
+  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
 
   return (
     <div className="edit-buttons-container">
@@ -51,19 +50,20 @@ export default function EditButtons({
         </span>
         <span className="edit-button-text">{isEditMode ? "Done" : "Edit"}</span>
       </button>
-      {isEditMode && (
-        <Button action={() => setShowDialog(true)}>
-          <span className="edit-button-icon">
-            <Wallpaper />
-          </span>
-          <span>Set Background</span>
-        </Button>
-      )}
+
+      <button className="edit-button" onClick={() => setShowDialog(true)}>
+        <span className="edit-button-icon">
+          <Wallpaper />
+        </span>
+        <span className="edit-button-text">Set Background</span>
+      </button>
+
       {showDialog && (
         <BackgroundUpload
           backgroundUrl={backgroundUrl}
           setBackgroundUrl={setBackgroundUrl}
           dialogRef={dialogRef}
+          focusRef={focusRef}
           close={() => setShowDialog(false)}
         />
       )}

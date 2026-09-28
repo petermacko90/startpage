@@ -67,7 +67,10 @@ export default function AddEditCategory({
             isEditing={category ? true : false}
           />
         </FormField>
-        <Button action={() => handleCategorySave()}>Save</Button>
+        <div className="buttons-container">
+          <Button action={() => handleCategorySave()}>Save</Button>
+          <Button action={close}>Close</Button>
+        </div>
       </Form>
     </Dialog>
   );

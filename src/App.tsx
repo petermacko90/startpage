@@ -37,9 +37,9 @@ export default function App() {
 
   return (
     <StateContext value={state}>
-      <EditButtons isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
-      <CategoryList isEditMode={isEditMode} />
       <div className="spacer"></div>
+      <CategoryList isEditMode={isEditMode} />
+      <EditButtons isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
     </StateContext>
   );
 }

@@ -1,5 +1,6 @@
 import { useRef, useState, type RefObject } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
+import { Close } from "@material-symbols-svg/react/icons/close";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
 import type { Category, Link } from "../../state/models";
@@ -64,6 +65,10 @@ export default function CategoryModal({
             <span>{isEditMode ? "Done" : "Edit Links"}</span>
           </Button>
         )}
+        <Button action={close}>
+          <Close />
+          Close
+        </Button>
       </div>
       {isAddingLink && (
         <AddEditLink
