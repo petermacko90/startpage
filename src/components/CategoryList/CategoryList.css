@@ -26,6 +26,7 @@ main {
   height: var(--category-size);
   width: var(--category-size);
   background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
+  backdrop-filter: blur(var(--blur));
   color: var(--color-light-1);
   font-size: 4rem;
   border: none;

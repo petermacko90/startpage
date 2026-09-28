@@ -20,6 +20,7 @@ dialog:focus {
 
 dialog::backdrop {
   background-color: color-mix(in srgb, var(--color-dark-2) 75%, transparent);
+  backdrop-filter: blur(var(--blur));
 }
 
 .dialog-header {
