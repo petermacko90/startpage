@@ -4,7 +4,7 @@ import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import CategoryModal from "../CategoryModal/CategoryModal";
-import AddEditCategory from "../AddEditCategory/AddEditCategory";
+import EditCategory from "../AddEditCategory/EditCategory";
 import FloatingButton from "../Button/FloatingButton";
 import PageIcon from "../PageIcon/PageIcon";
 import "./CategoryItem.css";
@@ -85,7 +85,7 @@ export default function CategoryItem({
         />
       )}
       {showEditCategory && (
-        <AddEditCategory
+        <EditCategory
           category={category}
           dialogRef={editCategoryRef}
           inputRef={editCategoryInputRef}

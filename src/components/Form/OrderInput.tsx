@@ -12,7 +12,6 @@ export default function OrderInput<T extends Category | Link>({
   setValue,
   items,
   itemId,
-  isEditing,
 }: {
   id: string;
   value: number;
@@ -20,7 +19,6 @@ export default function OrderInput<T extends Category | Link>({
   setValue: Dispatch<SetStateAction<number>>;
   items: T[];
   itemId: T["id"] | null;
-  isEditing: boolean;
 }) {
   const min = 0;
 
@@ -28,7 +26,7 @@ export default function OrderInput<T extends Category | Link>({
     if (value === min) return "(first)";
     if (value === max) return "(last)";
 
-    if (isEditing) {
+    if (itemId) {
       const oldIndex = items.findIndex((link) => link.id === itemId);
       items.splice(oldIndex, 1);
     }

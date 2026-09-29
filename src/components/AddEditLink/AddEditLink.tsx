@@ -135,7 +135,6 @@ export default function AddEditLink({
             setValue={setOrder}
             items={[...links!]}
             itemId={linkId}
-            isEditing={link ? true : false}
           />
         </FormField>
       </Form>

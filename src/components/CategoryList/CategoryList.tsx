@@ -10,8 +10,8 @@ import { UNDO_TIMEOUT } from "../../constants";
 import { useDialog } from "../../hooks/useDialog";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
+import AddCategory from "../AddEditCategory/AddCategory";
 import CategoryItem from "../CategoryItem/CategoryItem";
-import AddEditCategory from "../AddEditCategory/AddEditCategory";
 import Toast from "../Toast/Toast";
 import "./CategoryList.css";
 
@@ -70,8 +70,7 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
         +
       </button>
       {showDialog && (
-        <AddEditCategory
-          category={null}
+        <AddCategory
           dialogRef={dialogRef}
           inputRef={focusRef}
           close={() => setShowDialog(false)}
