@@ -1,4 +1,9 @@
-import { type Dispatch, type RefObject, type SetStateAction } from "react";
+import {
+  type Dispatch,
+  type KeyboardEvent,
+  type RefObject,
+  type SetStateAction,
+} from "react";
 import { Edit } from "@material-symbols-svg/react/icons/edit";
 import type { Category, Link } from "../../state/models";
 import { updateLinks } from "../../storage/localStorage";
@@ -35,10 +40,40 @@ export default function LinkList({
     setTimeout(() => textInputRef.current?.focus());
   }
 
+  function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const currentLink = document.activeElement as HTMLAnchorElement;
+    if (!currentLink) return;
+
+    const links = Array.from(
+      container.querySelectorAll(".link"),
+    ) as HTMLAnchorElement[];
+    const currentIndex = links.indexOf(currentLink);
+
+    if (currentIndex === -1) return;
+
+    e.preventDefault();
+
+    let nextIndex: number = NaN;
+
+    if (e.key === "ArrowRight") {
+      nextIndex = (currentIndex + 1) % links.length;
+    } else if (e.key === "ArrowLeft") {
+      nextIndex = (currentIndex - 1 + links.length) % links.length;
+    }
+
+    links.at(nextIndex)?.focus();
+  }
+
   return (
     <div
       className={`links-container${category.items.length === 0 ? "" : " not-empty"}`}
       ref={containerRef}
+      onKeyDown={handleKeyDown}
     >
       {sortItems(category.items).map((link) => (
         <div key={link.id} className="link-container">
