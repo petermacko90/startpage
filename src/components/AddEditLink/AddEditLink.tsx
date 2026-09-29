@@ -17,12 +17,14 @@ export default function AddEditLink({
   linkId,
   cancel,
   textInputRef,
+  handleDeleteLink,
 }: {
   categoryId: Category["id"];
   linkCount: number;
   linkId: Link["id"] | null;
   cancel: () => void;
   textInputRef: RefObject<HTMLInputElement | null>;
+  handleDeleteLink?: (linkId: Link["id"]) => void;
 }) {
   const state = useContext(StateContext);
   const links = selectLinks(state)(categoryId);
@@ -141,6 +143,16 @@ export default function AddEditLink({
       <div className="add-edit-link-actions">
         <Button action={() => handleSave()}>Save</Button>
         <Button action={cancel}>Cancel</Button>
+        {linkId && (
+          <Button
+            action={() => {
+              handleDeleteLink!(linkId);
+              cancel();
+            }}
+          >
+            Delete Link
+          </Button>
+        )}
       </div>
     </div>
   );

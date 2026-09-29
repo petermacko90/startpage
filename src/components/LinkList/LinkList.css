@@ -12,3 +12,17 @@
 .link-container {
   position: relative;
 }
+
+.edit-button-container {
+  visibility: hidden;
+  opacity: 0%;
+  transition:
+    visibility 0.15s ease-in-out,
+    opacity 0.15s ease-in-out;
+}
+
+.link-container:hover .edit-button-container,
+.link-container:focus-within .edit-button-container {
+  visibility: visible;
+  opacity: 100%;
+}

@@ -1,13 +1,14 @@
-import { useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Close } from "@material-symbols-svg/react/icons/close";
-import { Edit } from "@material-symbols-svg/react/icons/edit";
-import { EditOff } from "@material-symbols-svg/react/icons/edit-off";
 import type { Category, Link } from "../../state/models";
+import { UNDO_TIMEOUT } from "../../constants";
+import { deleteLink, undoState } from "../../storage/localStorage";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
 import LinkList from "../LinkList/LinkList";
 import Dialog from "../Dialog/Dialog";
+import Toast from "../Toast/Toast";
 import "./CategoryModal.css";
 
 export default function CategoryModal({
@@ -21,13 +22,34 @@ export default function CategoryModal({
 }) {
   const [isAddingLink, setIsAddingLink] = useState(false);
   const [editLinkId, setEditLinkId] = useState<Link["id"] | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
   const textInputRef = useRef<HTMLInputElement | null>(null);
 
   function handleAddLink() {
     setEditLinkId(null);
     setIsAddingLink(true);
     setTimeout(() => textInputRef.current?.focus());
+  }
+
+  const [isShowUndo, setIsShowUndo] = useState(false);
+  const undoTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    };
+  }, []);
+
+  function handleDeleteLink(linkId: Link["id"]) {
+    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    deleteLink(category.id, linkId);
+    setIsShowUndo(true);
+    undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
+  }
+
+  function undo() {
+    undoState();
+    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    setIsShowUndo(false);
   }
 
   return (
@@ -40,7 +62,6 @@ export default function CategoryModal({
     >
       <LinkList
         category={category}
-        isEditMode={isEditMode}
         setIsAddingLink={setIsAddingLink}
         setEditLinkId={setEditLinkId}
         textInputRef={textInputRef}
@@ -52,19 +73,6 @@ export default function CategoryModal({
           <Add />
           <span>Add Link</span>
         </Button>
-        {category.items.length > 0 && (
-          <Button
-            action={() =>
-              setIsEditMode((prev) => {
-                if (prev === true) setEditLinkId(null);
-                return !prev;
-              })
-            }
-          >
-            {isEditMode ? <EditOff /> : <Edit />}
-            <span>{isEditMode ? "Done" : "Edit Links"}</span>
-          </Button>
-        )}
         <Button action={close}>
           <Close />
           Close
@@ -88,8 +96,10 @@ export default function CategoryModal({
           linkId={editLinkId}
           cancel={() => setEditLinkId(null)}
           textInputRef={textInputRef}
+          handleDeleteLink={handleDeleteLink}
         />
       )}
+      <Toast type="undo" show={isShowUndo} text="Link deleted" undo={undo} />
     </Dialog>
   );
 }
