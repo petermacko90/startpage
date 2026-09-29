@@ -15,11 +15,13 @@ export default function AddEditCategory({
   dialogRef,
   inputRef,
   close,
+  handleDeleteCategory,
 }: {
   category: Category | null;
   dialogRef: RefObject<HTMLDialogElement | null>;
   inputRef: RefObject<HTMLInputElement | null>;
   close: () => void;
+  handleDeleteCategory?: (categoryId: Category["id"]) => void;
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
@@ -33,10 +35,9 @@ export default function AddEditCategory({
       updateCategory(category.id, title.trim(), order);
     } else {
       createCategory(order, title.trim(), categoriesCount);
-      setTitle("");
     }
 
-    setTimeout(() => close());
+    close();
   }
 
   return (
@@ -70,6 +71,11 @@ export default function AddEditCategory({
         <div className="buttons-container">
           <Button action={() => handleCategorySave()}>Save</Button>
           <Button action={close}>Close</Button>
+          {category && (
+            <Button action={() => handleDeleteCategory!(category.id)}>
+              Delete Category
+            </Button>
+          )}
         </div>
       </Form>
     </Dialog>

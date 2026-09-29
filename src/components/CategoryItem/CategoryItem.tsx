@@ -90,6 +90,7 @@ export default function CategoryItem({
           dialogRef={editCategoryRef}
           inputRef={editCategoryInputRef}
           close={() => setShowEditCategory(false)}
+          handleDeleteCategory={deleteCategory}
         />
       )}
     </div>
