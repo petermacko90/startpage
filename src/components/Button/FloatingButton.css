@@ -2,7 +2,7 @@
   --button-size: 2rem;
 
   position: absolute;
-  top: calc(var(--spacing-xs) * -1);
+  top: calc(var(--spacing-s) * -1);
   z-index: 1;
   display: inline-flex;
   justify-content: center;
@@ -19,11 +19,11 @@
 }
 
 .floating-button.left {
-  left: calc(var(--spacing-xs) * -1);
+  left: calc(var(--spacing-s) * -1);
 }
 
 .floating-button.right {
-  right: calc(var(--spacing-xs) * -1);
+  right: calc(var(--spacing-s) * -1);
 }
 
 .floating-button.edit {

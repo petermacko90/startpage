@@ -11,6 +11,7 @@ import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import FloatingButton from "../Button/FloatingButton";
 import LinkItem from "../LinkItem/LinkItem";
+import NumberBadge from "../NumberBadge/NumberBadge";
 import "./LinkList.css";
 
 export default function LinkList({
@@ -41,6 +42,13 @@ export default function LinkList({
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    handleArrowKeys(e);
+    handleNumericKeys(e);
+  }
+
+  function handleArrowKeys(e: KeyboardEvent<HTMLDivElement>) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
 
     const container = containerRef.current;
@@ -52,21 +60,50 @@ export default function LinkList({
     const links = Array.from(
       container.querySelectorAll(".link"),
     ) as HTMLAnchorElement[];
-    const currentIndex = links.indexOf(currentLink);
 
+    const currentIndex = links.indexOf(currentLink);
     if (currentIndex === -1) return;
 
     e.preventDefault();
 
-    let nextIndex: number = NaN;
+    const nextIndex =
+      e.key === "ArrowRight"
+        ? (currentIndex + 1) % links.length
+        : (currentIndex - 1 + links.length) % links.length;
 
-    if (e.key === "ArrowRight") {
-      nextIndex = (currentIndex + 1) % links.length;
-    } else if (e.key === "ArrowLeft") {
-      nextIndex = (currentIndex - 1 + links.length) % links.length;
+    links[nextIndex]?.focus();
+  }
+
+  function handleNumericKeys(e: KeyboardEvent<HTMLDivElement>) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+
+    if (
+      e.key !== "1" &&
+      e.key !== "2" &&
+      e.key !== "3" &&
+      e.key !== "4" &&
+      e.key !== "5" &&
+      e.key !== "6" &&
+      e.key !== "7" &&
+      e.key !== "8" &&
+      e.key !== "9" &&
+      e.key !== "0"
+    ) {
+      return;
     }
 
-    links.at(nextIndex)?.focus();
+    const container = containerRef.current;
+    if (!container) return;
+
+    const links = Array.from(
+      container.querySelectorAll(".link"),
+    ) as HTMLAnchorElement[];
+
+    e.preventDefault();
+
+    const linkIndex = e.key === "0" ? 9 : Number(e.key) - 1;
+    links[linkIndex]?.focus();
+    links[linkIndex]?.click();
   }
 
   return (
@@ -75,9 +112,10 @@ export default function LinkList({
       ref={containerRef}
       onKeyDown={handleKeyDown}
     >
-      {sortItems(category.items).map((link) => (
+      {sortItems(category.items).map((link, index) => (
         <div key={link.id} className="link-container">
           <LinkItem key={link.id} link={link} />
+          {index <= 9 && <NumberBadge index={index} />}
           <div className="edit-button-container">
             <FloatingButton
               action={() => handleEditLink(link.id)}
