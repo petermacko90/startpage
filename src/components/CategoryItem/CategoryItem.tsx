@@ -1,21 +1,17 @@
-import { Edit } from "@material-symbols-svg/react/icons/edit";
-import { Delete } from "@material-symbols-svg/react/icons/delete";
 import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
-import FloatingButton from "../Button/FloatingButton";
+import EditButton from "../Button/EditButton";
 import PageIcon from "../PageIcon/PageIcon";
 import "./CategoryItem.css";
 
 export default function CategoryItem({
   category,
-  isEditMode,
   deleteCategory,
 }: {
   category: Category;
-  isEditMode: boolean;
   deleteCategory: (categoryId: Category["id"]) => void;
 }) {
   const {
@@ -41,26 +37,6 @@ export default function CategoryItem({
       ref={ref}
       data-flip-id={category.id}
     >
-      {isEditMode && (
-        <FloatingButton
-          action={() => setShowEditCategory(true)}
-          position="left"
-          type="edit"
-          tooltip="Edit"
-        >
-          <Edit />
-        </FloatingButton>
-      )}
-      {isEditMode && (
-        <FloatingButton
-          action={() => deleteCategory(category.id)}
-          position="right"
-          type="delete"
-          tooltip="Delete"
-        >
-          <Delete />
-        </FloatingButton>
-      )}
       <button
         className="category-button"
         onClick={() => setShowCategoryModal(true)}
@@ -77,6 +53,7 @@ export default function CategoryItem({
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>
+      <EditButton action={() => setShowEditCategory(true)} />
       {showCategoryModal && (
         <CategoryModal
           category={category}

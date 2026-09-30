@@ -1,0 +1,39 @@
+.edit-button {
+  --button-size: 1.5rem;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--button-size);
+  width: var(--button-size);
+  background-color: transparent;
+  color: var(--color-light-1);
+  border: none;
+  border-radius: var(--button-size);
+
+  visibility: hidden;
+  opacity: 0%;
+  transition:
+    visibility 0.15s ease-in-out,
+    opacity 0.15s ease-in-out;
+}
+
+.link-container:hover .edit-button,
+.link-container:focus-within .edit-button,
+.category:hover .edit-button,
+.category:focus-within .edit-button {
+  visibility: visible;
+  opacity: 100%;
+}
+
+.edit-button:focus {
+  outline: var(--outline) solid var(--color-primary);
+}
+
+.edit-button:hover {
+  background-color: var(--color-tertiary);
+}

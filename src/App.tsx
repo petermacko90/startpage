@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { initialState, reducer } from "./state/reducer";
 import type { Category } from "./state/models";
 import { StateContext } from "./state/context";
@@ -9,7 +9,6 @@ import "./App.css";
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
     getState().then((state) => {
@@ -38,8 +37,8 @@ export default function App() {
   return (
     <StateContext value={state}>
       <div className="spacer"></div>
-      <CategoryList isEditMode={isEditMode} />
-      <EditButtons isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
+      <CategoryList />
+      <EditButtons />
     </StateContext>
   );
 }

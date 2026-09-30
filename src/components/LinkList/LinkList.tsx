@@ -4,12 +4,11 @@ import {
   type RefObject,
   type SetStateAction,
 } from "react";
-import { EditSquare } from "@material-symbols-svg/react/icons/edit-square";
 import type { Category, Link } from "../../state/models";
 import { updateLinks } from "../../storage/localStorage";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
-import FloatingButton from "../Button/FloatingButton";
+import EditButton from "../Button/EditButton";
 import LinkItem from "../LinkItem/LinkItem";
 import NumberBadge from "../NumberBadge/NumberBadge";
 import "./LinkList.css";
@@ -116,16 +115,7 @@ export default function LinkList({
         <div key={link.id} className="link-container">
           <LinkItem key={link.id} link={link} />
           {index <= 9 && <NumberBadge index={index} />}
-          <div className="edit-button-container">
-            <FloatingButton
-              action={() => handleEditLink(link.id)}
-              position="right"
-              tooltip="Edit"
-              type="edit"
-            >
-              <EditSquare size={20} />
-            </FloatingButton>
-          </div>
+          <EditButton action={() => handleEditLink(link.id)} />
         </div>
       ))}
     </div>

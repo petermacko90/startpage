@@ -15,7 +15,7 @@ import CategoryItem from "../CategoryItem/CategoryItem";
 import Toast from "../Toast/Toast";
 import "./CategoryList.css";
 
-export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
+export default function CategoryList() {
   const state = useContext(StateContext);
 
   const [isShowUndo, setIsShowUndo] = useState(false);
@@ -58,7 +58,6 @@ export default function CategoryList({ isEditMode }: { isEditMode: boolean }) {
         <CategoryItem
           key={category.id}
           category={category}
-          isEditMode={isEditMode}
           deleteCategory={handleDeleteCategory}
         />
       ))}
