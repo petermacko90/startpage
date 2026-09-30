@@ -1,4 +1,10 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { StateContext } from "../../state/context";
 import type { Category } from "../../state/models";
 import {
@@ -10,6 +16,8 @@ import { UNDO_TIMEOUT } from "../../constants";
 import { useDialog } from "../../hooks/useDialog";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
+import { handleArrowKeys } from "../../utils/handleArrowKeys";
+import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import Toast from "../Toast/Toast";
@@ -52,8 +60,13 @@ export default function CategoryList() {
     updateCategories(updadetedCategories),
   );
 
+  function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-button");
+    handleNumericKeys<HTMLButtonElement>(e, containerRef, ".category-button");
+  }
+
   return (
-    <main ref={containerRef}>
+    <main ref={containerRef} onKeyDown={handleKeyDown}>
       {sortCategories(state.categories).map((category) => (
         <CategoryItem
           key={category.id}

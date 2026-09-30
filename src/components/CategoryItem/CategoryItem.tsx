@@ -4,6 +4,7 @@ import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
 import EditButton from "../Button/EditButton";
+import NumberBadge from "../NumberBadge/NumberBadge";
 import PageIcon from "../PageIcon/PageIcon";
 import "./CategoryItem.css";
 
@@ -53,6 +54,7 @@ export default function CategoryItem({
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>
+      <NumberBadge index={category.order} />
       <EditButton action={() => setShowEditCategory(true)} />
       {showCategoryModal && (
         <CategoryModal
