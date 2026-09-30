@@ -1,8 +1,8 @@
 .floating-button {
-  --button-size: 2rem;
+  --button-size: 1.5rem;
 
   position: absolute;
-  top: calc(var(--spacing-s) * -1);
+  top: 0;
   z-index: 1;
   display: inline-flex;
   justify-content: center;
@@ -11,27 +11,28 @@
   width: var(--button-size);
   color: var(--color-light-1);
   border: none;
-  border-radius: var(--border-radius-s);
+  border-radius: var(--button-size);
 }
 
 .floating-button:focus {
-  outline: var(--outline) solid var(--color-light-1);
+  outline: var(--outline) solid var(--color-primary);
 }
 
 .floating-button.left {
-  left: calc(var(--spacing-s) * -1);
+  left: 0;
 }
 
 .floating-button.right {
-  right: calc(var(--spacing-s) * -1);
+  right: 0;
 }
 
 .floating-button.edit {
-  background-color: var(--color-tertiary);
+  background-color: transparent;
+  color: var(--color-light-1);
 }
 
 .floating-button.edit:hover {
-  background-color: color-mix(in srgb, var(--color-tertiary) 80%, white);
+  background-color: var(--color-tertiary);
 }
 
 .floating-button.delete {

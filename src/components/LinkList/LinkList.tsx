@@ -4,7 +4,7 @@ import {
   type RefObject,
   type SetStateAction,
 } from "react";
-import { Edit } from "@material-symbols-svg/react/icons/edit";
+import { EditSquare } from "@material-symbols-svg/react/icons/edit-square";
 import type { Category, Link } from "../../state/models";
 import { updateLinks } from "../../storage/localStorage";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
@@ -123,7 +123,7 @@ export default function LinkList({
               tooltip="Edit"
               type="edit"
             >
-              <Edit />
+              <EditSquare size={20} />
             </FloatingButton>
           </div>
         </div>
