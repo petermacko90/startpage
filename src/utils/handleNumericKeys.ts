@@ -3,8 +3,8 @@ import type { KeyboardEvent, RefObject } from "react";
 export function handleNumericKeys<
   T extends HTMLAnchorElement | HTMLButtonElement,
 >(
-  e: KeyboardEvent<HTMLDivElement>,
-  containerRef: RefObject<HTMLDivElement | null>,
+  e: KeyboardEvent<HTMLDivElement | HTMLDialogElement>,
+  containerRef: RefObject<HTMLDivElement | HTMLDialogElement | null>,
   itemSelector: string,
 ) {
   if (e.altKey || e.ctrlKey || e.metaKey) return;

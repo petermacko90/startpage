@@ -1,9 +1,16 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type RefObject,
+} from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Close } from "@material-symbols-svg/react/icons/close";
 import type { Category, Link } from "../../state/models";
 import { UNDO_TIMEOUT } from "../../constants";
 import { deleteLink, undoState } from "../../storage/localStorage";
+import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
 import LinkList from "../LinkList/LinkList";
@@ -52,11 +59,32 @@ export default function CategoryModal({
     setIsShowUndo(false);
   }
 
+  function handleKeyDown(e: KeyboardEvent<HTMLDialogElement>) {
+    if (!shouldHandleNumericKeys()) return;
+    handleNumericKeys<HTMLAnchorElement>(e, dialogRef, ".link");
+  }
+
+  function shouldHandleNumericKeys(): boolean {
+    return !isAddingLink && !editLinkId;
+  }
+
+  const addLinkRef = useRef<HTMLButtonElement | null>(null);
+
+  const lastActiveLinkRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    if (editLinkId === null && lastActiveLinkRef.current) {
+      lastActiveLinkRef.current.focus();
+      lastActiveLinkRef.current = null;
+    }
+  }, [editLinkId]);
+
   return (
     <Dialog
       closedby="any"
       onClose={close}
       ref={dialogRef}
+      onKeyDown={handleKeyDown}
       title={category.title || "No title"}
       className="category-modal"
     >
@@ -65,11 +93,13 @@ export default function CategoryModal({
         setIsAddingLink={setIsAddingLink}
         setEditLinkId={setEditLinkId}
         textInputRef={textInputRef}
+        shouldShowBadge={shouldHandleNumericKeys()}
+        lastActiveLinkRef={lastActiveLinkRef}
       />
       <div
         className={`buttons-container${isAddingLink || editLinkId ? " mb" : ""}`}
       >
-        <Button action={() => handleAddLink()}>
+        <Button action={() => handleAddLink()} ref={addLinkRef}>
           <Add />
           <span>Add Link</span>
         </Button>
@@ -84,7 +114,10 @@ export default function CategoryModal({
           categoryId={category.id}
           linkCount={category.items.length}
           linkId={null}
-          cancel={() => setIsAddingLink(false)}
+          cancel={() => {
+            setIsAddingLink(false);
+            addLinkRef.current?.focus();
+          }}
           textInputRef={textInputRef}
         />
       )}

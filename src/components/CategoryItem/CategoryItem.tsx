@@ -10,9 +10,11 @@ import "./CategoryItem.css";
 
 export default function CategoryItem({
   category,
+  isAppFocused,
   deleteCategory,
 }: {
   category: Category;
+  isAppFocused: boolean;
   deleteCategory: (categoryId: Category["id"]) => void;
 }) {
   const {
@@ -54,7 +56,9 @@ export default function CategoryItem({
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>
-      <NumberBadge index={category.order} />
+      {isAppFocused && category.order <= 9 && (
+        <NumberBadge index={category.order} />
+      )}
       <EditButton action={() => setShowEditCategory(true)} />
       {showCategoryModal && (
         <CategoryModal

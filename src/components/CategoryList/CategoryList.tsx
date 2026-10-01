@@ -17,13 +17,16 @@ import { useDialog } from "../../hooks/useDialog";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
-import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import Toast from "../Toast/Toast";
 import "./CategoryList.css";
 
-export default function CategoryList() {
+export default function CategoryList({
+  isAppFocused,
+}: {
+  isAppFocused: boolean;
+}) {
   const state = useContext(StateContext);
 
   const [isShowUndo, setIsShowUndo] = useState(false);
@@ -62,7 +65,6 @@ export default function CategoryList() {
 
   function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
     handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-button");
-    handleNumericKeys<HTMLButtonElement>(e, containerRef, ".category-button");
   }
 
   return (
@@ -71,6 +73,7 @@ export default function CategoryList() {
         <CategoryItem
           key={category.id}
           category={category}
+          isAppFocused={isAppFocused}
           deleteCategory={handleDeleteCategory}
         />
       ))}

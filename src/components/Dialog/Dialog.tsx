@@ -1,4 +1,9 @@
-import type { DialogHTMLAttributes, ReactNode, RefObject } from "react";
+import type {
+  DialogHTMLAttributes,
+  KeyboardEventHandler,
+  ReactNode,
+  RefObject,
+} from "react";
 import { createPortal } from "react-dom";
 import CloseButton from "../Button/CloseButton";
 import "./Dialog.css";
@@ -10,6 +15,7 @@ export default function Dialog({
   title,
   children,
   className,
+  onKeyDown,
 }: {
   closedby: DialogHTMLAttributes<HTMLDialogElement>["closedby"];
   ref: RefObject<HTMLDialogElement | null>;
@@ -17,6 +23,7 @@ export default function Dialog({
   title: string;
   children: ReactNode;
   className?: string;
+  onKeyDown?: KeyboardEventHandler<HTMLDialogElement>;
 }) {
   return createPortal(
     <dialog
@@ -24,6 +31,7 @@ export default function Dialog({
       ref={ref}
       onClose={onClose}
       className={className}
+      onKeyDown={onKeyDown}
     >
       <div
         className={`dialog-header ${closedby === "any" && "justify-center"}`}

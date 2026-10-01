@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { initialState, reducer } from "./state/reducer";
 import type { Category } from "./state/models";
 import { StateContext } from "./state/context";
@@ -34,10 +34,25 @@ export default function App() {
     return () => browser.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
+  const [isAppFocused, setIsAppFocused] = useState<boolean>(false);
+
+  useEffect(() => {
+    const onFocus = () => setIsAppFocused(true);
+    const onBlur = () => setIsAppFocused(false);
+
+    window.addEventListener("focus", onFocus);
+    window.addEventListener("blur", onBlur);
+
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("blur", onBlur);
+    };
+  }, []);
+
   return (
     <StateContext value={state}>
       <div className="spacer"></div>
-      <CategoryList />
+      <CategoryList isAppFocused={isAppFocused} />
       <EditButtons />
     </StateContext>
   );

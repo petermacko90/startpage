@@ -9,7 +9,6 @@ import { updateLinks } from "../../storage/localStorage";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
-import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import EditButton from "../Button/EditButton";
 import LinkItem from "../LinkItem/LinkItem";
 import NumberBadge from "../NumberBadge/NumberBadge";
@@ -20,11 +19,15 @@ export default function LinkList({
   setIsAddingLink,
   setEditLinkId,
   textInputRef,
+  shouldShowBadge,
+  lastActiveLinkRef,
 }: {
   category: Category;
   setIsAddingLink: Dispatch<SetStateAction<boolean>>;
   setEditLinkId: Dispatch<SetStateAction<Link["id"] | null>>;
   textInputRef: RefObject<HTMLInputElement | null>;
+  shouldShowBadge: boolean;
+  lastActiveLinkRef: RefObject<HTMLAnchorElement | null>;
 }) {
   function sortItems(items: Link[]): Link[] {
     return items.toSorted((a, b) => a.order - b.order);
@@ -44,7 +47,6 @@ export default function LinkList({
 
   function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
     handleArrowKeys<HTMLAnchorElement>(e, containerRef, ".link");
-    handleNumericKeys<HTMLAnchorElement>(e, containerRef, ".link");
   }
 
   return (
@@ -55,9 +57,15 @@ export default function LinkList({
     >
       {sortItems(category.items).map((link, index) => (
         <div key={link.id} className="link-container">
+          {shouldShowBadge && index <= 9 && <NumberBadge index={index} />}
           <LinkItem key={link.id} link={link} />
-          {index <= 9 && <NumberBadge index={index} />}
-          <EditButton action={() => handleEditLink(link.id)} />
+          <EditButton
+            action={(e) => {
+              lastActiveLinkRef.current = e.currentTarget
+                .previousElementSibling as HTMLAnchorElement;
+              handleEditLink(link.id);
+            }}
+          />
         </div>
       ))}
     </div>

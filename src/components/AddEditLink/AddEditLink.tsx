@@ -84,6 +84,8 @@ export default function AddEditLink({
       setUrl("");
       setOrder(linkCount);
       setUrlError("");
+
+      setTimeout(() => textInputRef.current?.focus(), 50);
     }
   }
 
