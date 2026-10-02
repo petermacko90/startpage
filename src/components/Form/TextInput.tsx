@@ -1,4 +1,4 @@
-import type { ChangeEventHandler, RefObject } from "react";
+import type { ChangeEventHandler, KeyboardEvent, RefObject } from "react";
 import "./TextInput.css";
 
 export default function TextInput({
@@ -16,13 +16,20 @@ export default function TextInput({
   maxLength?: number;
   inputRef?: RefObject<HTMLInputElement | null>;
 }) {
+  function handlePressEnter(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onPressEnter();
+    }
+  }
+
   return (
     <input
       type="text"
       id={id}
       value={value}
       onChange={onChange}
-      onKeyDown={(e) => e.key === "Enter" && onPressEnter()}
+      onKeyDown={handlePressEnter}
       maxLength={maxLength}
       ref={inputRef}
     />

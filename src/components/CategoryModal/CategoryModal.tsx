@@ -46,17 +46,46 @@ export default function CategoryModal({
     };
   }, []);
 
-  function handleDeleteLink(linkId: Link["id"]) {
+  function handleDeleteLink(linkId: Link["id"], index: number) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    let neighborId: Link["id"] | null = null;
+
+    if (category.items.length > 1) {
+      if (index < category.items.length - 1) {
+        neighborId = category.items[index + 1].id;
+      } else {
+        neighborId = category.items[index - 1].id;
+      }
+    }
+
+    neighborIdRef.current = neighborId;
+    setDeletedLinkId(linkId);
     deleteLink(category.id, linkId);
     setIsShowUndo(true);
-    undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
+    undoTimerRef.current = setTimeout(() => handleToastClose(), UNDO_TIMEOUT);
+    setTimeout(() => undoButtonRef.current?.focus(), 50);
+
+    if (neighborId) {
+      setIdToFocus(neighborId);
+    }
+  }
+
+  function handleToastClose() {
+    setIsShowUndo(false);
+
+    if (neighborIdRef.current) {
+      setIdToFocus(neighborIdRef.current);
+      neighborIdRef.current = null;
+    } else {
+      addLinkRef.current?.focus();
+    }
   }
 
   function undo() {
-    undoState();
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    undoState();
     setIsShowUndo(false);
+    setIdToFocus(deletedLinkId);
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLDialogElement>) {
@@ -69,15 +98,27 @@ export default function CategoryModal({
   }
 
   const addLinkRef = useRef<HTMLButtonElement | null>(null);
+  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
+  const lastActiveLinkRef = useRef<string | null>(null);
+  const neighborIdRef = useRef<string | null>(null);
 
-  const lastActiveLinkRef = useRef<HTMLAnchorElement | null>(null);
+  const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
+
+  const [idToFocus, setIdToFocus] = useState<string | null>(null);
 
   useEffect(() => {
-    if (editLinkId === null && lastActiveLinkRef.current) {
-      lastActiveLinkRef.current.focus();
-      lastActiveLinkRef.current = null;
+    if (idToFocus) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById(`link-${idToFocus}`);
+        if (element) {
+          (element as HTMLElement).focus();
+        }
+        setIdToFocus(null);
+      }, 50);
+
+      return () => clearTimeout(timer);
     }
-  }, [editLinkId]);
+  }, [idToFocus]);
 
   return (
     <Dialog
@@ -99,7 +140,7 @@ export default function CategoryModal({
       <div
         className={`buttons-container${isAddingLink || editLinkId ? " mb" : ""}`}
       >
-        <Button action={() => handleAddLink()} ref={addLinkRef}>
+        <Button action={() => handleAddLink()} buttonRef={addLinkRef}>
           <Add />
           <span>Add Link</span>
         </Button>
@@ -127,12 +168,24 @@ export default function CategoryModal({
           categoryId={category.id}
           linkCount={category.items.length}
           linkId={editLinkId}
-          cancel={() => setEditLinkId(null)}
+          cancel={() => {
+            setEditLinkId(null);
+            if (lastActiveLinkRef.current) {
+              setIdToFocus(lastActiveLinkRef.current);
+              lastActiveLinkRef.current = null;
+            }
+          }}
           textInputRef={textInputRef}
           handleDeleteLink={handleDeleteLink}
         />
       )}
-      <Toast type="undo" show={isShowUndo} text="Link deleted" undo={undo} />
+      <Toast
+        type="undo"
+        show={isShowUndo}
+        text="Link deleted"
+        undo={undo}
+        undoButtonRef={undoButtonRef}
+      />
     </Dialog>
   );
 }

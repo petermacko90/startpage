@@ -27,7 +27,7 @@ export default function LinkList({
   setEditLinkId: Dispatch<SetStateAction<Link["id"] | null>>;
   textInputRef: RefObject<HTMLInputElement | null>;
   shouldShowBadge: boolean;
-  lastActiveLinkRef: RefObject<HTMLAnchorElement | null>;
+  lastActiveLinkRef: RefObject<Link["id"] | null>;
 }) {
   function sortItems(items: Link[]): Link[] {
     return items.toSorted((a, b) => a.order - b.order);
@@ -60,9 +60,8 @@ export default function LinkList({
           {shouldShowBadge && index <= 9 && <NumberBadge index={index} />}
           <LinkItem key={link.id} link={link} />
           <EditButton
-            action={(e) => {
-              lastActiveLinkRef.current = e.currentTarget
-                .previousElementSibling as HTMLAnchorElement;
+            action={() => {
+              lastActiveLinkRef.current = link.id;
               handleEditLink(link.id);
             }}
           />

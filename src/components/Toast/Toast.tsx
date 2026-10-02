@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import Button from "../Button/Button";
 import "./Toast.css";
 
@@ -9,6 +10,7 @@ interface ToastProps {
 interface UndoToastProps extends ToastProps {
   type: "undo";
   undo: () => void;
+  undoButtonRef?: RefObject<HTMLButtonElement | null>;
 }
 
 interface ErrorToastProps extends ToastProps {
@@ -22,7 +24,9 @@ export default function Toast(props: UndoToastProps | ErrorToastProps) {
         {props.text}
       </span>
       {props.type === "undo" && (
-        <Button action={() => props.undo()}>Undo</Button>
+        <Button action={() => props.undo()} buttonRef={props.undoButtonRef}>
+          Undo
+        </Button>
       )}
     </div>
   );

@@ -1,16 +1,16 @@
-import type { MouseEventHandler, ReactNode, Ref } from "react";
+import type { MouseEventHandler, ReactNode, RefObject } from "react";
 import "./Button.css";
 
 export default function Button({
   action,
   children,
   disabled,
-  ref,
+  buttonRef,
 }: {
   action: MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
   disabled?: boolean;
-  ref?: Ref<HTMLButtonElement>;
+  buttonRef?: RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <button
@@ -18,7 +18,7 @@ export default function Button({
       className="button"
       onClick={action}
       disabled={disabled}
-      ref={ref}
+      ref={buttonRef}
     >
       {children}
     </button>
