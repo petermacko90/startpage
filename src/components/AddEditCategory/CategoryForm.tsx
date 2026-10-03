@@ -53,7 +53,7 @@ export default function CategoryForm({
       </FormField>
       <div className="buttons-container">
         <Button action={() => handleCategorySave(title, order)}>Save</Button>
-        <Button action={close}>Close</Button>
+        <Button action={() => close()}>Close</Button>
         {handleDeleteCategory && (
           <Button action={handleDeleteCategory}>Delete Category</Button>
         )}

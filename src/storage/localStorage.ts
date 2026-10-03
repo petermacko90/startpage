@@ -13,6 +13,7 @@ export async function getState(): Promise<State> {
 }
 
 export function createCategory(
+  id: string,
   order: Category["order"],
   title: Category["title"],
   categoriesCount: number,
@@ -20,7 +21,7 @@ export function createCategory(
   getState().then((state) => {
     const newCategory: Category = {
       icon: "",
-      id: uuidv4(),
+      id,
       items: [],
       order,
       title,

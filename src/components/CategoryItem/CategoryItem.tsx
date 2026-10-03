@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
@@ -12,10 +13,12 @@ export default function CategoryItem({
   category,
   isAppFocused,
   deleteCategory,
+  setIdToFocus,
 }: {
   category: Category;
   isAppFocused: boolean;
-  deleteCategory: (categoryId: Category["id"]) => void;
+  deleteCategory: (categoryId: Category["id"], index: number) => void;
+  setIdToFocus: Dispatch<SetStateAction<Category["id"] | null>>;
 }) {
   const {
     dialogRef: categoryModalRef,
@@ -41,6 +44,7 @@ export default function CategoryItem({
       data-flip-id={category.id}
     >
       <button
+        id={`category-${category.id}`}
         className="category-button"
         onClick={() => setShowCategoryModal(true)}
         title={category.title || "No title"}
@@ -64,7 +68,10 @@ export default function CategoryItem({
         <CategoryModal
           category={category}
           dialogRef={categoryModalRef}
-          close={() => setShowCategoryModal(false)}
+          close={() => {
+            setShowCategoryModal(false);
+            setIdToFocus(category.id);
+          }}
         />
       )}
       {showEditCategory && (
@@ -72,7 +79,10 @@ export default function CategoryItem({
           category={category}
           dialogRef={editCategoryRef}
           inputRef={editCategoryInputRef}
-          close={() => setShowEditCategory(false)}
+          close={() => {
+            setShowEditCategory(false);
+            setIdToFocus(category.id);
+          }}
           handleDeleteCategory={deleteCategory}
         />
       )}

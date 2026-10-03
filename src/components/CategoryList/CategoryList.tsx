@@ -40,17 +40,42 @@ export default function CategoryList({
 
   const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
 
-  function handleDeleteCategory(categoryId: Category["id"]) {
+  function handleDeleteCategory(categoryId: Category["id"], index: number) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    let neighborId: Category["id"] | null = null;
+
+    if (state.categories.length > 1) {
+      if (index < state.categories.length - 1) {
+        neighborId = state.categories[index + 1].id;
+      } else {
+        neighborId = state.categories[index - 1].id;
+      }
+    }
+
+    neighborIdRef.current = neighborId;
+    setDeletedCategoryId(categoryId);
     deleteCategory(categoryId);
     setIsShowUndo(true);
-    undoTimerRef.current = setTimeout(() => setIsShowUndo(false), UNDO_TIMEOUT);
+    undoTimerRef.current = setTimeout(() => handleToastClose(), UNDO_TIMEOUT);
+    setTimeout(() => undoButtonRef.current?.focus(), 50);
+  }
+
+  function handleToastClose() {
+    setIsShowUndo(false);
+
+    if (neighborIdRef.current) {
+      setIdToFocus(neighborIdRef.current);
+      neighborIdRef.current = null;
+    } else {
+      addCategoryButtonRef.current?.focus();
+    }
   }
 
   function undo() {
-    undoState();
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    undoState();
     setIsShowUndo(false);
+    setIdToFocus(deletedCategoryId);
   }
 
   function sortCategories(categories: Category[]): Category[] {
@@ -67,6 +92,29 @@ export default function CategoryList({
     handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-button");
   }
 
+  const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
+  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
+  const neighborIdRef = useRef<Category["id"] | null>(null);
+
+  const [deletedCategoryId, setDeletedCategoryId] = useState<
+    Category["id"] | null
+  >(null);
+  const [idToFocus, setIdToFocus] = useState<Category["id"] | null>(null);
+
+  useEffect(() => {
+    if (idToFocus) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById(`category-${idToFocus}`);
+        if (element) {
+          (element as HTMLElement).focus();
+        }
+        setIdToFocus(null);
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+  }, [idToFocus]);
+
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
       {sortCategories(state.categories).map((category) => (
@@ -75,12 +123,14 @@ export default function CategoryList({
           category={category}
           isAppFocused={isAppFocused}
           deleteCategory={handleDeleteCategory}
+          setIdToFocus={setIdToFocus}
         />
       ))}
       <button
         className="add-category"
         onClick={() => setShowDialog(true)}
         title="Add Category"
+        ref={addCategoryButtonRef}
       >
         +
       </button>
@@ -88,7 +138,15 @@ export default function CategoryList({
         <AddCategory
           dialogRef={dialogRef}
           inputRef={focusRef}
-          close={() => setShowDialog(false)}
+          close={(categoryId) => {
+            setShowDialog(false);
+
+            if (categoryId) {
+              setIdToFocus(categoryId);
+            } else {
+              setTimeout(() => addCategoryButtonRef.current?.focus());
+            }
+          }}
         />
       )}
       <Toast
@@ -96,6 +154,7 @@ export default function CategoryList({
         show={isShowUndo}
         text="Category deleted"
         undo={undo}
+        undoButtonRef={undoButtonRef}
       />
     </main>
   );

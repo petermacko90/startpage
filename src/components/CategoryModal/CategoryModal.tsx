@@ -99,12 +99,12 @@ export default function CategoryModal({
 
   const addLinkRef = useRef<HTMLButtonElement | null>(null);
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
-  const lastActiveLinkRef = useRef<string | null>(null);
-  const neighborIdRef = useRef<string | null>(null);
+  const lastActiveLinkRef = useRef<Link["id"] | null>(null);
+  const neighborIdRef = useRef<Link["id"] | null>(null);
 
   const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
 
-  const [idToFocus, setIdToFocus] = useState<string | null>(null);
+  const [idToFocus, setIdToFocus] = useState<Link["id"] | null>(null);
 
   useEffect(() => {
     if (idToFocus) {

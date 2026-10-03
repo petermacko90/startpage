@@ -17,7 +17,7 @@ export default function EditCategory({
   dialogRef: RefObject<HTMLDialogElement | null>;
   inputRef: RefObject<HTMLInputElement | null>;
   close: () => void;
-  handleDeleteCategory: (categoryId: Category["id"]) => void;
+  handleDeleteCategory: (categoryId: Category["id"], index: number) => void;
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
@@ -42,7 +42,9 @@ export default function EditCategory({
         itemId={category.id}
         inputRef={inputRef}
         close={close}
-        handleDeleteCategory={() => handleDeleteCategory(category.id)}
+        handleDeleteCategory={() =>
+          handleDeleteCategory(category.id, category.order)
+        }
       />
     </Dialog>
   );
