@@ -82,6 +82,7 @@ export default function BackgroundUpload({
 
     try {
       await removeImage(BACKGROUND_KEY);
+      focusRef.current?.focus();
 
       setBackgroundUrl((prevValue) => {
         if (prevValue) {
