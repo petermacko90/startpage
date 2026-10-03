@@ -9,10 +9,12 @@ import "./App.css";
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getState().then((state) => {
       dispatch({ type: "fetched", payload: state });
+      setIsLoading(false);
     });
 
     const handleStorageChange = (
@@ -34,7 +36,9 @@ export default function App() {
     return () => browser.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
-  const [isAppFocused, setIsAppFocused] = useState<boolean>(false);
+  const [isAppFocused, setIsAppFocused] = useState<boolean>(
+    document.hasFocus(),
+  );
 
   useEffect(() => {
     const onFocus = () => setIsAppFocused(true);
@@ -49,10 +53,46 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    function handleNumericKeys(e: KeyboardEvent) {
+      const isAnyModalOpen = document.querySelector("dialog:modal") !== null;
+      if (isAnyModalOpen) return;
+
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+
+      if (
+        e.key !== "1" &&
+        e.key !== "2" &&
+        e.key !== "3" &&
+        e.key !== "4" &&
+        e.key !== "5" &&
+        e.key !== "6" &&
+        e.key !== "7" &&
+        e.key !== "8" &&
+        e.key !== "9" &&
+        e.key !== "0"
+      ) {
+        return;
+      }
+
+      e.preventDefault();
+
+      const categories =
+        document.querySelectorAll<HTMLButtonElement>(".category-button");
+
+      const index = e.key === "0" ? 9 : Number(e.key) - 1;
+      categories[index]?.focus();
+      categories[index]?.click();
+    }
+
+    window.addEventListener("keydown", handleNumericKeys);
+    return () => window.removeEventListener("keydown", handleNumericKeys);
+  }, []);
+
   return (
     <StateContext value={state}>
       <div className="spacer"></div>
-      <CategoryList isAppFocused={isAppFocused} />
+      <CategoryList isAppFocused={isAppFocused} isLoading={isLoading} />
       <EditButtons />
     </StateContext>
   );

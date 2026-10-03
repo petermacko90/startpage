@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, RefObject, SetStateAction } from "react";
 import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
@@ -12,11 +12,13 @@ import "./CategoryItem.css";
 export default function CategoryItem({
   category,
   isAppFocused,
+  initialFocusRef,
   deleteCategory,
   setIdToFocus,
 }: {
   category: Category;
   isAppFocused: boolean;
+  initialFocusRef: RefObject<HTMLButtonElement | null> | null;
   deleteCategory: (categoryId: Category["id"], index: number) => void;
   setIdToFocus: Dispatch<SetStateAction<Category["id"] | null>>;
 }) {
@@ -48,6 +50,7 @@ export default function CategoryItem({
         className="category-button"
         onClick={() => setShowCategoryModal(true)}
         title={category.title || "No title"}
+        ref={initialFocusRef}
       >
         <span className="category-icon">
           {category.items.slice(0, 4).map((link) => (

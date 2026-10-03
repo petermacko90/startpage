@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
 import { getImage } from "../../storage/indexedDB";
@@ -31,9 +31,15 @@ export default function EditButtons() {
 
   const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
 
+  const backgroundSetButtonRef = useRef<HTMLButtonElement | null>(null);
+
   return (
     <div className="edit-buttons-container">
-      <button className="expanding-button" onClick={() => setShowDialog(true)}>
+      <button
+        className="expanding-button"
+        onClick={() => setShowDialog(true)}
+        ref={backgroundSetButtonRef}
+      >
         <span className="expanding-button-icon">
           <Wallpaper />
         </span>
@@ -46,7 +52,10 @@ export default function EditButtons() {
           setBackgroundUrl={setBackgroundUrl}
           dialogRef={dialogRef}
           focusRef={focusRef}
-          close={() => setShowDialog(false)}
+          close={() => {
+            setShowDialog(false);
+            setTimeout(() => backgroundSetButtonRef.current?.focus());
+          }}
         />
       )}
     </div>

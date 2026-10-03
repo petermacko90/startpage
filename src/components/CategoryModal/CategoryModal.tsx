@@ -90,7 +90,7 @@ export default function CategoryModal({
 
   function handleKeyDown(e: KeyboardEvent<HTMLDialogElement>) {
     if (!shouldHandleNumericKeys()) return;
-    handleNumericKeys<HTMLAnchorElement>(e, dialogRef, ".link");
+    handleNumericKeys(e, dialogRef, ".link");
   }
 
   function shouldHandleNumericKeys(): boolean {

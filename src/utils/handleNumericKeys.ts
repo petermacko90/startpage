@@ -1,8 +1,6 @@
 import type { KeyboardEvent, RefObject } from "react";
 
-export function handleNumericKeys<
-  T extends HTMLAnchorElement | HTMLButtonElement,
->(
+export function handleNumericKeys(
   e: KeyboardEvent<HTMLDivElement | HTMLDialogElement>,
   containerRef: RefObject<HTMLDivElement | HTMLDialogElement | null>,
   itemSelector: string,
@@ -27,7 +25,9 @@ export function handleNumericKeys<
   const container = containerRef.current;
   if (!container) return;
 
-  const items = Array.from(container.querySelectorAll(itemSelector)) as T[];
+  const items = Array.from(
+    container.querySelectorAll(itemSelector),
+  ) as HTMLAnchorElement[];
 
   e.preventDefault();
 

@@ -1,10 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type KeyboardEvent,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { StateContext } from "../../state/context";
 import type { Category } from "../../state/models";
 import {
@@ -24,8 +18,10 @@ import "./CategoryList.css";
 
 export default function CategoryList({
   isAppFocused,
+  isLoading,
 }: {
   isAppFocused: boolean;
+  isLoading: boolean;
 }) {
   const state = useContext(StateContext);
 
@@ -88,7 +84,7 @@ export default function CategoryList({
     updateCategories(updadetedCategories),
   );
 
-  function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-button");
   }
 
@@ -115,15 +111,31 @@ export default function CategoryList({
     }
   }, [idToFocus]);
 
+  const initialFocusRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isLoading || !containerRef.current) return;
+    const firstCategory = containerRef.current.querySelector(
+      ".category-button",
+    ) as HTMLElement;
+
+    if (firstCategory) {
+      firstCategory.focus();
+    } else {
+      addCategoryButtonRef.current?.focus();
+    }
+  }, [isLoading, containerRef]);
+
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
-      {sortCategories(state.categories).map((category) => (
+      {sortCategories(state.categories).map((category, index) => (
         <CategoryItem
           key={category.id}
           category={category}
           isAppFocused={isAppFocused}
           deleteCategory={handleDeleteCategory}
           setIdToFocus={setIdToFocus}
+          initialFocusRef={index === 0 ? initialFocusRef : null}
         />
       ))}
       <button
