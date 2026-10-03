@@ -22,6 +22,12 @@ main {
   }
 }
 
+@media screen and (min-width: 90rem) {
+  main {
+    grid-template-columns: repeat(10, auto);
+  }
+}
+
 .add-category {
   height: var(--category-size);
   width: var(--category-size);
