@@ -1,9 +1,6 @@
-import type { KeyboardEvent, RefObject } from "react";
-
 export function handleNumericKeys(
-  e: KeyboardEvent<HTMLDivElement | HTMLDialogElement>,
-  containerRef: RefObject<HTMLDivElement | HTMLDialogElement | null>,
-  itemSelector: string,
+  e: React.KeyboardEvent<HTMLDialogElement> | KeyboardEvent,
+  selectItems: () => NodeListOf<HTMLAnchorElement | HTMLButtonElement>,
 ) {
   if (e.altKey || e.ctrlKey || e.metaKey) return;
 
@@ -22,12 +19,7 @@ export function handleNumericKeys(
     return;
   }
 
-  const container = containerRef.current;
-  if (!container) return;
-
-  const items = Array.from(
-    container.querySelectorAll(itemSelector),
-  ) as HTMLAnchorElement[];
+  const items = selectItems();
 
   e.preventDefault();
 

@@ -3,6 +3,7 @@ import { initialState, reducer } from "./state/reducer";
 import type { Category } from "./state/models";
 import { StateContext } from "./state/context";
 import { getState } from "./storage/localStorage";
+import { handleNumericKeys } from "./utils/handleNumericKeys";
 import EditButtons from "./components/EditButtons/EditButtons";
 import CategoryList from "./components/CategoryList/CategoryList";
 import "./App.css";
@@ -54,39 +55,17 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    function handleNumericKeys(e: KeyboardEvent) {
+    function handleKeyDown(e: KeyboardEvent) {
       const isAnyModalOpen = document.querySelector("dialog:modal") !== null;
       if (isAnyModalOpen) return;
 
-      if (e.altKey || e.ctrlKey || e.metaKey) return;
-
-      if (
-        e.key !== "1" &&
-        e.key !== "2" &&
-        e.key !== "3" &&
-        e.key !== "4" &&
-        e.key !== "5" &&
-        e.key !== "6" &&
-        e.key !== "7" &&
-        e.key !== "8" &&
-        e.key !== "9" &&
-        e.key !== "0"
-      ) {
-        return;
-      }
-
-      e.preventDefault();
-
-      const categories =
-        document.querySelectorAll<HTMLButtonElement>(".category-button");
-
-      const index = e.key === "0" ? 9 : Number(e.key) - 1;
-      categories[index]?.focus();
-      categories[index]?.click();
+      handleNumericKeys(e, () =>
+        document.querySelectorAll<HTMLButtonElement>(".category-button"),
+      );
     }
 
-    window.addEventListener("keydown", handleNumericKeys);
-    return () => window.removeEventListener("keydown", handleNumericKeys);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
