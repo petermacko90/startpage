@@ -10,7 +10,7 @@ interface ToastProps {
 interface UndoToastProps extends ToastProps {
   type: "undo";
   undo: () => void;
-  undoButtonRef?: RefObject<HTMLButtonElement | null>;
+  undoButtonRef: RefObject<HTMLButtonElement | null>;
 }
 
 interface ErrorToastProps extends ToastProps {

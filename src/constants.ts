@@ -4,3 +4,5 @@ export const ERROR_TIMEOUT = 5000;
 export const BACKGROUND_KEY = "background";
 
 export const LOCALHOST = "localhost";
+
+export const NO_TITLE = "No title";

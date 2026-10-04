@@ -2,6 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "@material-symbols-svg/react/icons/chevron-left";
 import { ChevronRight } from "@material-symbols-svg/react/icons/chevron-right";
 import type { Category, Link } from "../../state/models";
+import { NO_TITLE } from "../../constants";
 import Button from "../Button/Button";
 import "./OrderInput.css";
 
@@ -27,14 +28,14 @@ export default function OrderInput<T extends Category | Link>({
     if (value === max) return "(last)";
 
     if (itemId) {
-      const oldIndex = items.findIndex((link) => link.id === itemId);
+      const oldIndex = items.findIndex((i) => i.id === itemId);
       items.splice(oldIndex, 1);
     }
 
-    const linkBefore = items[value - 1];
-    const linkAfter = items[value];
+    const itemBefore = items[value - 1];
+    const itemAfter = items[value];
 
-    return `(between ${linkBefore.title} and ${linkAfter.title})`;
+    return `(between ${itemBefore.title || NO_TITLE} and ${itemAfter.title || NO_TITLE})`;
   }
 
   return (

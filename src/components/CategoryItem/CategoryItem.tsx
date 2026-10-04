@@ -2,6 +2,7 @@ import type { Dispatch, RefObject, SetStateAction } from "react";
 import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import { NO_TITLE } from "../../constants";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
 import EditButton from "../Button/EditButton";
@@ -49,7 +50,7 @@ export default function CategoryItem({
         id={`category-${category.id}`}
         className="category-button"
         onClick={() => setShowCategoryModal(true)}
-        title={category.title || "No title"}
+        title={category.title || NO_TITLE}
         ref={initialFocusRef}
       >
         <span className="category-icon">

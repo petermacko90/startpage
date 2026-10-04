@@ -8,7 +8,7 @@ import {
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Close } from "@material-symbols-svg/react/icons/close";
 import type { Category, Link } from "../../state/models";
-import { UNDO_TIMEOUT } from "../../constants";
+import { NO_TITLE, UNDO_TIMEOUT } from "../../constants";
 import { deleteLink, undoState } from "../../storage/localStorage";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import AddEditLink from "../AddEditLink/AddEditLink";
@@ -126,7 +126,7 @@ export default function CategoryModal({
       onClose={close}
       ref={dialogRef}
       onKeyDown={handleKeyDown}
-      title={category.title || "No title"}
+      title={category.title || NO_TITLE}
       className="category-modal"
     >
       <LinkList
