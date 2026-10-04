@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 
-export function useFlipAnimation<T>(dependencies: T[]) {
+export function useFlipAnimation<T>(dependency: T) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rectsRef = useRef<Map<string, DOMRect>>(new Map());
 
@@ -49,8 +49,7 @@ export function useFlipAnimation<T>(dependencies: T[]) {
         }
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, dependencies);
+  }, [dependency]);
 
   return { containerRef, captureFirst };
 }

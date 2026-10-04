@@ -78,7 +78,7 @@ export default function CategoryList({
     return categories.toSorted((a, b) => a.order - b.order);
   }
 
-  const { containerRef, captureFirst } = useFlipAnimation([state.categories]);
+  const { containerRef, captureFirst } = useFlipAnimation(state.categories);
 
   useDropMonitor(state.categories, captureFirst, (updadetedCategories) =>
     updateCategories(updadetedCategories),

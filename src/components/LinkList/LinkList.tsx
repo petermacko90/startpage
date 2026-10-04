@@ -33,7 +33,7 @@ export default function LinkList({
     return items.toSorted((a, b) => a.order - b.order);
   }
 
-  const { containerRef, captureFirst } = useFlipAnimation([category.items]);
+  const { containerRef, captureFirst } = useFlipAnimation(category.items);
 
   useDropMonitor(category.items, captureFirst, (updatedLinks) =>
     updateLinks(category.id, updatedLinks),
