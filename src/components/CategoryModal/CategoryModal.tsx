@@ -64,12 +64,15 @@ export default function CategoryModal({
   function handleToastClose() {
     setIsShowUndo(false);
 
-    if (neighborIdRef.current) {
-      setIdToFocus(neighborIdRef.current);
-      neighborIdRef.current = null;
-    } else {
-      addLinkRef.current?.focus();
+    if (document.activeElement === undoButtonRef.current) {
+      if (neighborIdRef.current) {
+        setIdToFocus(neighborIdRef.current);
+      } else {
+        addLinkRef.current?.focus();
+      }
     }
+
+    neighborIdRef.current = null;
   }
 
   function undo() {

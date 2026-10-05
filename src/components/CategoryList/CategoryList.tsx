@@ -53,12 +53,15 @@ export default function CategoryList({
   function handleToastClose() {
     setIsShowUndo(false);
 
-    if (neighborIdRef.current) {
-      setIdToFocus(neighborIdRef.current);
-      neighborIdRef.current = null;
-    } else {
-      addCategoryButtonRef.current?.focus();
+    if (document.activeElement === undoButtonRef.current) {
+      if (neighborIdRef.current) {
+        setIdToFocus(neighborIdRef.current);
+      } else {
+        addCategoryButtonRef.current?.focus();
+      }
     }
+
+    neighborIdRef.current = null;
   }
 
   function undo() {
