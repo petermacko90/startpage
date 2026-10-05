@@ -1,9 +1,4 @@
-import {
-  type Dispatch,
-  type KeyboardEvent,
-  type RefObject,
-  type SetStateAction,
-} from "react";
+import { type Dispatch, type RefObject, type SetStateAction } from "react";
 import type { Category, Link } from "../../state/models";
 import { updateLinks } from "../../storage/localStorage";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
@@ -45,15 +40,11 @@ export default function LinkList({
     setTimeout(() => textInputRef.current?.focus());
   }
 
-  function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
-    handleArrowKeys<HTMLAnchorElement>(e, containerRef, ".link");
-  }
-
   return (
     <div
       className={`links-container${category.links.length === 0 ? "" : " not-empty"}`}
       ref={containerRef}
-      onKeyDown={handleKeyDown}
+      onKeyDown={(e) => handleArrowKeys(e, containerRef, ".link")}
     >
       {sortLinks(category.links).map((link, index) => (
         <div key={link.id} className="link-container">

@@ -13,7 +13,7 @@ export async function getState(): Promise<State> {
 }
 
 export function createCategory(
-  id: string,
+  id: Category["id"],
   order: Category["order"],
   title: Category["title"],
   categoriesCount: number,

@@ -1,5 +1,6 @@
 import type { Link } from "../../state/models";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import { getHostname } from "../../utils/getHostname";
 import PageIcon from "../PageIcon/PageIcon";
 import "./LinkItem.css";
 
@@ -18,7 +19,7 @@ export default function LinkItem({ link }: { link: Link }) {
       data-flip-id={link.id}
     >
       <span className="link-icon-container">
-        <PageIcon domain={new URL(link.url).hostname} />
+        <PageIcon domain={getHostname(link.url)} />
       </span>
       <span className="link-title">{link.title}</span>
     </a>

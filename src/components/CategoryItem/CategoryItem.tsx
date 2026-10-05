@@ -3,6 +3,7 @@ import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { NO_TITLE } from "../../constants";
+import { getHostname } from "../../utils/getHostname";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
 import EditButton from "../Button/EditButton";
@@ -57,7 +58,7 @@ export default function CategoryItem({
           {category.links.slice(0, 4).map((link) => (
             <PageIcon
               key={link.id}
-              domain={new URL(link.url).hostname}
+              domain={getHostname(link.url)}
               size="24px"
             />
           ))}
