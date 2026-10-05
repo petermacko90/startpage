@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type KeyboardEvent,
-  type RefObject,
-} from "react";
+import { useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Close } from "@material-symbols-svg/react/icons/close";
 import type { Category, Link } from "../../state/models";
@@ -12,6 +6,7 @@ import { NO_TITLE, UNDO_TIMEOUT } from "../../constants";
 import { deleteLink, undoState } from "../../storage/localStorage";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import { useFocusById } from "../../hooks/useFocusById";
+import { useTimer } from "../../hooks/useTimer";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
 import LinkList from "../LinkList/LinkList";
@@ -39,18 +34,10 @@ export default function CategoryModal({
   }
 
   const [isShowUndo, setIsShowUndo] = useState(false);
-  const undoTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
-    };
-  }, []);
-
+  const { clearTimer, startTimer } = useTimer();
   const { setIdToFocus } = useFocusById("link");
 
   function handleDeleteLink(linkId: Link["id"], index: number) {
-    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     let neighborId: Link["id"] | null = null;
 
     if (category.links.length > 1) {
@@ -65,7 +52,7 @@ export default function CategoryModal({
     setDeletedLinkId(linkId);
     deleteLink(category.id, linkId);
     setIsShowUndo(true);
-    undoTimerRef.current = setTimeout(() => handleToastClose(), UNDO_TIMEOUT);
+    startTimer(() => handleToastClose(), UNDO_TIMEOUT);
     setTimeout(() => undoButtonRef.current?.focus(), 50);
 
     if (neighborId) {
@@ -85,7 +72,7 @@ export default function CategoryModal({
   }
 
   function undo() {
-    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    clearTimer();
     undoState();
     setIsShowUndo(false);
     setIdToFocus(deletedLinkId);

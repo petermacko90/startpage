@@ -1,6 +1,4 @@
 import {
-  useEffect,
-  useRef,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -14,6 +12,7 @@ import Form from "../Form/Form";
 import Toast from "../Toast/Toast";
 import Dialog from "../Dialog/Dialog";
 import "./BackgroundUpload.css";
+import { useTimer } from "../../hooks/useTimer";
 
 export default function BackgroundUpload({
   backgroundUrl,
@@ -30,17 +29,11 @@ export default function BackgroundUpload({
 }) {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const errorTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
-    };
-  }, []);
+  const { clearTimer, startTimer } = useTimer();
 
   async function handleBackgroundUpload(e: ChangeEvent<HTMLInputElement>) {
     setIsError(false);
-    if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
+    clearTimer();
 
     const file = e.target.files?.[0];
     if (!file) return;
@@ -48,10 +41,7 @@ export default function BackgroundUpload({
     if (!file.type.startsWith("image/")) {
       setIsError(true);
       setErrorMessage("Please select an image");
-      errorTimerRef.current = setTimeout(
-        () => setIsError(false),
-        ERROR_TIMEOUT,
-      );
+      startTimer(() => setIsError(false), ERROR_TIMEOUT);
       return;
     }
 
@@ -68,17 +58,14 @@ export default function BackgroundUpload({
       console.error("failed to set background", error);
       setIsError(true);
       setErrorMessage("Failed to set background");
-      errorTimerRef.current = setTimeout(
-        () => setIsError(false),
-        ERROR_TIMEOUT,
-      );
+      startTimer(() => setIsError(false), ERROR_TIMEOUT);
       return;
     }
   }
 
   async function handleBackgroundRemove() {
     setIsError(false);
-    if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
+    clearTimer();
 
     try {
       await removeImage(BACKGROUND_KEY);
@@ -94,10 +81,7 @@ export default function BackgroundUpload({
       console.error("failed to remove background", error);
       setIsError(true);
       setErrorMessage("Failed to remove background");
-      errorTimerRef.current = setTimeout(
-        () => setIsError(false),
-        ERROR_TIMEOUT,
-      );
+      startTimer(() => setIsError(false), ERROR_TIMEOUT);
       return;
     }
   }

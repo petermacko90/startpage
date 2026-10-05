@@ -11,6 +11,7 @@ import { useDialog } from "../../hooks/useDialog";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useFocusById } from "../../hooks/useFocusById";
+import { useTimer } from "../../hooks/useTimer";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
 import CategoryItem from "../CategoryItem/CategoryItem";
@@ -25,20 +26,10 @@ export default function CategoryList({
   isLoading: boolean;
 }) {
   const state = useContext(StateContext);
-
   const [isShowUndo, setIsShowUndo] = useState(false);
-  const undoTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
-    };
-  }, []);
-
-  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
+  const { clearTimer, startTimer } = useTimer();
 
   function handleDeleteCategory(categoryId: Category["id"], index: number) {
-    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     let neighborId: Category["id"] | null = null;
 
     if (state.categories.length > 1) {
@@ -53,7 +44,7 @@ export default function CategoryList({
     setDeletedCategoryId(categoryId);
     deleteCategory(categoryId);
     setIsShowUndo(true);
-    undoTimerRef.current = setTimeout(() => handleToastClose(), UNDO_TIMEOUT);
+    startTimer(() => handleToastClose(), UNDO_TIMEOUT);
     setTimeout(() => undoButtonRef.current?.focus(), 50);
   }
 
@@ -71,7 +62,7 @@ export default function CategoryList({
   }
 
   function undo() {
-    if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
+    clearTimer();
     undoState();
     setIsShowUndo(false);
     setIdToFocus(deletedCategoryId);
@@ -113,6 +104,8 @@ export default function CategoryList({
       addCategoryButtonRef.current?.focus();
     }
   }, [isLoading, containerRef]);
+
+  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
 
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
