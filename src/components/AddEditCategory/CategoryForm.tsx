@@ -5,6 +5,7 @@ import FormField from "../Form/FormField";
 import OrderInput from "../Form/OrderInput";
 import TextInput from "../Form/TextInput";
 import Button from "../Button/Button";
+import type { Category, Link } from "../../state/models";
 
 export default function CategoryForm({
   titleInitial,
@@ -20,7 +21,7 @@ export default function CategoryForm({
   orderInitial: number;
   maxOrder: number;
   handleCategorySave: (title: string, order: number) => void;
-  itemId: string | null;
+  itemId: Category["id"] | Link["id"] | null;
   inputRef: RefObject<HTMLInputElement | null>;
   close: () => void;
   handleDeleteCategory?: () => void;

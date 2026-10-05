@@ -10,7 +10,7 @@ export const selectCategory =
   };
 
 export const selectLinks = (state: State) => (categoryId: Category["id"]) => {
-  return selectCategory(state)(categoryId)?.items;
+  return selectCategory(state)(categoryId)?.links;
 };
 
 export const selectLink =

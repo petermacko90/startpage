@@ -10,7 +10,7 @@ export type Category = {
   id: string;
   icon: string;
   title: string;
-  items: Link[];
+  links: Link[];
   order: number;
 };
 

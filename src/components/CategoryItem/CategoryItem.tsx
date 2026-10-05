@@ -54,7 +54,7 @@ export default function CategoryItem({
         ref={initialFocusRef}
       >
         <span className="category-icon">
-          {category.items.slice(0, 4).map((link) => (
+          {category.links.slice(0, 4).map((link) => (
             <PageIcon
               key={link.id}
               domain={new URL(link.url).hostname}

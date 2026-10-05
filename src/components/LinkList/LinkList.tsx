@@ -29,13 +29,13 @@ export default function LinkList({
   shouldShowBadge: boolean;
   lastActiveLinkRef: RefObject<Link["id"] | null>;
 }) {
-  function sortItems(items: Link[]): Link[] {
-    return items.toSorted((a, b) => a.order - b.order);
+  function sortLinks(links: Link[]): Link[] {
+    return links.toSorted((a, b) => a.order - b.order);
   }
 
-  const { containerRef, captureFirst } = useFlipAnimation(category.items);
+  const { containerRef, captureFirst } = useFlipAnimation(category.links);
 
-  useDropMonitor(category.items, captureFirst, (updatedLinks) =>
+  useDropMonitor(category.links, captureFirst, (updatedLinks) =>
     updateLinks(category.id, updatedLinks),
   );
 
@@ -51,11 +51,11 @@ export default function LinkList({
 
   return (
     <div
-      className={`links-container${category.items.length === 0 ? "" : " not-empty"}`}
+      className={`links-container${category.links.length === 0 ? "" : " not-empty"}`}
       ref={containerRef}
       onKeyDown={handleKeyDown}
     >
-      {sortItems(category.items).map((link, index) => (
+      {sortLinks(category.links).map((link, index) => (
         <div key={link.id} className="link-container">
           {shouldShowBadge && index <= 9 && <NumberBadge index={index} />}
           <LinkItem key={link.id} link={link} />

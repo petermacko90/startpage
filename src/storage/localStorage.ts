@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link, State } from "../state/models";
-import { selectLink, selectLinks } from "../state/selectors";
+import { selectLink } from "../state/selectors";
 
 export function setState(state: State) {
   browser.storage.local.set(state);
@@ -22,7 +22,7 @@ export function createCategory(
     const newCategory: Category = {
       icon: "",
       id,
-      items: [],
+      links: [],
       order,
       title,
     };
@@ -100,7 +100,7 @@ export function createLink(
   linkCount: number,
 ) {
   getState().then((state) => {
-    const newItem: Link = {
+    const newLink: Link = {
       icon: "",
       id: uuidv4(),
       order,
@@ -108,22 +108,22 @@ export function createLink(
       url,
     };
 
-    let updatedItems: Link[];
+    let updatedLinks: Link[];
     const index = getCategoryIndex(state, categoryId);
 
     if (order === linkCount) {
-      updatedItems = state.categories[index].items = [
-        ...state.categories[index].items,
-        newItem,
+      updatedLinks = state.categories[index].links = [
+        ...state.categories[index].links,
+        newLink,
       ];
     } else {
-      const items = [...state.categories[index].items];
-      items.splice(order, 0, newItem);
-      updatedItems = reorderItems(items);
+      const links = [...state.categories[index].links];
+      links.splice(order, 0, newLink);
+      updatedLinks = reorderItems(links);
     }
 
     setState({
-      categories: updateCategoryItems(state, categoryId, index, updatedItems),
+      categories: updateCategoryLinks(state, categoryId, index, updatedLinks),
       undoState: undefined,
     });
   });
@@ -144,31 +144,31 @@ export function updateLink(
   getState().then((state) => {
     const index = getCategoryIndex(state, categoryId);
 
-    const updatedItems = state.categories[index].items.map((item) => {
-      return item.id === id ? updatedLink : item;
+    const updatedLinks = state.categories[index].links.map((link) => {
+      return link.id === id ? updatedLink : link;
     });
 
-    const reorderedItems = reorderItemsOnUpdate(
+    const reorderedLinks = reorderLinksOnUpdate(
       state,
       categoryId,
       id,
       order,
-      updatedItems,
+      updatedLinks,
     );
 
     setState({
-      categories: updateCategoryItems(state, categoryId, index, reorderedItems),
+      categories: updateCategoryLinks(state, categoryId, index, reorderedLinks),
       undoState: undefined,
     });
   });
 }
 
-export function updateLinks(categoryId: Category["id"], items: Link[]) {
+export function updateLinks(categoryId: Category["id"], links: Link[]) {
   getState().then((state) => {
     const index = getCategoryIndex(state, categoryId);
 
     setState({
-      categories: updateCategoryItems(state, categoryId, index, items),
+      categories: updateCategoryLinks(state, categoryId, index, links),
       undoState: undefined,
     });
   });
@@ -178,14 +178,14 @@ export function deleteLink(categoryId: Category["id"], linkId: Link["id"]) {
   getState().then((state) => {
     const index = getCategoryIndex(state, categoryId);
 
-    const filteredItems = state.categories[index].items.filter((item) => {
-      return item.id !== linkId;
+    const filteredLinks = state.categories[index].links.filter((link) => {
+      return link.id !== linkId;
     });
 
-    const reorderedItems = reorderItems(filteredItems);
+    const reorderedLinks = reorderItems(filteredLinks);
 
     setState({
-      categories: updateCategoryItems(state, categoryId, index, reorderedItems),
+      categories: updateCategoryLinks(state, categoryId, index, reorderedLinks),
       undoState: state.categories,
     });
   });
@@ -212,30 +212,29 @@ function getCategoryIndex(state: State, categoryId: Category["id"]) {
   return state.categories.findIndex((c) => c.id === categoryId);
 }
 
-function reorderItemsOnUpdate(
+function reorderLinksOnUpdate(
   state: State,
   categoryId: Category["id"],
   linkId: Link["id"],
   order: Link["order"],
-  items: Link[],
+  links: Link[],
 ): Link[] {
   const link = selectLink(state)(categoryId, linkId);
-  if (order === link?.order) return items;
+  if (order === link?.order) return links;
 
-  const links = selectLinks(state)(categoryId);
-  const oldIndex = links!.findIndex((link) => link.id === linkId);
-  const [movedItem] = items.splice(oldIndex, 1);
-  items.splice(order, 0, movedItem);
-  return reorderItems(items);
+  const oldIndex = links.findIndex((link) => link.id === linkId);
+  const [movedLink] = links.splice(oldIndex, 1);
+  links.splice(order, 0, movedLink);
+  return reorderItems(links);
 }
 
-function updateCategoryItems(
+function updateCategoryLinks(
   state: State,
   id: Category["id"],
   index: number,
-  items: Link[],
+  links: Link[],
 ): Category[] {
   return state.categories.map((c) => {
-    return c.id === id ? { ...state.categories[index], items } : c;
+    return c.id === id ? { ...state.categories[index], links } : c;
   });
 }

@@ -50,11 +50,11 @@ export default function CategoryModal({
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     let neighborId: Link["id"] | null = null;
 
-    if (category.items.length > 1) {
-      if (index < category.items.length - 1) {
-        neighborId = category.items[index + 1].id;
+    if (category.links.length > 1) {
+      if (index < category.links.length - 1) {
+        neighborId = category.links[index + 1].id;
       } else {
-        neighborId = category.items[index - 1].id;
+        neighborId = category.links[index - 1].id;
       }
     }
 
@@ -151,9 +151,9 @@ export default function CategoryModal({
       </div>
       {isAddingLink && (
         <AddEditLink
-          key={category.items.length}
+          key={category.links.length}
           categoryId={category.id}
-          linkCount={category.items.length}
+          linkCount={category.links.length}
           linkId={null}
           cancel={() => {
             setIsAddingLink(false);
@@ -166,7 +166,7 @@ export default function CategoryModal({
         <AddEditLink
           key={editLinkId}
           categoryId={category.id}
-          linkCount={category.items.length}
+          linkCount={category.links.length}
           linkId={editLinkId}
           cancel={() => {
             setEditLinkId(null);
