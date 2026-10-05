@@ -11,6 +11,7 @@ import type { Category, Link } from "../../state/models";
 import { NO_TITLE, UNDO_TIMEOUT } from "../../constants";
 import { deleteLink, undoState } from "../../storage/localStorage";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
+import { useFocusById } from "../../hooks/useFocusById";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
 import LinkList from "../LinkList/LinkList";
@@ -45,6 +46,8 @@ export default function CategoryModal({
       if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
     };
   }, []);
+
+  const { setIdToFocus } = useFocusById("link");
 
   function handleDeleteLink(linkId: Link["id"], index: number) {
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current);
@@ -103,22 +106,6 @@ export default function CategoryModal({
   const neighborIdRef = useRef<Link["id"] | null>(null);
 
   const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
-
-  const [idToFocus, setIdToFocus] = useState<Link["id"] | null>(null);
-
-  useEffect(() => {
-    if (idToFocus) {
-      const timer = setTimeout(() => {
-        const element = document.getElementById(`link-${idToFocus}`);
-        if (element) {
-          (element as HTMLElement).focus();
-        }
-        setIdToFocus(null);
-      }, 50);
-
-      return () => clearTimeout(timer);
-    }
-  }, [idToFocus]);
 
   return (
     <Dialog

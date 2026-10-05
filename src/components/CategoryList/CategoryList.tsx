@@ -8,8 +8,9 @@ import {
 } from "../../storage/localStorage";
 import { UNDO_TIMEOUT } from "../../constants";
 import { useDialog } from "../../hooks/useDialog";
-import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
+import { useFlipAnimation } from "../../hooks/useFlipAnimation";
+import { useFocusById } from "../../hooks/useFocusById";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
 import CategoryItem from "../CategoryItem/CategoryItem";
@@ -56,6 +57,8 @@ export default function CategoryList({
     setTimeout(() => undoButtonRef.current?.focus(), 50);
   }
 
+  const { setIdToFocus } = useFocusById("category");
+
   function handleToastClose() {
     setIsShowUndo(false);
 
@@ -95,21 +98,6 @@ export default function CategoryList({
   const [deletedCategoryId, setDeletedCategoryId] = useState<
     Category["id"] | null
   >(null);
-  const [idToFocus, setIdToFocus] = useState<Category["id"] | null>(null);
-
-  useEffect(() => {
-    if (idToFocus) {
-      const timer = setTimeout(() => {
-        const element = document.getElementById(`category-${idToFocus}`);
-        if (element) {
-          (element as HTMLElement).focus();
-        }
-        setIdToFocus(null);
-      }, 50);
-
-      return () => clearTimeout(timer);
-    }
-  }, [idToFocus]);
 
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
