@@ -33,9 +33,12 @@ export default function CategoryModal({
     setTimeout(() => textInputRef.current?.focus());
   }
 
+  const neighborIdRef = useRef<Link["id"] | null>(null);
+  const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
   const [isShowUndo, setIsShowUndo] = useState(false);
   const { clearTimer, startTimer } = useTimer();
   const { setIdToFocus } = useFocusById("link");
+  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
 
   function handleDeleteLink(linkId: Link["id"], index: number) {
     let neighborId: Link["id"] | null = null;
@@ -54,11 +57,9 @@ export default function CategoryModal({
     setIsShowUndo(true);
     startTimer(() => handleToastClose(), UNDO_TIMEOUT);
     setTimeout(() => undoButtonRef.current?.focus(), 50);
-
-    if (neighborId) {
-      setIdToFocus(neighborId);
-    }
   }
+
+  const addLinkRef = useRef<HTMLButtonElement | null>(null);
 
   function handleToastClose() {
     setIsShowUndo(false);
@@ -87,12 +88,7 @@ export default function CategoryModal({
     return !isAddingLink && !editLinkId;
   }
 
-  const addLinkRef = useRef<HTMLButtonElement | null>(null);
-  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
   const lastActiveLinkRef = useRef<Link["id"] | null>(null);
-  const neighborIdRef = useRef<Link["id"] | null>(null);
-
-  const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
 
   return (
     <Dialog

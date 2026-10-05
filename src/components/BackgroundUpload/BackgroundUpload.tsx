@@ -7,12 +7,12 @@ import {
 } from "react";
 import { removeImage, saveImage } from "../../storage/indexedDB";
 import { BACKGROUND_KEY, ERROR_TIMEOUT } from "../../constants";
+import { useTimer } from "../../hooks/useTimer";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import Toast from "../Toast/Toast";
 import Dialog from "../Dialog/Dialog";
 import "./BackgroundUpload.css";
-import { useTimer } from "../../hooks/useTimer";
 
 export default function BackgroundUpload({
   backgroundUrl,
