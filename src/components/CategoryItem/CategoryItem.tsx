@@ -13,13 +13,13 @@ import "./CategoryItem.css";
 
 export default function CategoryItem({
   category,
-  isAppFocused,
+  shouldDisplayHints,
   initialFocusRef,
   deleteCategory,
   setIdToFocus,
 }: {
   category: Category;
-  isAppFocused: boolean;
+  shouldDisplayHints: boolean;
   initialFocusRef: RefObject<HTMLButtonElement | null> | null;
   deleteCategory: (categoryId: Category["id"], index: number) => void;
   setIdToFocus: Dispatch<SetStateAction<Category["id"] | null>>;
@@ -65,7 +65,7 @@ export default function CategoryItem({
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>
-      {isAppFocused && category.order <= 9 && (
+      {shouldDisplayHints && category.order <= 9 && (
         <NumberBadge index={category.order} />
       )}
       <EditButton action={() => setShowEditCategory(true)} />

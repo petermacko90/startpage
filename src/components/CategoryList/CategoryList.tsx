@@ -19,10 +19,10 @@ import Toast from "../Toast/Toast";
 import "./CategoryList.css";
 
 export default function CategoryList({
-  isAppFocused,
+  shouldDisplayHints,
   isLoading,
 }: {
-  isAppFocused: boolean;
+  shouldDisplayHints: boolean;
   isLoading: boolean;
 }) {
   const state = useContext(StateContext);
@@ -116,7 +116,7 @@ export default function CategoryList({
         <CategoryItem
           key={category.id}
           category={category}
-          isAppFocused={isAppFocused}
+          shouldDisplayHints={shouldDisplayHints}
           deleteCategory={handleDeleteCategory}
           setIdToFocus={setIdToFocus}
           initialFocusRef={index === 0 ? initialFocusRef : null}

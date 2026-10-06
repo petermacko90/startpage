@@ -54,10 +54,35 @@ export default function App() {
     };
   }, []);
 
+  const [isAnyModalOpen, setIsAnyModalOpen] = useState<boolean>(
+    () => document.querySelector("dialog:modal") !== null,
+  );
+
+  useEffect(() => {
+    const checkModal = () => {
+      const isOpen = document.querySelector("dialog:modal") !== null;
+      setIsAnyModalOpen(isOpen);
+    };
+
+    const observer = new MutationObserver(() => {
+      checkModal();
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ["open"],
+      childList: true,
+    });
+
+    checkModal();
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      const isAnyModalOpen = document.querySelector("dialog:modal") !== null;
-      if (isAnyModalOpen) return;
+      if (document.querySelector("dialog:modal") !== null) return;
 
       handleNumericKeys(e, () =>
         document.querySelectorAll<HTMLButtonElement>(".category-button"),
@@ -71,7 +96,10 @@ export default function App() {
   return (
     <StateContext value={state}>
       <div className="spacer"></div>
-      <CategoryList isAppFocused={isAppFocused} isLoading={isLoading} />
+      <CategoryList
+        shouldDisplayHints={isAppFocused && !isAnyModalOpen}
+        isLoading={isLoading}
+      />
       <EditButtons />
     </StateContext>
   );
