@@ -99,7 +99,7 @@ export default function CategoryList({
     if (isLoading || !containerRef.current) return;
     const firstCategory = containerRef.current.querySelector(
       ".category-button",
-    ) as HTMLElement;
+    ) as HTMLButtonElement;
 
     if (firstCategory) {
       firstCategory.focus();

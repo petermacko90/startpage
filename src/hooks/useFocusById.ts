@@ -11,7 +11,7 @@ export function useFocusById(item: "link" | "category") {
       const timer = setTimeout(() => {
         const element = document.getElementById(`${item}-${idToFocus}`);
         if (element) {
-          (element as HTMLElement).focus();
+          element.focus();
         }
         setIdToFocus(null);
       }, 50);

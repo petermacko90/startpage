@@ -33,7 +33,7 @@ export function useDragAndDrop<T extends HTMLDivElement | HTMLAnchorElement>(
               };
             },
             render({ container }) {
-              const clone = element.cloneNode(true) as HTMLElement;
+              const clone = element.cloneNode(true) as T;
               clone.style.width = `${element.offsetWidth}px`;
               clone.style.height = `${element.offsetHeight}px`;
               clone.style.opacity = "0.7";
