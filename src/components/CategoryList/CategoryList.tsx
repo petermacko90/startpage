@@ -48,7 +48,7 @@ export default function CategoryList({
     setTimeout(() => undoButtonRef.current?.focus(), 50);
   }
 
-  const { setIdToFocus } = useFocusById("category");
+  const setIdToFocus = useFocusById("category");
 
   function handleToastClose() {
     setIsShowUndo(false);

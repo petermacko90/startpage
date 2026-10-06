@@ -37,7 +37,7 @@ export default function CategoryModal({
   const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
   const [isShowUndo, setIsShowUndo] = useState(false);
   const { clearTimer, startTimer } = useTimer();
-  const { setIdToFocus } = useFocusById("link");
+  const setIdToFocus = useFocusById("link");
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
 
   function handleDeleteLink(linkId: Link["id"], index: number) {

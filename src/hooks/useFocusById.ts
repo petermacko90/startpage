@@ -20,5 +20,5 @@ export function useFocusById(item: "link" | "category") {
     }
   }, [item, idToFocus]);
 
-  return { setIdToFocus };
+  return setIdToFocus;
 }
