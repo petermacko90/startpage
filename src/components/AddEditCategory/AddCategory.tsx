@@ -1,46 +1,41 @@
-import { useContext, type RefObject } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { StateContext } from "../../state/context";
-import { createCategory } from "../../storage/localStorage";
-import { selectCategoriesCount } from "../../state/selectors";
-import Dialog from "../Dialog/Dialog";
-import CategoryForm from "./CategoryForm";
-import type { Category } from "../../state/models";
+import type { Dispatch, RefObject, SetStateAction } from "react";
+import { Add } from "@material-symbols-svg/react/icons/add";
+import { useDialog } from "../../hooks/useDialog";
+import AddCategoryDialog from "./AddCategoryDialog";
+import AddImportCategoryButton from "../Button/AddImportCategoryButton";
 
 export default function AddCategory({
-  dialogRef,
-  inputRef,
-  close,
+  setIdToFocus,
+  addCategoryButtonRef,
 }: {
-  dialogRef: RefObject<HTMLDialogElement | null>;
-  inputRef: RefObject<HTMLInputElement | null>;
-  close: (id?: Category["id"]) => void;
+  setIdToFocus: Dispatch<SetStateAction<string | null>>;
+  addCategoryButtonRef: RefObject<HTMLButtonElement | null>;
 }) {
-  const state = useContext(StateContext);
-  const categoriesCount = selectCategoriesCount(state);
-
-  function handleCategorySave(title: string, order: number) {
-    const id = uuidv4();
-    createCategory(id, order, title.trim(), categoriesCount);
-    close(id);
-  }
+  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
 
   return (
-    <Dialog
-      closedby="closerequest"
-      onClose={close}
-      ref={dialogRef}
-      title="Add Category"
-    >
-      <CategoryForm
-        titleInitial={""}
-        orderInitial={categoriesCount}
-        maxOrder={categoriesCount}
-        handleCategorySave={handleCategorySave}
-        itemId={null}
-        inputRef={inputRef}
-        close={close}
+    <>
+      <AddImportCategoryButton
+        action={() => setShowDialog(true)}
+        icon={<Add />}
+        text="Add Category"
+        buttonRef={addCategoryButtonRef}
       />
-    </Dialog>
+      {showDialog && (
+        <AddCategoryDialog
+          dialogRef={dialogRef}
+          inputRef={focusRef}
+          close={(categoryId) => {
+            setShowDialog(false);
+
+            if (categoryId) {
+              setIdToFocus(categoryId);
+            } else {
+              setTimeout(() => addCategoryButtonRef.current?.focus());
+            }
+          }}
+        />
+      )}
+    </>
   );
 }

@@ -1,0 +1,23 @@
+.add-import-category {
+  height: var(--category-size);
+  width: var(--category-size);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
+  backdrop-filter: blur(var(--blur));
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+  border: none;
+  border-radius: var(--border-radius-m);
+  box-shadow: var(--box-shadow-m);
+}
+
+.add-import-category:hover {
+  background-color: color-mix(in srgb, var(--color-dark-4) 90%, transparent);
+}
+
+.add-import-category:focus {
+  outline: var(--outline) solid var(--color-primary);
+}

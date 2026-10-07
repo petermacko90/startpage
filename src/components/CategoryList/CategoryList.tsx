@@ -7,13 +7,13 @@ import {
   updateCategories,
 } from "../../storage/localStorage";
 import { UNDO_TIMEOUT } from "../../constants";
-import { useDialog } from "../../hooks/useDialog";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useFocusById } from "../../hooks/useFocusById";
 import { useTimer } from "../../hooks/useTimer";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
+import BookmarksImport from "../BookmarksImport/BookmarksImport";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import Toast from "../Toast/Toast";
 import "./CategoryList.css";
@@ -108,8 +108,6 @@ export default function CategoryList({
     }
   }, [isLoading, containerRef]);
 
-  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
-
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
       {sortCategories(state.categories).map((category, index) => (
@@ -122,29 +120,11 @@ export default function CategoryList({
           initialFocusRef={index === 0 ? initialFocusRef : null}
         />
       ))}
-      <button
-        className="add-category"
-        onClick={() => setShowDialog(true)}
-        title="Add Category"
-        ref={addCategoryButtonRef}
-      >
-        +
-      </button>
-      {showDialog && (
-        <AddCategory
-          dialogRef={dialogRef}
-          inputRef={focusRef}
-          close={(categoryId) => {
-            setShowDialog(false);
-
-            if (categoryId) {
-              setIdToFocus(categoryId);
-            } else {
-              setTimeout(() => addCategoryButtonRef.current?.focus());
-            }
-          }}
-        />
-      )}
+      <AddCategory
+        setIdToFocus={setIdToFocus}
+        addCategoryButtonRef={addCategoryButtonRef}
+      />
+      <BookmarksImport />
       <Toast
         type="undo"
         show={isShowUndo}
