@@ -13,7 +13,7 @@ export default function LinkItem({ link }: { link: Link }) {
     <a
       id={`link-${link.id}`}
       href={link.url}
-      className={`link ${isOver ? "is-over" : ""} ${isDragging ? "is-dragging" : ""}`}
+      className={`link${isOver ? " is-over" : ""}${isDragging ? " is-dragging" : ""}`}
       title={link.title}
       ref={ref}
       data-flip-id={link.id}
