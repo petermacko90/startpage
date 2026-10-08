@@ -1,0 +1,17 @@
+@media screen and (min-width: 48rem) {
+  dialog.bookmarks-import {
+    width: 36rem;
+  }
+}
+
+@media screen and (min-width: 80rem) {
+  dialog.bookmarks-import {
+    width: 50rem;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  dialog.bookmarks-import {
+    width: 60rem;
+  }
+}

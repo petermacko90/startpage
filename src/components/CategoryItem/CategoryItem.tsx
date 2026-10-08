@@ -43,7 +43,7 @@ export default function CategoryItem({
 
   return (
     <div
-      className={`category ${isOver ? "is-over" : ""} ${isDragging ? "is-dragging" : ""}`}
+      className={`category${isOver ? " is-over" : ""}${isDragging ? " is-dragging" : ""}`}
       ref={ref}
       data-flip-id={category.id}
     >

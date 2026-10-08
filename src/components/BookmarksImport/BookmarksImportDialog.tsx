@@ -1,6 +1,7 @@
 import { useEffect, useState, type RefObject } from "react";
+import BookmarkItems from "./BookmarkItems";
 import Dialog from "../Dialog/Dialog";
-import Form from "../Form/Form";
+import "./BookmarksImportDialog.css";
 
 export default function BookmarksImportDialog({
   dialogRef,
@@ -25,16 +26,9 @@ export default function BookmarksImportDialog({
       title="Import Bookmarks"
       ref={dialogRef}
       onClose={close}
+      className="bookmarks-import"
     >
-      <Form>
-        {bookmarks.map((bookmark) => {
-          return (
-            <span style={{ color: "var(--color-light-1)" }}>
-              {bookmark.title}
-            </span>
-          );
-        })}
-      </Form>
+      <BookmarkItems bookmarkItems={bookmarks} />
     </Dialog>
   );
 }

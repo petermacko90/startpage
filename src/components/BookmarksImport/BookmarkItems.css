@@ -1,0 +1,29 @@
+.bookmark-container {
+  margin-left: var(--spacing-m);
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+}
+
+.bookmark-item {
+  padding-left: var(--outline);
+}
+
+.folder-button {
+  margin-top: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+  background-color: transparent;
+  color: var(--color-light-3);
+  border: none;
+  border-radius: var(--border-radius-s);
+  font-size: var(--font-size-m);
+  font-weight: bold;
+}
+
+.folder-button:hover,
+.folder-button:focus {
+  color: var(--color-light-1);
+}
+
+.folder-button:focus {
+  outline: var(--outline) solid var(--color-primary);
+}

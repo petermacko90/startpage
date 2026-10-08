@@ -34,7 +34,7 @@ export default function Dialog({
       onKeyDown={onKeyDown}
     >
       <div
-        className={`dialog-header ${closedby === "any" && "justify-center"}`}
+        className={`dialog-header${closedby === "any" ? " justify-center" : ""}`}
       >
         {closedby === "closerequest" && <div></div>}
         <div className={`dialog-title overflow`}>{title}</div>
