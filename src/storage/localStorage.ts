@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link, State } from "../state/models";
-import { selectLink } from "../state/selectors";
+import { selectCategoriesCount, selectLink } from "../state/selectors";
 
 export function setState(state: State) {
   browser.storage.local.set(state);
@@ -12,32 +12,72 @@ export async function getState(): Promise<State> {
   return state;
 }
 
-export function createCategory(
+export async function createCategory(
   id: Category["id"],
   order: Category["order"],
   title: Category["title"],
   categoriesCount: number,
 ) {
-  getState().then((state) => {
-    const newCategory: Category = {
+  const state = await getState();
+
+  const newCategory: Category = {
+    icon: "",
+    id,
+    links: [],
+    order,
+    title,
+  };
+
+  let updatedCategories: Category[];
+
+  if (order === categoriesCount) {
+    updatedCategories = [...state.categories, newCategory];
+  } else {
+    const categories = [...state.categories];
+    categories.splice(order, 0, newCategory);
+    updatedCategories = reorderItems(categories);
+  }
+
+  updateCategories(updatedCategories);
+}
+
+export async function importCategories(bookmarks: Record<string, boolean>) {
+  const state = await getState();
+
+  const selectedBookmarks = Object.entries(bookmarks).filter(
+    ([, value]) => value,
+  );
+
+  const bookmarkItems = await Promise.all(
+    selectedBookmarks.map(([key]) => browser.bookmarks.getSubTree(key)),
+  );
+
+  let categoriesCount = selectCategoriesCount(state);
+
+  const newCategories: Category[] = bookmarkItems.map((item) => {
+    return {
       icon: "",
-      id,
-      links: [],
-      order,
-      title,
+      id: uuidv4(),
+      links:
+        item[0].children
+          ?.filter((item) => item.url)
+          .map((item, index) => {
+            return {
+              icon: "",
+              id: uuidv4(),
+              order: index,
+              title: item.title,
+              url: item.url!,
+            };
+          }) ?? [],
+      order: categoriesCount++,
+      title: item[0].title,
     };
+  });
 
-    let updatedCategories: Category[];
-
-    if (order === categoriesCount) {
-      updatedCategories = [...state.categories, newCategory];
-    } else {
-      const categories = [...state.categories];
-      categories.splice(order, 0, newCategory);
-      updatedCategories = reorderItems(categories);
-    }
-
-    updateCategories(updatedCategories);
+  setState({
+    categories: [...state.categories, ...newCategories],
+    undoState: undefined,
   });
 }
 

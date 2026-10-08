@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import "./BookmarkItems.css";
 
 export default function BookmarkItems({
   bookmarkItems,
+  selectedBookmarks,
+  setSelectedBookmarks,
 }: {
   bookmarkItems: chrome.bookmarks.BookmarkTreeNode[];
+  selectedBookmarks: Record<string, boolean>;
+  setSelectedBookmarks: Dispatch<SetStateAction<Record<string, boolean>>>;
 }) {
-  function getUrlOrTitle(
-    bookmarkItem: chrome.bookmarks.BookmarkTreeNode,
-  ): string {
-    return bookmarkItem.url ? bookmarkItem.url : bookmarkItem.title;
-  }
-
   const [showNested, setShowNested] = useState<Record<string, boolean>>({});
 
   function toggleNested(id: string) {
     setShowNested((prevValue) => ({ ...prevValue, [id]: !prevValue[id] }));
+  }
+
+  function handleCheck(id: string, checked: boolean) {
+    setSelectedBookmarks((prevValue) => ({ ...prevValue, [id]: checked }));
   }
 
   return (
@@ -24,23 +26,36 @@ export default function BookmarkItems({
       {bookmarkItems.map((bookmarkItem) => {
         return (
           <>
-            <div
-              className="bookmark-item overflow"
-              title={getUrlOrTitle(bookmarkItem)}
-            >
+            <div className="bookmark-item overflow">
               {bookmarkItem.url ? (
-                <span>{bookmarkItem.url}</span>
+                <span title={`${bookmarkItem.title} | ${bookmarkItem.url}`}>
+                  {bookmarkItem.title} | {bookmarkItem.url}
+                </span>
               ) : (
-                <button
-                  className="folder-button"
-                  onClick={() => toggleNested(bookmarkItem.id)}
-                >
-                  <span>{`${showNested[bookmarkItem.id] ? "-" : "+"} ${bookmarkItem.title}`}</span>
-                </button>
+                <>
+                  <input
+                    type="checkbox"
+                    value={bookmarkItem.id}
+                    onChange={(e) =>
+                      handleCheck(bookmarkItem.id, e.target.checked)
+                    }
+                  />
+                  <button
+                    className="folder-button"
+                    onClick={() => toggleNested(bookmarkItem.id)}
+                    title={bookmarkItem.title}
+                  >
+                    {`${showNested[bookmarkItem.id] ? "-" : "+"} ${bookmarkItem.title}`}
+                  </button>
+                </>
               )}
             </div>
             {showNested[bookmarkItem.id] && bookmarkItem.children && (
-              <BookmarkItems bookmarkItems={bookmarkItem.children} />
+              <BookmarkItems
+                bookmarkItems={bookmarkItem.children}
+                selectedBookmarks={selectedBookmarks}
+                setSelectedBookmarks={setSelectedBookmarks}
+              />
             )}
           </>
         );

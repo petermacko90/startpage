@@ -15,3 +15,7 @@
     width: 60rem;
   }
 }
+
+.buttons-container.mt {
+  margin-top: var(--spacing-m);
+}

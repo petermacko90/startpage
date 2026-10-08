@@ -1,5 +1,7 @@
 import { useEffect, useState, type RefObject } from "react";
+import { importCategories } from "../../storage/localStorage";
 import BookmarkItems from "./BookmarkItems";
+import Button from "../Button/Button";
 import Dialog from "../Dialog/Dialog";
 import "./BookmarksImportDialog.css";
 
@@ -20,6 +22,15 @@ export default function BookmarksImportDialog({
     });
   }, []);
 
+  const [selectedBookmarks, setSelectedBookmarks] = useState<
+    Record<string, boolean>
+  >({});
+
+  function handleImport() {
+    importCategories(selectedBookmarks);
+    close();
+  }
+
   return (
     <Dialog
       closedby="closerequest"
@@ -28,7 +39,14 @@ export default function BookmarksImportDialog({
       onClose={close}
       className="bookmarks-import"
     >
-      <BookmarkItems bookmarkItems={bookmarks} />
+      <BookmarkItems
+        bookmarkItems={bookmarks}
+        selectedBookmarks={selectedBookmarks}
+        setSelectedBookmarks={setSelectedBookmarks}
+      />
+      <div className="buttons-container mt">
+        <Button action={() => handleImport()}>Import</Button>
+      </div>
     </Dialog>
   );
 }
