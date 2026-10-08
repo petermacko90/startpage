@@ -11,6 +11,7 @@
 .folder-button {
   margin-top: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
+  vertical-align: middle;
   background-color: transparent;
   color: var(--color-light-3);
   border: none;
@@ -25,5 +26,44 @@
 }
 
 .folder-button:focus {
+  outline: var(--outline) solid var(--color-primary);
+}
+
+input[type="checkbox"] {
+  --checkbox-size: 1.25rem;
+
+  appearance: none;
+  -webkit-appearance: none;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  display: inline-grid;
+  place-content: center;
+  vertical-align: middle;
+  background-color: var(--color-dark-1);
+  border-radius: var(--border-radius-s);
+  border: var(--border-width) solid var(--color-dark-4);
+  cursor: pointer;
+}
+
+input[type="checkbox"]::before {
+  --checkmark-size: 0.6rem;
+
+  content: "";
+  width: var(--checkmark-size);
+  height: var(--checkmark-size);
+  background-color: var(--color-primary);
+  clip-path: polygon(14% 44%, 0 58%, 38% 96%, 100% 16%, 86% 2%, 38% 68%);
+  transform: scale(0);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:hover {
+  background-color: var(--color-dark-2);
+}
+
+input[type="checkbox"]:focus {
   outline: var(--outline) solid var(--color-primary);
 }
