@@ -46,6 +46,7 @@ export default function BookmarksImportDialog({
       />
       <div className="buttons-container mt">
         <Button action={() => handleImport()}>Import</Button>
+        <Button action={close}>Close</Button>
       </div>
     </Dialog>
   );

@@ -1,4 +1,6 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { Add } from "@material-symbols-svg/react/icons/add";
+import { Remove } from "@material-symbols-svg/react/icons/remove";
 import "./BookmarkItems.css";
 
 export default function BookmarkItems({
@@ -45,7 +47,14 @@ export default function BookmarkItems({
                     onClick={() => toggleNested(bookmarkItem.id)}
                     title={bookmarkItem.title}
                   >
-                    {`${showNested[bookmarkItem.id] ? "-" : "+"} ${bookmarkItem.title}`}
+                    <span>
+                      {showNested[bookmarkItem.id] ? (
+                        <Remove size={20} />
+                      ) : (
+                        <Add size={20} />
+                      )}
+                    </span>
+                    <span>{bookmarkItem.title}</span>
                   </button>
                 </>
               )}

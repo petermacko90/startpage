@@ -9,8 +9,12 @@
 }
 
 .folder-button {
+  display: inline-flex;
+  gap: var(--spacing-xs);
   margin-top: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
+  padding-top: 0;
+  padding-bottom: 0;
   vertical-align: middle;
   background-color: transparent;
   color: var(--color-light-3);
@@ -38,7 +42,6 @@ input[type="checkbox"] {
   height: var(--checkbox-size);
   display: inline-grid;
   place-content: center;
-  vertical-align: middle;
   background-color: var(--color-dark-1);
   border-radius: var(--border-radius-s);
   border: var(--border-width) solid var(--color-dark-4);
