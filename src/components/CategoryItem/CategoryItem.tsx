@@ -49,7 +49,7 @@ export default function CategoryItem({
     >
       <button
         id={`category-${category.id}`}
-        className="category-button"
+        className="category-button category-item"
         onClick={() => setShowCategoryModal(true)}
         title={category.title || NO_TITLE}
         ref={initialFocusRef}

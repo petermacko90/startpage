@@ -82,7 +82,7 @@ export default function CategoryList({
   );
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-button");
+    handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-item");
   }
 
   const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);

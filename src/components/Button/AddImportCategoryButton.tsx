@@ -14,7 +14,11 @@ export default function AddImportCategoryButton({
   buttonRef?: RefObject<HTMLButtonElement | null>;
 }) {
   return (
-    <button className="add-import-category" onClick={action} ref={buttonRef}>
+    <button
+      className="add-import-category category-item"
+      onClick={action}
+      ref={buttonRef}
+    >
       {icon}
       <span>{text}</span>
     </button>
