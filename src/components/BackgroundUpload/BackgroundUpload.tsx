@@ -106,7 +106,7 @@ export default function BackgroundUpload({
           </Button>
         )}
       </Form>
-      <Toast type="error" show={isError} text={errorMessage!} />
+      <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>
   );
 }

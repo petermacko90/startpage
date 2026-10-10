@@ -41,18 +41,13 @@ export async function createCategory(
   updateCategories(updatedCategories);
 }
 
-export async function importCategories(bookmarks: Record<string, boolean>) {
+export async function importCategories(bookmarks: Array<[string, boolean]>) {
   const state = await getState();
-
-  const selectedBookmarks = Object.entries(bookmarks).filter(
-    ([, value]) => value,
-  );
+  let categoriesCount = selectCategoriesCount(state);
 
   const bookmarkItems = await Promise.all(
-    selectedBookmarks.map(([key]) => browser.bookmarks.getSubTree(key)),
+    bookmarks.map(([key]) => browser.bookmarks.getSubTree(key)),
   );
-
-  let categoriesCount = selectCategoriesCount(state);
 
   const newCategories: Category[] = bookmarkItems.map((item) => {
     return {
