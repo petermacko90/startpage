@@ -19,11 +19,26 @@ export default function BookmarksImportDialog({
     chrome.bookmarks.BookmarkTreeNode[]
   >([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     browser.bookmarks.getTree().then((bookmarks) => {
       setBookmarks(bookmarks.at(0)?.children ?? []);
+      setIsLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (isLoading || !dialogRef.current) return;
+
+    const firstBookmark = dialogRef.current.querySelector(
+      ".folder-button",
+    ) as HTMLButtonElement;
+
+    if (firstBookmark) {
+      firstBookmark.focus();
+    }
+  }, [isLoading, dialogRef]);
 
   const [selectedBookmarks, setSelectedBookmarks] = useState<
     Record<string, boolean>
