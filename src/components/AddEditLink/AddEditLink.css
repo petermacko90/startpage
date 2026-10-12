@@ -12,7 +12,7 @@
 }
 
 .add-edit-link-actions {
-  margin-top: var(--spacing-s);
+  margin-top: var(--spacing-m);
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-s);
