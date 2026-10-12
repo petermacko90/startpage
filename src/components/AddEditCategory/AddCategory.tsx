@@ -24,7 +24,7 @@ export default function AddCategory({
       {showDialog && (
         <AddCategoryDialog
           dialogRef={dialogRef}
-          inputRef={focusRef}
+          inputRef={focusRef as RefObject<HTMLInputElement>}
           close={(categoryId) => {
             setShowDialog(false);
 

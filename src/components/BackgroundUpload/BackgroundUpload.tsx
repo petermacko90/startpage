@@ -6,13 +6,12 @@ import {
   type SetStateAction,
 } from "react";
 import { removeImage, saveImage } from "../../storage/indexedDB";
-import { BACKGROUND_KEY, ERROR_TIMEOUT } from "../../constants";
+import { BACKGROUND_KEY, ERROR_TIMEOUT, IMAGE_FILETYPE } from "../../constants";
 import { useTimer } from "../../hooks/useTimer";
-import Button from "../Button/Button";
-import Form from "../Form/Form";
-import Toast from "../Toast/Toast";
 import Dialog from "../Dialog/Dialog";
-import "./BackgroundUpload.css";
+import Form from "../Form/Form";
+import ImageUpload from "../Form/ImageUpload";
+import Toast from "../Toast/Toast";
 
 export default function BackgroundUpload({
   backgroundUrl,
@@ -24,7 +23,7 @@ export default function BackgroundUpload({
   backgroundUrl: string | null;
   setBackgroundUrl: Dispatch<SetStateAction<string | null>>;
   dialogRef: RefObject<HTMLDialogElement | null>;
-  focusRef: RefObject<HTMLInputElement | null>;
+  focusRef: RefObject<HTMLElement | null>;
   close: () => void;
 }) {
   const [isError, setIsError] = useState<boolean>(false);
@@ -38,7 +37,7 @@ export default function BackgroundUpload({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
+    if (!file.type.startsWith(IMAGE_FILETYPE)) {
       setIsError(true);
       setErrorMessage("Please select an image");
       startTimer(() => setIsError(false), ERROR_TIMEOUT);
@@ -91,20 +90,17 @@ export default function BackgroundUpload({
       closedby="closerequest"
       onClose={close}
       ref={dialogRef}
-      title="Set Background"
+      title="Set Wallpaper"
     >
       <Form>
-        <input
-          type="file"
-          accept="image/*"
-          ref={focusRef}
-          onChange={(e) => handleBackgroundUpload(e)}
+        <ImageUpload
+          label="Upload Wallpaper"
+          showDelete={backgroundUrl !== null}
+          deleteLabel="Remove Wallpaper"
+          handleUpload={handleBackgroundUpload}
+          handleDelete={() => handleBackgroundRemove()}
+          focusRef={focusRef}
         />
-        {backgroundUrl && (
-          <Button action={() => handleBackgroundRemove()}>
-            Remove Background
-          </Button>
-        )}
       </Form>
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>

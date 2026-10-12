@@ -59,6 +59,7 @@ export default function CategoryItem({
             <PageIcon
               key={link.id}
               domain={getHostname(link.url)}
+              id={link.customIconId}
               size="24px"
             />
           ))}
@@ -83,7 +84,7 @@ export default function CategoryItem({
         <EditCategory
           category={category}
           dialogRef={editCategoryRef}
-          inputRef={editCategoryInputRef}
+          inputRef={editCategoryInputRef as RefObject<HTMLInputElement>}
           close={() => {
             setShowEditCategory(false);
             setIdToFocus(category.id);

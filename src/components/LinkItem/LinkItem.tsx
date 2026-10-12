@@ -19,7 +19,7 @@ export default function LinkItem({ link }: { link: Link }) {
       data-flip-id={link.id}
     >
       <span className="link-icon-container">
-        <PageIcon domain={getHostname(link.url)} />
+        <PageIcon domain={getHostname(link.url)} id={link.customIconId} />
       </span>
       <span className="link-title">{link.title}</span>
     </a>

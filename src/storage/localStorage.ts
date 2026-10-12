@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link, State } from "../state/models";
 import { selectCategoriesCount, selectLink } from "../state/selectors";
+import { removeImage, saveImage } from "./indexedDB";
 
 export function setState(state: State) {
   browser.storage.local.set(state);
@@ -58,12 +59,12 @@ export async function importCategories(bookmarks: Array<[string, boolean]>) {
           ?.filter((item) => item.url)
           .map((item, index) => {
             return {
-              icon: "",
+              customIconId: null,
               id: uuidv4(),
               order: index,
               title: item.title,
               url: item.url!,
-            };
+            } as Link;
           }) ?? [],
       order: categoriesCount++,
       title: item[0].title,
@@ -127,74 +128,116 @@ export function deleteCategory(categoryId: Category["id"]) {
   });
 }
 
-export function createLink(
+export async function createLink(
   categoryId: Category["id"],
   order: Link["order"],
   title: Link["title"],
   url: Link["url"],
+  customIcon: File | null,
   linkCount: number,
 ) {
-  getState().then((state) => {
-    const newLink: Link = {
-      icon: "",
-      id: uuidv4(),
-      order,
-      title,
-      url,
-    };
+  const state = await getState();
+  const id = uuidv4();
+  let customIconId: Link["customIconId"] = null;
 
-    let updatedLinks: Link[];
-    const index = getCategoryIndex(state, categoryId);
-
-    if (order === linkCount) {
-      updatedLinks = state.categories[index].links = [
-        ...state.categories[index].links,
-        newLink,
-      ];
-    } else {
-      const links = [...state.categories[index].links];
-      links.splice(order, 0, newLink);
-      updatedLinks = reorderItems(links);
+  if (customIcon) {
+    try {
+      customIconId = uuidv4();
+      await saveImage(customIconId, customIcon);
+    } catch (e) {
+      console.error("failed to upload custom icon", e);
     }
+  }
 
-    setState({
-      categories: updateCategoryLinks(state, categoryId, index, updatedLinks),
-      undoState: undefined,
-    });
-  });
-}
-
-export function updateLink(
-  categoryId: Category["id"],
-  { icon, id, order, title, url }: Link,
-) {
-  const updatedLink: Link = {
-    icon,
+  const newLink: Link = {
+    customIconId,
     id,
     order,
     title,
     url,
   };
 
-  getState().then((state) => {
-    const index = getCategoryIndex(state, categoryId);
+  let updatedLinks: Link[];
+  const index = getCategoryIndex(state, categoryId);
 
-    const updatedLinks = state.categories[index].links.map((link) => {
-      return link.id === id ? updatedLink : link;
-    });
+  if (order === linkCount) {
+    updatedLinks = state.categories[index].links = [
+      ...state.categories[index].links,
+      newLink,
+    ];
+  } else {
+    const links = [...state.categories[index].links];
+    links.splice(order, 0, newLink);
+    updatedLinks = reorderItems(links);
+  }
 
-    const reorderedLinks = reorderLinksOnUpdate(
-      state,
-      categoryId,
-      id,
-      order,
-      updatedLinks,
-    );
+  setState({
+    categories: updateCategoryLinks(state, categoryId, index, updatedLinks),
+    undoState: undefined,
+  });
+}
 
-    setState({
-      categories: updateCategoryLinks(state, categoryId, index, reorderedLinks),
-      undoState: undefined,
-    });
+export async function updateLink(
+  categoryId: Category["id"],
+  { customIconId, id, order, title, url }: Link,
+  customIcon: File | null,
+) {
+  let updatedCustomIconId: Link["customIconId"] = customIconId;
+
+  if (!customIcon && customIconId) {
+    try {
+      removeImage(customIconId);
+      updatedCustomIconId = null;
+    } catch (e) {
+      console.error("failed to remove custom icon", e);
+      updatedCustomIconId = null;
+    }
+  }
+
+  if (customIcon) {
+    try {
+      if (customIconId) {
+        try {
+          await removeImage(customIconId);
+        } catch (e) {
+          console.error("failed to remove custom icon", e);
+        }
+      }
+
+      updatedCustomIconId = uuidv4();
+      await saveImage(updatedCustomIconId, customIcon);
+    } catch (e) {
+      console.error("failed to upload custom icon", e);
+      updatedCustomIconId = null;
+    }
+  }
+
+  const updatedLink: Link = {
+    customIconId: updatedCustomIconId,
+    id,
+    order,
+    title,
+    url,
+  };
+
+  const state = await getState();
+  const index = getCategoryIndex(state, categoryId);
+
+  const updatedLinks = state.categories[index].links.map((link) => {
+    return link.id === id ? updatedLink : link;
+  });
+
+  const reorderedLinks = reorderLinksOnUpdate(
+    state,
+    categoryId,
+    id,
+    order,
+    updatedLinks,
+  );
+
+  setState({
+    categories: updateCategoryLinks(state, categoryId, index, reorderedLinks),
+    undoState: undefined,
   });
 }
 
@@ -209,21 +252,32 @@ export function updateLinks(categoryId: Category["id"], links: Link[]) {
   });
 }
 
-export function deleteLink(categoryId: Category["id"], linkId: Link["id"]) {
-  getState().then((state) => {
-    const index = getCategoryIndex(state, categoryId);
+export async function deleteLink(
+  categoryId: Category["id"],
+  linkId: Link["id"],
+) {
+  const state = await getState();
+  const index = getCategoryIndex(state, categoryId);
+  const customIconId = selectLink(state)(categoryId, linkId)?.customIconId;
 
-    const filteredLinks = state.categories[index].links.filter((link) => {
-      return link.id !== linkId;
-    });
-
-    const reorderedLinks = reorderItems(filteredLinks);
-
-    setState({
-      categories: updateCategoryLinks(state, categoryId, index, reorderedLinks),
-      undoState: state.categories,
-    });
+  const filteredLinks = state.categories[index].links.filter((link) => {
+    return link.id !== linkId;
   });
+
+  const reorderedLinks = reorderItems(filteredLinks);
+
+  setState({
+    categories: updateCategoryLinks(state, categoryId, index, reorderedLinks),
+    undoState: state.categories,
+  });
+
+  if (customIconId) {
+    try {
+      await removeImage(customIconId);
+    } catch (e) {
+      console.log("failed to remove custom icon", e);
+    }
+  }
 }
 
 export function undoState() {

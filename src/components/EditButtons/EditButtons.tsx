@@ -43,7 +43,7 @@ export default function EditButtons() {
         <span className="expanding-button-icon">
           <Wallpaper />
         </span>
-        <span className="expanding-button-text">Set Background</span>
+        <span className="expanding-button-text">Set Wallpaper</span>
       </button>
 
       {showDialog && (

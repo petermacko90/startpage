@@ -1,6 +1,6 @@
 export type Link = {
   id: string;
-  icon: string;
+  customIconId: string | null;
   title: string;
   url: string;
   order: number;

@@ -1,14 +1,15 @@
-import { useContext, useState, type RefObject } from "react";
+import { useContext, useState, type ChangeEvent, type RefObject } from "react";
 import { StateContext } from "../../state/context.ts";
 import { type Category, type Link } from "../../state/models.ts";
-import { LOCALHOST } from "../../constants.ts";
+import { IMAGE_FILETYPE, LOCALHOST } from "../../constants.ts";
 import { selectLink, selectLinks } from "../../state/selectors.ts";
 import { createLink, updateLink } from "../../storage/localStorage.ts";
 import Button from "../Button/Button.tsx";
 import Form from "../Form/Form.tsx";
 import FormField from "../Form/FormField.tsx";
-import TextInput from "../Form/TextInput.tsx";
+import ImageUpload from "../Form/ImageUpload.tsx";
 import OrderInput from "../Form/OrderInput.tsx";
+import TextInput from "../Form/TextInput.tsx";
 import "./AddEditLink.css";
 
 export default function AddEditLink({
@@ -36,8 +37,11 @@ export default function AddEditLink({
 
   const [title, setTitle] = useState(link ? link.title : "");
   const [url, setUrl] = useState(link ? link.url : "");
-  const [order, setOrder] = useState(link ? link.order : linkCount);
   const [urlError, setUrlError] = useState("");
+  const [order, setOrder] = useState(link ? link.order : linkCount);
+  const [customIcon, setCustomIcon] = useState<File | null>(null);
+  const [customIconId, setCustomIconId] = useState(link?.customIconId);
+  // const [customIconError, setCustomIconError] = useState("");
 
   function isValidUrl(url: string): boolean {
     try {
@@ -62,13 +66,17 @@ export default function AddEditLink({
     }
 
     if (link) {
-      updateLink(categoryId, {
-        icon: link.icon,
-        id: link.id,
-        order,
-        title: title.trim() || formattedUrl,
-        url: formattedUrl,
-      });
+      updateLink(
+        categoryId,
+        {
+          customIconId: link.customIconId,
+          id: link.id,
+          order,
+          title: title.trim() || formattedUrl,
+          url: formattedUrl,
+        },
+        customIcon,
+      );
 
       cancel();
     } else {
@@ -77,6 +85,7 @@ export default function AddEditLink({
         order,
         title.trim() || formattedUrl,
         formattedUrl,
+        customIcon,
         linkCount,
       );
 
@@ -103,6 +112,32 @@ export default function AddEditLink({
 
     if (url.startsWith(`${LOCALHOST}:`)) return `${http}${url}`;
     return `${https}${url}`;
+  }
+
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith(IMAGE_FILETYPE)) {
+      // setCustomIconError("Please select an image");
+      return;
+    }
+
+    setCustomIcon(file);
+
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+
+    setPreviewUrl(URL.createObjectURL(file));
+  }
+
+  function handleIconDelete() {
+    setCustomIcon(null);
+    setCustomIconId(null);
+    setPreviewUrl(null);
   }
 
   return (
@@ -141,6 +176,14 @@ export default function AddEditLink({
             itemId={linkId}
           />
         </FormField>
+        <ImageUpload
+          label="Upload Icon"
+          showDelete={customIconId !== null || customIcon !== null}
+          deleteLabel="Remove Icon"
+          previewUrl={previewUrl}
+          handleUpload={handleIconUpload}
+          handleDelete={handleIconDelete}
+        />
       </Form>
       <div className="add-edit-link-actions">
         <Button action={() => handleSave()}>Save</Button>
