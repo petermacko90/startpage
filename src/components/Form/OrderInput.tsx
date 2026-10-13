@@ -22,8 +22,8 @@ export default function OrderInput<T extends Category | Link>({
   const min = 0;
 
   function getOrderHint(): string {
-    if (value === min) return "(first)";
-    if (value === max) return "(last)";
+    if (value === min) return `${value + 1} (first)`;
+    if (value === max) return `${value + 1} (last)`;
 
     let hintItems = [...items];
 
@@ -43,8 +43,10 @@ export default function OrderInput<T extends Category | Link>({
       <div className="order-form-field">
         <label htmlFor="order-input">Order:</label>
         <Button
-          action={() => setValue((prevValue) => prevValue - 1)}
-          disabled={value <= min}
+          action={() => {
+            if (value <= min) return;
+            setValue((prevValue) => prevValue - 1);
+          }}
         >
           <ChevronLeft size={16} />
         </Button>
@@ -58,8 +60,10 @@ export default function OrderInput<T extends Category | Link>({
           hidden
         />
         <Button
-          action={() => setValue((prevValue) => prevValue + 1)}
-          disabled={value >= max}
+          action={() => {
+            if (value >= max) return;
+            setValue((prevValue) => prevValue + 1);
+          }}
         >
           <ChevronRight size={16} />
         </Button>
