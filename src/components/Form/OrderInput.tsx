@@ -2,8 +2,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "@material-symbols-svg/react/icons/chevron-left";
 import { ChevronRight } from "@material-symbols-svg/react/icons/chevron-right";
 import type { Category, Link } from "../../state/models";
-import { NO_TITLE } from "../../constants";
 import Button from "../Button/Button";
+import OrderHint from "./OrderHint";
 import "./OrderInput.css";
 
 export default function OrderInput<T extends Category | Link>({
@@ -20,22 +20,11 @@ export default function OrderInput<T extends Category | Link>({
   itemId: T["id"] | null;
 }) {
   const min = 0;
+  let hintItems = [...items];
 
-  function getOrderHint(): string {
-    if (value === min) return `${value + 1} (first)`;
-    if (value === max) return `${value + 1} (last)`;
-
-    let hintItems = [...items];
-
-    if (itemId) {
-      const oldIndex = hintItems.findIndex((i) => i.id === itemId);
-      hintItems = hintItems.toSpliced(oldIndex, 1);
-    }
-
-    const itemBefore = hintItems[value - 1];
-    const itemAfter = hintItems[value];
-
-    return `${value + 1} (between ${itemBefore.title || NO_TITLE} and ${itemAfter?.title || NO_TITLE})`;
+  if (itemId) {
+    const oldIndex = hintItems.findIndex((i) => i.id === itemId);
+    hintItems = hintItems.toSpliced(oldIndex, 1);
   }
 
   return (
@@ -68,9 +57,7 @@ export default function OrderInput<T extends Category | Link>({
           <ChevronRight size={16} />
         </Button>
       </div>
-      <div className="order-hint overflow" title={getOrderHint()}>
-        {getOrderHint()}
-      </div>
+      <OrderHint value={value} items={hintItems} />
     </div>
   );
 }

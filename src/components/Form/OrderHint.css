@@ -1,0 +1,11 @@
+.order-hint {
+  width: 100%;
+  color: var(--color-light-1);
+  font-size: var(--font-size-m);
+}
+
+@media screen and (min-width: 30rem) {
+  .order-hint {
+    width: initial;
+  }
+}
