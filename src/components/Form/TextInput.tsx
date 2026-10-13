@@ -8,11 +8,13 @@ export default function TextInput({
   onPressEnter,
   maxLength,
   inputRef,
+  type = "text",
 }: {
   id: string;
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
   onPressEnter: () => void;
+  type?: "text" | "url";
   maxLength?: number;
   inputRef?: RefObject<HTMLInputElement | null>;
 }) {
@@ -25,7 +27,7 @@ export default function TextInput({
 
   return (
     <input
-      type="text"
+      type={type}
       id={id}
       value={value}
       onChange={onChange}

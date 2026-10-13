@@ -205,6 +205,7 @@ export default function AddEditLink({
             }}
             onPressEnter={handleSave}
             value={url}
+            type="url"
           />
         </FormField>
         <OrderInput
