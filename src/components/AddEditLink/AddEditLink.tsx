@@ -1,9 +1,17 @@
-import { useContext, useState, type ChangeEvent, type RefObject } from "react";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type RefObject,
+} from "react";
 import { StateContext } from "../../state/context.ts";
 import { type Category, type Link } from "../../state/models.ts";
 import { IMAGE_FILETYPE, LOCALHOST } from "../../constants.ts";
 import { selectLink, selectLinks } from "../../state/selectors.ts";
 import { createLink, updateLink } from "../../storage/localStorage.ts";
+import { getImage } from "../../storage/indexedDB.ts";
 import Button from "../Button/Button.tsx";
 import Form from "../Form/Form.tsx";
 import FormField from "../Form/FormField.tsx";
@@ -134,11 +142,44 @@ export default function AddEditLink({
     setPreviewUrl(URL.createObjectURL(file));
   }
 
+  const uploadIconRef = useRef<HTMLElement>(null);
+
   function handleIconDelete() {
     setCustomIcon(null);
     setCustomIconId(null);
     setPreviewUrl(null);
+    setCustomIconSrc(null);
+    uploadIconRef.current?.focus();
   }
+
+  const [customIconSrc, setCustomIconSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let objectUrl = "";
+
+    async function loadCustomIcon() {
+      if (link?.customIconId) {
+        try {
+          const blob = await getImage(link.customIconId);
+
+          if (blob) {
+            objectUrl = URL.createObjectURL(blob);
+            setCustomIconSrc(objectUrl);
+          }
+        } catch (e) {
+          console.error("failed to fetch image from IndexedDB", e);
+        }
+      }
+    }
+
+    loadCustomIcon();
+
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [link?.customIconId]);
 
   return (
     <div className="add-edit-link-container">
@@ -180,9 +221,10 @@ export default function AddEditLink({
           label="Upload Icon"
           showDelete={customIconId !== null || customIcon !== null}
           deleteLabel="Remove Icon"
-          previewUrl={previewUrl}
+          previewUrl={previewUrl ?? customIconSrc}
           handleUpload={handleIconUpload}
           handleDelete={handleIconDelete}
+          focusRef={uploadIconRef}
         />
       </Form>
       <div className="add-edit-link-actions">
