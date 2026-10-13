@@ -7,14 +7,12 @@ import Button from "../Button/Button";
 import "./OrderInput.css";
 
 export default function OrderInput<T extends Category | Link>({
-  id,
   value,
   max,
   setValue,
   items,
   itemId,
 }: {
-  id: string;
   value: number;
   max: number;
   setValue: Dispatch<SetStateAction<number>>;
@@ -27,41 +25,48 @@ export default function OrderInput<T extends Category | Link>({
     if (value === min) return "(first)";
     if (value === max) return "(last)";
 
+    let hintItems = [...items];
+
     if (itemId) {
-      const oldIndex = items.findIndex((i) => i.id === itemId);
-      items.splice(oldIndex, 1);
+      const oldIndex = hintItems.findIndex((i) => i.id === itemId);
+      hintItems = hintItems.toSpliced(oldIndex, 1);
     }
 
-    const itemBefore = items[value - 1];
-    const itemAfter = items[value];
+    const itemBefore = hintItems[value - 1];
+    const itemAfter = hintItems[value];
 
-    return `(between ${itemBefore.title || NO_TITLE} and ${itemAfter.title || NO_TITLE})`;
+    return `${value + 1} (between ${itemBefore.title || NO_TITLE} and ${itemAfter?.title || NO_TITLE})`;
   }
 
   return (
-    <div className="order-input">
-      <Button
-        action={() => setValue((prevValue) => prevValue - 1)}
-        disabled={value <= min}
-      >
-        <ChevronLeft size={16} />
-      </Button>
-      <input
-        type="number"
-        id={id}
-        value={value}
-        min={min}
-        max={max}
-        onChange={(e) => setValue(Number(e.target.value))}
-        hidden
-      />
-      <Button
-        action={() => setValue((prevValue) => prevValue + 1)}
-        disabled={value >= max}
-      >
-        <ChevronRight size={16} />
-      </Button>
-      <span className="hint">{`${value + 1} ${getOrderHint()}`}</span>
+    <div className="order-input-container">
+      <div className="order-form-field">
+        <label htmlFor="order-input">Order:</label>
+        <Button
+          action={() => setValue((prevValue) => prevValue - 1)}
+          disabled={value <= min}
+        >
+          <ChevronLeft size={16} />
+        </Button>
+        <input
+          type="number"
+          id="order-input"
+          value={value}
+          min={min}
+          max={max}
+          onChange={(e) => setValue(Number(e.target.value))}
+          hidden
+        />
+        <Button
+          action={() => setValue((prevValue) => prevValue + 1)}
+          disabled={value >= max}
+        >
+          <ChevronRight size={16} />
+        </Button>
+      </div>
+      <div className="order-hint overflow" title={getOrderHint()}>
+        {getOrderHint()}
+      </div>
     </div>
   );
 }

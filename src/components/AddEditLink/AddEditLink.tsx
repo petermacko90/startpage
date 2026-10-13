@@ -207,16 +207,13 @@ export default function AddEditLink({
             value={url}
           />
         </FormField>
-        <FormField id="order" labelText="Order:">
-          <OrderInput
-            id="order"
-            value={order}
-            max={link ? linkCount - 1 : linkCount}
-            setValue={setOrder}
-            items={[...links!]}
-            itemId={linkId}
-          />
-        </FormField>
+        <OrderInput
+          value={order}
+          max={link ? linkCount - 1 : linkCount}
+          setValue={setOrder}
+          items={[...links!]}
+          itemId={linkId}
+        />
         <ImageUpload
           label="Upload Icon"
           showDelete={customIconId !== null || customIcon !== null}

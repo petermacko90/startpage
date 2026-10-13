@@ -42,16 +42,13 @@ export default function CategoryForm({
           inputRef={inputRef}
         />
       </FormField>
-      <FormField id="order" labelText="Order:">
-        <OrderInput
-          id="order"
-          value={order}
-          max={maxOrder}
-          setValue={setOrder}
-          items={[...state.categories]}
-          itemId={itemId}
-        />
-      </FormField>
+      <OrderInput
+        value={order}
+        max={maxOrder}
+        setValue={setOrder}
+        items={[...state.categories]}
+        itemId={itemId}
+      />
       <div className="buttons-container">
         <Button action={() => handleCategorySave(title, order)}>Save</Button>
         <Button action={() => close()}>Close</Button>
