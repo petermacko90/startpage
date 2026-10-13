@@ -9,7 +9,6 @@ import { removeImage, saveImage } from "../../storage/indexedDB";
 import { BACKGROUND_KEY, ERROR_TIMEOUT, IMAGE_FILETYPE } from "../../constants";
 import { useTimer } from "../../hooks/useTimer";
 import Dialog from "../Dialog/Dialog";
-import Form from "../Form/Form";
 import ImageUpload from "../Form/ImageUpload";
 import Toast from "../Toast/Toast";
 
@@ -92,16 +91,14 @@ export default function BackgroundUpload({
       ref={dialogRef}
       title="Set Wallpaper"
     >
-      <Form>
-        <ImageUpload
-          label="Upload Wallpaper"
-          showDelete={backgroundUrl !== null}
-          deleteLabel="Remove Wallpaper"
-          handleUpload={handleBackgroundUpload}
-          handleDelete={() => handleBackgroundRemove()}
-          focusRef={focusRef}
-        />
-      </Form>
+      <ImageUpload
+        label="Upload Wallpaper"
+        showDelete={backgroundUrl !== null}
+        deleteLabel="Remove Wallpaper"
+        handleUpload={handleBackgroundUpload}
+        handleDelete={() => handleBackgroundRemove()}
+        focusRef={focusRef}
+      />
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>
   );

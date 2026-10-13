@@ -226,21 +226,21 @@ export default function AddEditLink({
           handleDelete={handleIconDelete}
           focusRef={uploadIconRef}
         />
+        <div className="buttons-container">
+          <Button action={() => handleSave()}>Save</Button>
+          <Button action={cancel}>Cancel</Button>
+          {linkId && (
+            <Button
+              action={() => {
+                handleDeleteLink!(linkId, order);
+                cancel();
+              }}
+            >
+              Delete Link
+            </Button>
+          )}
+        </div>
       </Form>
-      <div className="add-edit-link-actions">
-        <Button action={() => handleSave()}>Save</Button>
-        <Button action={cancel}>Cancel</Button>
-        {linkId && (
-          <Button
-            action={() => {
-              handleDeleteLink!(linkId, order);
-              cancel();
-            }}
-          >
-            Delete Link
-          </Button>
-        )}
-      </div>
     </div>
   );
 }

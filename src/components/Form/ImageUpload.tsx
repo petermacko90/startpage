@@ -22,7 +22,7 @@ export default function ImageUpload({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="image-upload-container">
+    <div className="buttons-container">
       <label
         htmlFor="image-upload"
         className="image-upload"
