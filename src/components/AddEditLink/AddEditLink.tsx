@@ -12,12 +12,14 @@ import { IMAGE_FILETYPE, LOCALHOST } from "../../constants.ts";
 import { selectLink, selectLinks } from "../../state/selectors.ts";
 import { createLink, updateLink } from "../../storage/localStorage.ts";
 import { getImage } from "../../storage/indexedDB.ts";
+import { useErrorToast } from "../../hooks/useToastError.ts";
 import Button from "../Button/Button.tsx";
 import Form from "../Form/Form.tsx";
 import FormField from "../Form/FormField.tsx";
 import ImageUpload from "../Form/ImageUpload.tsx";
 import OrderInput from "../Form/OrderInput.tsx";
 import TextInput from "../Form/TextInput.tsx";
+import Toast from "../Toast/Toast.tsx";
 import "./AddEditLink.css";
 
 export default function AddEditLink({
@@ -49,7 +51,6 @@ export default function AddEditLink({
   const [order, setOrder] = useState(link ? link.order : linkCount);
   const [customIcon, setCustomIcon] = useState<File | null>(null);
   const [customIconId, setCustomIconId] = useState(link?.customIconId);
-  // const [customIconError, setCustomIconError] = useState("");
 
   function isValidUrl(url: string): boolean {
     try {
@@ -123,13 +124,16 @@ export default function AddEditLink({
   }
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
 
   function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
+    clearError();
+
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      // setCustomIconError("Please select an image");
+      showErrorToast("Please select an image");
       return;
     }
 
@@ -217,7 +221,7 @@ export default function AddEditLink({
         />
         <ImageUpload
           label="Upload Icon"
-          showDelete={customIconId !== null || customIcon !== null}
+          showDelete={!!customIconId || customIcon !== null}
           deleteLabel="Remove Icon"
           previewUrl={previewUrl ?? customIconSrc}
           handleUpload={handleIconUpload}
@@ -239,6 +243,7 @@ export default function AddEditLink({
           )}
         </div>
       </Form>
+      <Toast type="error" show={isError} text={errorMessage} />
     </div>
   );
 }
