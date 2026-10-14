@@ -1,7 +1,6 @@
 import { useEffect, useState, type RefObject } from "react";
-import { ERROR_TIMEOUT } from "../../constants";
 import { importCategories } from "../../storage/localStorage";
-import { useTimer } from "../../hooks/useTimer";
+import { useErrorToast } from "../../hooks/useToastError";
 import BookmarkItems from "./BookmarkItems";
 import Button from "../Button/Button";
 import Dialog from "../Dialog/Dialog";
@@ -44,22 +43,17 @@ export default function BookmarksImportDialog({
     Record<string, boolean>
   >({});
 
-  const [isError, setIsError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const { clearTimer, startTimer } = useTimer();
+  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
 
   function handleImport() {
-    setIsError(false);
-    clearTimer();
+    clearError();
 
     const bookmarks = Object.entries(selectedBookmarks).filter(
       ([, value]) => value,
     );
 
     if (bookmarks.length === 0) {
-      setIsError(true);
-      setErrorMessage("No bookmarks selected.");
-      startTimer(() => setIsError(false), ERROR_TIMEOUT);
+      showErrorToast("No bookmarks selected.");
       return;
     }
 

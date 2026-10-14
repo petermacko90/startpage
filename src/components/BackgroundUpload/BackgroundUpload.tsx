@@ -1,13 +1,12 @@
 import {
-  useState,
   type ChangeEvent,
   type Dispatch,
   type RefObject,
   type SetStateAction,
 } from "react";
 import { removeImage, saveImage } from "../../storage/indexedDB";
-import { BACKGROUND_KEY, ERROR_TIMEOUT, IMAGE_FILETYPE } from "../../constants";
-import { useTimer } from "../../hooks/useTimer";
+import { BACKGROUND_KEY, IMAGE_FILETYPE } from "../../constants";
+import { useErrorToast } from "../../hooks/useToastError";
 import Dialog from "../Dialog/Dialog";
 import ImageUpload from "../Form/ImageUpload";
 import Toast from "../Toast/Toast";
@@ -25,21 +24,16 @@ export default function BackgroundUpload({
   focusRef: RefObject<HTMLElement | null>;
   close: () => void;
 }) {
-  const [isError, setIsError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const { clearTimer, startTimer } = useTimer();
+  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
 
   async function handleBackgroundUpload(e: ChangeEvent<HTMLInputElement>) {
-    setIsError(false);
-    clearTimer();
+    clearError();
 
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      setIsError(true);
-      setErrorMessage("Please select an image");
-      startTimer(() => setIsError(false), ERROR_TIMEOUT);
+      showErrorToast("Please select an image");
       return;
     }
 
@@ -54,16 +48,13 @@ export default function BackgroundUpload({
       });
     } catch (error) {
       console.error("failed to set background", error);
-      setIsError(true);
-      setErrorMessage("Failed to set background");
-      startTimer(() => setIsError(false), ERROR_TIMEOUT);
+      showErrorToast("Failed to set background");
       return;
     }
   }
 
   async function handleBackgroundRemove() {
-    setIsError(false);
-    clearTimer();
+    clearError();
 
     try {
       await removeImage(BACKGROUND_KEY);
@@ -77,9 +68,7 @@ export default function BackgroundUpload({
       });
     } catch (error) {
       console.error("failed to remove background", error);
-      setIsError(true);
-      setErrorMessage("Failed to remove background");
-      startTimer(() => setIsError(false), ERROR_TIMEOUT);
+      showErrorToast("Failed to remove background");
       return;
     }
   }
