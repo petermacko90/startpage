@@ -1,6 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link, State } from "../state/models";
-import { selectCategoriesCount, selectLink } from "../state/selectors";
+import {
+  selectCategoriesCount,
+  selectLink,
+  selectLinks,
+} from "../state/selectors";
 import { removeImage, saveImage } from "./indexedDB";
 
 export function setState(state: State) {
@@ -113,18 +117,29 @@ export function updateCategories(categories: Category[]) {
   });
 }
 
-export function deleteCategory(categoryId: Category["id"]) {
-  getState().then((state) => {
-    const filteredCategories = state.categories.filter((category) => {
-      return category.id !== categoryId;
-    });
+export async function deleteCategory(categoryId: Category["id"]) {
+  const state = await getState();
+  const links = selectLinks(state)(categoryId);
 
-    const reorderedCategories = reorderItems(filteredCategories);
+  links?.forEach(async (link) => {
+    if (link.customIconId) {
+      try {
+        await removeImage(link.customIconId);
+      } catch (e) {
+        console.error("failed to remove custom icon", e);
+      }
+    }
+  });
 
-    setState({
-      categories: reorderedCategories,
-      undoState: state.categories,
-    });
+  const filteredCategories = state.categories.filter((category) => {
+    return category.id !== categoryId;
+  });
+
+  const reorderedCategories = reorderItems(filteredCategories);
+
+  setState({
+    categories: reorderedCategories,
+    undoState: state.categories,
   });
 }
 
