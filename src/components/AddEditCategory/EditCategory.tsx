@@ -1,7 +1,7 @@
 import { useContext, type RefObject } from "react";
 import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
-import { updateCategory } from "../../storage/localStorage";
+import { updateCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
 import Dialog from "../Dialog/Dialog";
 import CategoryForm from "./CategoryForm";

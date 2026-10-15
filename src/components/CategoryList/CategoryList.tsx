@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { StateContext } from "../../state/context";
 import type { Category } from "../../state/models";
+import { undoState } from "../../storage/localStorage/common";
 import {
   deleteCategory,
-  undoState,
   updateCategories,
-} from "../../storage/localStorage";
+} from "../../storage/localStorage/categories";
 import { UNDO_TIMEOUT } from "../../constants";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";

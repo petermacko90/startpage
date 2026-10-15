@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { initialState, reducer } from "./state/reducer";
 import type { Category } from "./state/models";
 import { StateContext } from "./state/context";
-import { getState } from "./storage/localStorage";
+import { getState } from "./storage/localStorage/common";
 import { handleNumericKeys } from "./utils/handleNumericKeys";
 import CategoryList from "./components/CategoryList/CategoryList";
 import WallpaperContainer from "./components/Wallpaper/WallpaperContainer";

@@ -1,6 +1,6 @@
 import { type Dispatch, type RefObject, type SetStateAction } from "react";
 import type { Category, Link } from "../../state/models";
-import { updateLinks } from "../../storage/localStorage";
+import { updateLinks } from "../../storage/localStorage/links";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";

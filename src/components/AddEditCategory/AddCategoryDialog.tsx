@@ -1,7 +1,7 @@
 import { useContext, type RefObject } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { StateContext } from "../../state/context";
-import { createCategory } from "../../storage/localStorage";
+import { createCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
 import Dialog from "../Dialog/Dialog";
 import CategoryForm from "./CategoryForm";

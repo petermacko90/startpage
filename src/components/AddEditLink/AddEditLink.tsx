@@ -6,20 +6,20 @@ import {
   type ChangeEvent,
   type RefObject,
 } from "react";
-import { StateContext } from "../../state/context.ts";
-import { type Category, type Link } from "../../state/models.ts";
-import { IMAGE_FILETYPE, LOCALHOST } from "../../constants.ts";
-import { selectLink, selectLinks } from "../../state/selectors.ts";
-import { createLink, updateLink } from "../../storage/localStorage.ts";
-import { getImage } from "../../storage/indexedDB.ts";
-import { useErrorToast } from "../../hooks/useToastError.ts";
-import Button from "../Button/Button.tsx";
-import Form from "../Form/Form.tsx";
-import FormField from "../Form/FormField.tsx";
-import ImageUpload from "../Form/ImageUpload.tsx";
-import OrderInput from "../Form/OrderInput.tsx";
-import TextInput from "../Form/TextInput.tsx";
-import Toast from "../Toast/Toast.tsx";
+import { StateContext } from "../../state/context";
+import { type Category, type Link } from "../../state/models";
+import { IMAGE_FILETYPE, LOCALHOST } from "../../constants";
+import { selectLink, selectLinks } from "../../state/selectors";
+import { createLink, updateLink } from "../../storage/localStorage/links";
+import { getImage } from "../../storage/indexedDB";
+import { useErrorToast } from "../../hooks/useToastError";
+import Button from "../Button/Button";
+import Form from "../Form/Form";
+import FormField from "../Form/FormField";
+import ImageUpload from "../Form/ImageUpload";
+import OrderInput from "../Form/OrderInput";
+import TextInput from "../Form/TextInput";
+import Toast from "../Toast/Toast";
 import "./AddEditLink.css";
 
 export default function AddEditLink({

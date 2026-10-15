@@ -1,5 +1,5 @@
 import { useEffect, useState, type RefObject } from "react";
-import { importCategories } from "../../storage/localStorage";
+import { importCategories } from "../../storage/localStorage/categories";
 import { useErrorToast } from "../../hooks/useToastError";
 import BookmarkItems from "./BookmarkItems";
 import Button from "../Button/Button";

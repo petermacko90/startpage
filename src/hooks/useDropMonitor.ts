@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import type { Category, Link } from "../state/models";
-import { reorderItems } from "../storage/localStorage";
+import { reorderItems } from "../storage/localStorage/common";
 
 export function useDropMonitor<T extends Category | Link>(
   items: T[],
