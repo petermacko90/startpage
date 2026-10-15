@@ -55,14 +55,20 @@ export default function CategoryItem({
         ref={initialFocusRef}
       >
         <span className="category-icon">
-          {category.links.slice(0, 4).map((link) => (
-            <PageIcon
-              key={link.id}
-              domain={getHostname(link.url)}
-              id={link.customIconId}
-              size="24px"
-            />
-          ))}
+          {category.customIconId ? (
+            <PageIcon domain="" id={category.customIconId} size="48px" />
+          ) : (
+            category.links
+              .slice(0, 4)
+              .map((link) => (
+                <PageIcon
+                  key={link.id}
+                  domain={getHostname(link.url)}
+                  id={link.customIconId}
+                  size="24px"
+                />
+              ))
+          )}
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>

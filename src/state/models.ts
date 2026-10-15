@@ -8,7 +8,7 @@ export type Link = {
 
 export type Category = {
   id: string;
-  icon: string;
+  customIconId: string | null;
   title: string;
   links: Link[];
   order: number;

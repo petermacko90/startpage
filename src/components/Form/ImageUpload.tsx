@@ -1,6 +1,6 @@
 import { useRef, type ChangeEvent, type RefObject } from "react";
-import "./ImageUpload.css";
 import Button from "../Button/Button";
+import "./ImageUpload.css";
 
 export default function ImageUpload({
   label,

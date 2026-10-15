@@ -19,9 +19,13 @@ export default function AddCategoryDialog({
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
 
-  function handleCategorySave(title: string, order: number) {
+  function handleCategorySave(
+    title: string,
+    order: number,
+    customIcon: File | null,
+  ) {
     const id = uuidv4();
-    createCategory(id, order, title.trim(), categoriesCount);
+    createCategory(id, order, title.trim(), customIcon, categoriesCount);
     close(id);
   }
 
@@ -35,6 +39,7 @@ export default function AddCategoryDialog({
       <CategoryForm
         titleInitial={""}
         orderInitial={categoriesCount}
+        customIconIdInitial={null}
         maxOrder={categoriesCount}
         handleCategorySave={handleCategorySave}
         itemId={null}

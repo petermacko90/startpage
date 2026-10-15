@@ -22,8 +22,18 @@ export default function EditCategory({
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
 
-  function handleCategorySave(title: string, order: number) {
-    updateCategory(category.id, title.trim(), order);
+  function handleCategorySave(
+    title: string,
+    order: number,
+    customIcon: File | null,
+  ) {
+    updateCategory(
+      category.id,
+      title.trim(),
+      order,
+      category.customIconId,
+      customIcon,
+    );
     close();
   }
 
@@ -37,6 +47,7 @@ export default function EditCategory({
       <CategoryForm
         titleInitial={category.title}
         orderInitial={category.order}
+        customIconIdInitial={category.customIconId}
         maxOrder={categoriesCount - 1}
         handleCategorySave={handleCategorySave}
         itemId={category.id}

@@ -10,7 +10,7 @@ export default function PageIcon({
 }: {
   domain: string;
   id: Link["customIconId"];
-  size?: "32px" | "24px";
+  size?: "32px" | "24px" | "48px";
 }) {
   const placeholderImage = "globe.svg";
   const url = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;

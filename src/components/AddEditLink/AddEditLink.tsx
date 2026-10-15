@@ -147,6 +147,7 @@ export default function AddEditLink({
   }
 
   const uploadIconRef = useRef<HTMLElement>(null);
+  const [customIconSrc, setCustomIconSrc] = useState<string | null>(null);
 
   function handleIconDelete() {
     setCustomIcon(null);
@@ -155,8 +156,6 @@ export default function AddEditLink({
     setCustomIconSrc(null);
     uploadIconRef.current?.focus();
   }
-
-  const [customIconSrc, setCustomIconSrc] = useState<string | null>(null);
 
   useEffect(() => {
     let objectUrl = "";
