@@ -11,7 +11,7 @@ import Dialog from "../Dialog/Dialog";
 import ImageUpload from "../Form/ImageUpload";
 import Toast from "../Toast/Toast";
 
-export default function BackgroundUpload({
+export default function WallpaperDialog({
   backgroundUrl,
   setBackgroundUrl,
   dialogRef,
@@ -47,8 +47,8 @@ export default function BackgroundUpload({
         return URL.createObjectURL(file);
       });
     } catch (error) {
-      console.error("failed to set background", error);
-      showErrorToast("Failed to set background");
+      console.error("failed to set wallpaper", error);
+      showErrorToast("Failed to set wallpaper");
       return;
     }
   }
@@ -67,8 +67,8 @@ export default function BackgroundUpload({
         return null;
       });
     } catch (error) {
-      console.error("failed to remove background", error);
-      showErrorToast("Failed to remove background");
+      console.error("failed to remove wallpaper", error);
+      showErrorToast("Failed to remove wallpaper");
       return;
     }
   }
@@ -78,10 +78,10 @@ export default function BackgroundUpload({
       closedby="closerequest"
       onClose={close}
       ref={dialogRef}
-      title="Set Wallpaper"
+      title="Wallpaper"
     >
       <ImageUpload
-        label="Upload Wallpaper"
+        label="Upload Image"
         showDelete={backgroundUrl !== null}
         deleteLabel="Remove Wallpaper"
         handleUpload={handleBackgroundUpload}

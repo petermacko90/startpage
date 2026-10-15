@@ -4,8 +4,8 @@ import type { Category } from "./state/models";
 import { StateContext } from "./state/context";
 import { getState } from "./storage/localStorage";
 import { handleNumericKeys } from "./utils/handleNumericKeys";
-import EditButtons from "./components/EditButtons/EditButtons";
 import CategoryList from "./components/CategoryList/CategoryList";
+import WallpaperContainer from "./components/Wallpaper/WallpaperContainer";
 import "./App.css";
 
 export default function App() {
@@ -100,7 +100,7 @@ export default function App() {
         shouldDisplayHints={isAppFocused && !isAnyModalOpen}
         isLoading={isLoading}
       />
-      <EditButtons />
+      <WallpaperContainer />
     </StateContext>
   );
 }

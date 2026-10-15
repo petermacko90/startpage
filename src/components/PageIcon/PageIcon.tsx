@@ -74,7 +74,7 @@ export default function PageIcon({
           setImgSrc(placeholderImage);
         }
       }}
-      onLoad={(e) => replacePlaceholderIcon(e)}
+      onLoad={replacePlaceholderIcon}
     />
   );
 }

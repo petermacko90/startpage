@@ -48,7 +48,7 @@
 
 .expanding-button:hover .expanding-button-text,
 .expanding-button:focus .expanding-button-text {
-  max-width: 7rem;
+  max-width: 8rem;
   margin-left: var(--spacing-s);
   margin-right: var(--spacing-s);
 }

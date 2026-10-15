@@ -3,10 +3,10 @@ import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
 import { getImage } from "../../storage/indexedDB";
 import { useDialog } from "../../hooks/useDialog";
-import BackgroundUpload from "../BackgroundUpload/BackgroundUpload";
-import "./EditButtons.css";
+import WallpaperDialog from "./WallpaperDialog";
+import "./WallpaperContainer.css";
 
-export default function EditButtons() {
+export default function WallpaperContainer() {
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,31 +30,32 @@ export default function EditButtons() {
   }, [backgroundUrl]);
 
   const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
-
-  const backgroundSetButtonRef = useRef<HTMLButtonElement | null>(null);
+  const wallpaperButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div className="edit-buttons-container">
       <button
         className="expanding-button"
         onClick={() => setShowDialog(true)}
-        ref={backgroundSetButtonRef}
+        ref={wallpaperButtonRef}
       >
         <span className="expanding-button-icon">
           <Wallpaper />
         </span>
-        <span className="expanding-button-text">Set Wallpaper</span>
+        <span className="expanding-button-text">
+          {backgroundUrl ? "Change Wallpaper" : "Add Wallpaper"}
+        </span>
       </button>
 
       {showDialog && (
-        <BackgroundUpload
+        <WallpaperDialog
           backgroundUrl={backgroundUrl}
           setBackgroundUrl={setBackgroundUrl}
           dialogRef={dialogRef}
           focusRef={focusRef}
           close={() => {
             setShowDialog(false);
-            setTimeout(() => backgroundSetButtonRef.current?.focus());
+            setTimeout(() => wallpaperButtonRef.current?.focus());
           }}
         />
       )}
