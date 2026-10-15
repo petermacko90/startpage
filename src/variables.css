@@ -1,0 +1,37 @@
+:root {
+  --color-dark-1: #2e3440;
+  --color-dark-2: #3b4252;
+  --color-dark-3: #434c5e;
+  --color-dark-4: #4c566a;
+  --color-light-1: #eceff4;
+  --color-light-3: #d8dee9;
+  --color-primary: #8fbcbb;
+  --color-tertiary: #5e81ac;
+  --color-red: #bf616a;
+
+  --border-width: 0.0625rem;
+  --outline: 0.125rem;
+
+  --spacing-xs: 0.25rem;
+  --spacing-s: 0.5rem;
+  --spacing-m: 1rem;
+
+  --border-radius-m: 0.5rem;
+  --border-radius-s: 0.25rem;
+
+  --font-size-m: 0.875rem;
+  --font-size-s: 0.78125rem;
+
+  --category-size: 6rem;
+  --link-icon-container-size: 4rem;
+  --link-width: calc(var(--link-icon-container-size) + var(--spacing-s));
+  --form-field-height: 2rem;
+  --edit-button-size: 2.25rem;
+
+  --hover-duration: 300ms;
+
+  --blur: 2px;
+
+  --box-shadow-m:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
