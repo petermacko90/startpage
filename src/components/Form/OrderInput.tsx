@@ -27,11 +27,18 @@ export default function OrderInput<T extends Category | Link>({
     hintItems = hintItems.toSpliced(oldIndex, 1);
   }
 
+  function isDisabled(): boolean {
+    if (itemId && items.length <= 1) return true;
+    if (!itemId && items.length <= 0) return true;
+    return false;
+  }
+
   return (
     <div className="order-input-container">
       <div className="order-form-field">
         <label htmlFor="order-input">Order:</label>
         <Button
+          disabled={isDisabled()}
           action={() => {
             if (value <= min) return;
             setValue((prevValue) => prevValue - 1);
@@ -49,6 +56,7 @@ export default function OrderInput<T extends Category | Link>({
           hidden
         />
         <Button
+          disabled={isDisabled()}
           action={() => {
             if (value >= max) return;
             setValue((prevValue) => prevValue + 1);
