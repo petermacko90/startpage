@@ -8,6 +8,7 @@
   border: none;
   border-radius: var(--border-radius-s);
   font-size: var(--font-size-m);
+  font-weight: bold;
 }
 
 .button:hover:not(:disabled) {
@@ -16,4 +17,20 @@
 
 .button:focus {
   outline: var(--outline) solid var(--color-primary);
+}
+
+.button.danger {
+  background-color: var(--color-red);
+}
+
+.button.danger:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--color-red) 80%,
+    var(--color-light-1)
+  );
+}
+
+.button.danger:focus {
+  outline-color: var(--color-light-1);
 }

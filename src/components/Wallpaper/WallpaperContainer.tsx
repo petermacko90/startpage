@@ -33,7 +33,7 @@ export default function WallpaperContainer() {
   const wallpaperButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
-    <div className="edit-buttons-container">
+    <div className="wallpaper-container">
       <button
         className="expanding-button"
         onClick={() => setShowDialog(true)}

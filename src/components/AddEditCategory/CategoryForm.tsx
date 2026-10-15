@@ -53,7 +53,9 @@ export default function CategoryForm({
         <Button action={() => handleCategorySave(title, order)}>Save</Button>
         <Button action={() => close()}>Close</Button>
         {handleDeleteCategory && (
-          <Button action={handleDeleteCategory}>Delete Category</Button>
+          <Button type="danger" action={handleDeleteCategory}>
+            Delete Category
+          </Button>
         )}
       </div>
     </Form>

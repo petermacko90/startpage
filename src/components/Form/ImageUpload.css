@@ -8,6 +8,7 @@
   border: none;
   border-radius: var(--border-radius-s);
   font-size: var(--font-size-m);
+  font-weight: bold;
   cursor: pointer;
 }
 

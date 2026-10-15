@@ -49,7 +49,11 @@ export default function ImageUpload({
       {previewUrl && (
         <img src={previewUrl} alt="custom icon" className="icon-preview" />
       )}
-      {showDelete && <Button action={handleDelete}>{deleteLabel}</Button>}
+      {showDelete && (
+        <Button type="danger" action={handleDelete}>
+          {deleteLabel}
+        </Button>
+      )}
     </div>
   );
 }

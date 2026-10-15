@@ -233,6 +233,7 @@ export default function AddEditLink({
           <Button action={cancel}>Cancel</Button>
           {linkId && (
             <Button
+              type="danger"
               action={() => {
                 handleDeleteLink!(linkId, order);
                 cancel();
