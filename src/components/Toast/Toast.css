@@ -7,10 +7,11 @@
   align-items: baseline;
   flex-wrap: wrap;
   gap: var(--spacing-m);
-  padding: var(--spacing-s);
+  padding: var(--spacing-s) var(--spacing-m);
   background-color: var(--color-dark-2);
   border: var(--border-width) solid var(--color-dark-4);
   border-radius: var(--border-radius-s);
+  font-weight: bold;
   box-shadow: var(--box-shadow-m);
   transition: all 0.5s;
 }

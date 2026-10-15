@@ -13,5 +13,6 @@ label {
 }
 
 .error-text {
+  margin-top: var(--spacing-xs);
   color: var(--color-red);
 }
