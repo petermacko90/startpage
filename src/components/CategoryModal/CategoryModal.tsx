@@ -3,6 +3,7 @@ import type { Category, Link } from "../../state/models";
 import { NO_TITLE, UNDO_TIMEOUT } from "../../constants";
 import { undoState } from "../../storage/localStorage/common";
 import { deleteLink } from "../../storage/localStorage/links";
+import { getNeighborId } from "../../utils/getNeighborId";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import { useFocusById } from "../../hooks/useFocusById";
 import { useTimer } from "../../hooks/useTimer";
@@ -40,17 +41,7 @@ export default function CategoryModal({
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
 
   function handleDeleteLink(linkId: Link["id"], index: number) {
-    let neighborId: Link["id"] | null = null;
-
-    if (category.links.length > 1) {
-      if (index < category.links.length - 1) {
-        neighborId = category.links[index + 1].id;
-      } else {
-        neighborId = category.links[index - 1].id;
-      }
-    }
-
-    neighborIdRef.current = neighborId;
+    neighborIdRef.current = getNeighborId(category.links, index);
     setDeletedLinkId(linkId);
     deleteLink(category.id, linkId);
     setIsShowUndo(true);

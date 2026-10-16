@@ -11,6 +11,7 @@ import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useFocusById } from "../../hooks/useFocusById";
 import { useTimer } from "../../hooks/useTimer";
+import { getNeighborId } from "../../utils/getNeighborId";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
 import BookmarksImport from "../BookmarksImport/BookmarksImport";
@@ -28,19 +29,10 @@ export default function CategoryList({
   const state = useContext(StateContext);
   const [isShowUndo, setIsShowUndo] = useState(false);
   const { clearTimer, startTimer } = useTimer();
+  const neighborIdRef = useRef<Category["id"] | null>(null);
 
   function handleDeleteCategory(categoryId: Category["id"], index: number) {
-    let neighborId: Category["id"] | null = null;
-
-    if (state.categories.length > 1) {
-      if (index < state.categories.length - 1) {
-        neighborId = state.categories[index + 1].id;
-      } else {
-        neighborId = state.categories[index - 1].id;
-      }
-    }
-
-    neighborIdRef.current = neighborId;
+    neighborIdRef.current = getNeighborId(state.categories, index);
     setDeletedCategoryId(categoryId);
     deleteCategory(categoryId);
     setIsShowUndo(true);
@@ -87,7 +79,6 @@ export default function CategoryList({
 
   const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
-  const neighborIdRef = useRef<Category["id"] | null>(null);
 
   const [deletedCategoryId, setDeletedCategoryId] = useState<
     Category["id"] | null
