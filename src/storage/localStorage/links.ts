@@ -87,14 +87,13 @@ export async function updateLink(
   });
 }
 
-export function updateLinks(categoryId: Category["id"], links: Link[]) {
-  getState().then((state) => {
-    const index = getCategoryIndex(state, categoryId);
+export async function updateLinks(categoryId: Category["id"], links: Link[]) {
+  const state = await getState();
+  const index = getCategoryIndex(state, categoryId);
 
-    setState({
-      categories: updateCategoryLinks(state, categoryId, index, links),
-      undoState: undefined,
-    });
+  setState({
+    categories: updateCategoryLinks(state, categoryId, index, links),
+    undoState: undefined,
   });
 }
 

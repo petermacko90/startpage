@@ -12,13 +12,13 @@ export async function getState(): Promise<State> {
   return state;
 }
 
-export function undoState() {
-  getState().then((state) => {
-    if (!state.undoState) return;
-    setState({
-      categories: state.undoState,
-      undoState: undefined,
-    });
+export async function undoState() {
+  const state = await getState();
+  if (!state.undoState) return;
+
+  setState({
+    categories: state.undoState,
+    undoState: undefined,
   });
 }
 
