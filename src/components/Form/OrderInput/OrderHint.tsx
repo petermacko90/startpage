@@ -1,5 +1,5 @@
-import { NO_TITLE } from "../../constants";
-import type { Category, Link } from "../../state/models";
+import { NO_TITLE } from "../../../constants";
+import type { Category, Link } from "../../../state/models";
 import "./OrderHint.css";
 
 export default function OrderHint<T extends Category | Link>({

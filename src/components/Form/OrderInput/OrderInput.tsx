@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "@material-symbols-svg/react/icons/chevron-left";
 import { ChevronRight } from "@material-symbols-svg/react/icons/chevron-right";
-import type { Category, Link } from "../../state/models";
-import Button from "../Button/Button";
+import type { Category, Link } from "../../../state/models";
+import Button from "../../Button/Button";
 import OrderHint from "./OrderHint";
 import "./OrderInput.css";
 

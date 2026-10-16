@@ -17,7 +17,7 @@ import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import ImageUpload from "../Form/ImageUpload";
-import OrderInput from "../Form/OrderInput";
+import OrderInput from "../Form/OrderInput/OrderInput";
 import TextInput from "../Form/TextInput";
 import Toast from "../Toast/Toast";
 import "./AddEditLink.css";
