@@ -1,6 +1,4 @@
 import { useRef, useState, type KeyboardEvent, type RefObject } from "react";
-import { Add } from "@material-symbols-svg/react/icons/add";
-import { Close } from "@material-symbols-svg/react/icons/close";
 import type { Category, Link } from "../../state/models";
 import { NO_TITLE, UNDO_TIMEOUT } from "../../constants";
 import { undoState } from "../../storage/localStorage/common";
@@ -115,13 +113,9 @@ export default function CategoryModal({
         className={`buttons-container${isAddingLink || editLinkId ? " mb" : ""}`}
       >
         <Button action={() => handleAddLink()} buttonRef={addLinkRef}>
-          <Add />
           <span>Add Link</span>
         </Button>
-        <Button action={close}>
-          <Close />
-          Close
-        </Button>
+        <Button action={close}>Close</Button>
       </div>
       {isAddingLink && (
         <AddEditLink
