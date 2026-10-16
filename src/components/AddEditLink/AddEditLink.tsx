@@ -51,6 +51,7 @@ export default function AddEditLink({
   const [order, setOrder] = useState(link ? link.order : linkCount);
   const [customIcon, setCustomIcon] = useState<File | null>(null);
   const [customIconId, setCustomIconId] = useState(link?.customIconId);
+  const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
 
   function isValidUrl(url: string): boolean {
     try {
@@ -85,6 +86,7 @@ export default function AddEditLink({
           url: formattedUrl,
         },
         customIcon,
+        shouldRemoveIcon,
       );
 
       cancel();
@@ -138,6 +140,7 @@ export default function AddEditLink({
     }
 
     setCustomIcon(file);
+    setShouldRemoveIcon(false);
 
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl);
@@ -154,6 +157,7 @@ export default function AddEditLink({
     setCustomIconId(null);
     setPreviewUrl(null);
     setCustomIconSrc(null);
+    setShouldRemoveIcon(true);
     uploadIconRef.current?.focus();
   }
 

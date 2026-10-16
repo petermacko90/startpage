@@ -84,10 +84,16 @@ export async function updateCategory(
   order: Category["order"],
   customIconId: Category["customIconId"],
   customIcon: File | null,
+  shouldRemove: boolean,
 ) {
   const state = await getState();
   const index = getCategoryIndex(state, categoryId);
-  const updatedCustomIconId = await updateCustomIcon(customIcon, customIconId);
+
+  const updatedCustomIconId = await updateCustomIcon(
+    customIcon,
+    customIconId,
+    shouldRemove,
+  );
 
   const updatedCategories = state.categories.map((category) => {
     return category.id === categoryId

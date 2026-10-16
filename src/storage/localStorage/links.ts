@@ -52,8 +52,13 @@ export async function updateLink(
   categoryId: Category["id"],
   { customIconId, id, order, title, url }: Link,
   customIcon: File | null,
+  shouldRemove: boolean,
 ) {
-  const updatedCustomIconId = await updateCustomIcon(customIcon, customIconId);
+  const updatedCustomIconId = await updateCustomIcon(
+    customIcon,
+    customIconId,
+    shouldRemove,
+  );
 
   const updatedLink: Link = {
     customIconId: updatedCustomIconId,

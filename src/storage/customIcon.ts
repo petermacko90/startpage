@@ -20,10 +20,11 @@ export async function saveCustomIcon(
 export async function updateCustomIcon(
   customIcon: File | null,
   customIconId: Category["customIconId"] | Link["customIconId"],
+  shouldRemove: boolean,
 ): Promise<Category["customIconId"] | Link["customIconId"] | null> {
-  if (!customIcon && customIconId) {
+  if (shouldRemove && customIconId) {
     try {
-      removeImage(customIconId);
+      await removeImage(customIconId);
       return null;
     } catch (e) {
       console.error("failed to remove custom icon", e);
@@ -52,6 +53,7 @@ export async function updateCustomIcon(
 
   return customIconId;
 }
+
 export async function removeCustomIcon(
   customIconId: Category["customIconId"] | Link["customIconId"],
 ) {

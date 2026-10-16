@@ -26,6 +26,7 @@ export default function EditCategory({
     title: string,
     order: number,
     customIcon: File | null,
+    shouldRemoveIcon: boolean,
   ) {
     updateCategory(
       category.id,
@@ -33,6 +34,7 @@ export default function EditCategory({
       order,
       category.customIconId,
       customIcon,
+      shouldRemoveIcon,
     );
     close();
   }

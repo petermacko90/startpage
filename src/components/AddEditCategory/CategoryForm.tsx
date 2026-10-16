@@ -38,6 +38,7 @@ export default function CategoryForm({
     title: string,
     order: number,
     customIcon: File | null,
+    shouldRemoveIcon: boolean,
   ) => void;
   itemId: Category["id"] | null;
   inputRef: RefObject<HTMLInputElement | null>;
@@ -45,13 +46,13 @@ export default function CategoryForm({
   handleDeleteCategory?: () => void;
 }) {
   const state = useContext(StateContext);
-
   const [title, setTitle] = useState(titleInitial);
   const [order, setOrder] = useState(orderInitial);
   const [customIcon, setCustomIcon] = useState<File | null>(null);
   const [customIconId, setCustomIconId] = useState(customIconIdInitial);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
+  const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
 
   function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
     clearError();
@@ -65,6 +66,7 @@ export default function CategoryForm({
     }
 
     setCustomIcon(file);
+    setShouldRemoveIcon(false);
 
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl);
@@ -81,6 +83,7 @@ export default function CategoryForm({
     setCustomIconId(null);
     setPreviewUrl(null);
     setCustomIconSrc(null);
+    setShouldRemoveIcon(true);
     uploadIconRef.current?.focus();
   }
 
@@ -117,7 +120,9 @@ export default function CategoryForm({
         <TextInput
           id="title"
           onChange={(e) => setTitle(e.target.value)}
-          onPressEnter={() => handleCategorySave(title, order, customIcon)}
+          onPressEnter={() =>
+            handleCategorySave(title, order, customIcon, shouldRemoveIcon)
+          }
           value={title}
           inputRef={inputRef}
         />
@@ -139,7 +144,11 @@ export default function CategoryForm({
         focusRef={uploadIconRef}
       />
       <div className="buttons-container">
-        <Button action={() => handleCategorySave(title, order, customIcon)}>
+        <Button
+          action={() =>
+            handleCategorySave(title, order, customIcon, shouldRemoveIcon)
+          }
+        >
           Save
         </Button>
         <Button action={() => close()}>Close</Button>
