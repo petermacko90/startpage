@@ -5,15 +5,12 @@ import {
   selectCategory,
   selectLinks,
 } from "../../state/selectors";
+import { getCategoryIndex, getState, reorderItems, setState } from "./common";
 import {
-  getCategoryIndex,
-  getState,
   removeCustomIcon,
-  reorderItems,
   saveCustomIcon,
-  setState,
   updateCustomIcon,
-} from "./common";
+} from "../customIcon";
 
 export async function importCategories(bookmarks: Array<[string, boolean]>) {
   const state = await getState();

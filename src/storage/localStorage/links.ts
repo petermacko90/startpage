@@ -1,15 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link, State } from "../../state/models";
 import { selectLink } from "../../state/selectors";
+import { getCategoryIndex, getState, reorderItems, setState } from "./common";
 import {
-  getCategoryIndex,
-  getState,
   removeCustomIcon,
-  reorderItems,
   saveCustomIcon,
-  setState,
   updateCustomIcon,
-} from "./common";
+} from "../customIcon";
 
 export async function createLink(
   categoryId: Category["id"],
