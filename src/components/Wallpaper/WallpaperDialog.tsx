@@ -6,7 +6,7 @@ import {
 } from "react";
 import { removeImage, saveImage } from "../../storage/indexedDB";
 import { BACKGROUND_KEY, IMAGE_FILETYPE } from "../../constants";
-import { useErrorToast } from "../../hooks/useToastError";
+import { useErrorToast } from "../../hooks/useErrorToast";
 import Dialog from "../Dialog/Dialog";
 import ImageUpload from "../Form/ImageUpload";
 import Toast from "../Toast/Toast";

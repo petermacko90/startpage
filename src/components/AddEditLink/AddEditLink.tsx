@@ -12,7 +12,7 @@ import { IMAGE_FILETYPE, LOCALHOST } from "../../constants";
 import { selectLink, selectLinks } from "../../state/selectors";
 import { createLink, updateLink } from "../../storage/localStorage/links";
 import { getImage } from "../../storage/indexedDB";
-import { useErrorToast } from "../../hooks/useToastError";
+import { useErrorToast } from "../../hooks/useErrorToast";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";

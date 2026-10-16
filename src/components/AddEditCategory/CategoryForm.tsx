@@ -10,7 +10,7 @@ import type { Category } from "../../state/models";
 import { IMAGE_FILETYPE } from "../../constants";
 import { StateContext } from "../../state/context";
 import { getImage } from "../../storage/indexedDB";
-import { useErrorToast } from "../../hooks/useToastError";
+import { useErrorToast } from "../../hooks/useErrorToast";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
