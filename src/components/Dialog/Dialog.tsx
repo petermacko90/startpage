@@ -5,7 +5,7 @@ import type {
   RefObject,
 } from "react";
 import { createPortal } from "react-dom";
-import CloseButton from "../Button/CloseButton";
+import CloseButton from "./CloseButton";
 import "./Dialog.css";
 
 export default function Dialog({
