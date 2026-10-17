@@ -1,12 +1,11 @@
 import { useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import type { Category, Link } from "../../state/models";
-import { NO_TITLE, UNDO_TIMEOUT } from "../../constants";
-import { undoState } from "../../storage/localStorage/common";
+import { NO_TITLE } from "../../constants";
 import { deleteLink } from "../../storage/localStorage/links";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
+import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
 import { useFocusById } from "../../hooks/useFocusById";
-import { useTimer } from "../../hooks/useTimer";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
 import LinkList from "../LinkList/LinkList";
@@ -33,44 +32,15 @@ export default function CategoryModal({
     setTimeout(() => textInputRef.current?.focus());
   }
 
-  const neighborIdRef = useRef<Link["id"] | null>(null);
-  const [deletedLinkId, setDeletedLinkId] = useState<Link["id"] | null>(null);
-  const [isShowUndo, setIsShowUndo] = useState(false);
-  const { clearTimer, startTimer } = useTimer();
   const setIdToFocus = useFocusById("link");
-  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
+  const addLinkButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  function handleDeleteLink(linkId: Link["id"], index: number) {
-    neighborIdRef.current = getNeighborId(category.links, index);
-    setDeletedLinkId(linkId);
-    deleteLink(category.id, linkId);
-    setIsShowUndo(true);
-    startTimer(() => handleToastClose(), UNDO_TIMEOUT);
-    setTimeout(() => undoButtonRef.current?.focus(), 50);
-  }
-
-  const addLinkRef = useRef<HTMLButtonElement | null>(null);
-
-  function handleToastClose() {
-    setIsShowUndo(false);
-
-    if (document.activeElement === undoButtonRef.current) {
-      if (neighborIdRef.current) {
-        setIdToFocus(neighborIdRef.current);
-      } else {
-        addLinkRef.current?.focus();
-      }
-    }
-
-    neighborIdRef.current = null;
-  }
-
-  function undo() {
-    clearTimer();
-    undoState();
-    setIsShowUndo(false);
-    setIdToFocus(deletedLinkId);
-  }
+  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo(
+    (linkId) => deleteLink(category.id, linkId),
+    (index) => getNeighborId(category.links, index),
+    setIdToFocus,
+    addLinkButtonRef,
+  );
 
   function handleKeyDown(e: KeyboardEvent<HTMLDialogElement>) {
     if (!shouldHandleNumericKeys()) return;
@@ -103,7 +73,7 @@ export default function CategoryModal({
       <div
         className={`buttons-container${isAddingLink || editLinkId ? " mb" : ""}`}
       >
-        <Button action={() => handleAddLink()} buttonRef={addLinkRef}>
+        <Button action={() => handleAddLink()} buttonRef={addLinkButtonRef}>
           <span>Add Link</span>
         </Button>
         <Button action={close}>Close</Button>
@@ -116,7 +86,7 @@ export default function CategoryModal({
           linkId={null}
           cancel={() => {
             setIsAddingLink(false);
-            addLinkRef.current?.focus();
+            addLinkButtonRef.current?.focus();
           }}
           textInputRef={textInputRef}
         />
@@ -135,7 +105,7 @@ export default function CategoryModal({
             }
           }}
           textInputRef={textInputRef}
-          handleDeleteLink={handleDeleteLink}
+          handleDeleteLink={deleteItem}
         />
       )}
       <Toast

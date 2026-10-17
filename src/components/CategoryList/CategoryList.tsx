@@ -1,16 +1,14 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { StateContext } from "../../state/context";
 import type { Category } from "../../state/models";
-import { undoState } from "../../storage/localStorage/common";
 import {
   deleteCategory,
   updateCategories,
 } from "../../storage/localStorage/categories";
-import { UNDO_TIMEOUT } from "../../constants";
+import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useFocusById } from "../../hooks/useFocusById";
-import { useTimer } from "../../hooks/useTimer";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
 import AddCategory from "../AddEditCategory/AddCategory";
@@ -27,41 +25,15 @@ export default function CategoryList({
   isLoading: boolean;
 }) {
   const state = useContext(StateContext);
-  const [isShowUndo, setIsShowUndo] = useState(false);
-  const { clearTimer, startTimer } = useTimer();
-  const neighborIdRef = useRef<Category["id"] | null>(null);
-
-  function handleDeleteCategory(categoryId: Category["id"], index: number) {
-    neighborIdRef.current = getNeighborId(state.categories, index);
-    setDeletedCategoryId(categoryId);
-    deleteCategory(categoryId);
-    setIsShowUndo(true);
-    startTimer(() => handleToastClose(), UNDO_TIMEOUT);
-    setTimeout(() => undoButtonRef.current?.focus(), 50);
-  }
-
   const setIdToFocus = useFocusById("category");
+  const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  function handleToastClose() {
-    setIsShowUndo(false);
-
-    if (document.activeElement === undoButtonRef.current) {
-      if (neighborIdRef.current) {
-        setIdToFocus(neighborIdRef.current);
-      } else {
-        addCategoryButtonRef.current?.focus();
-      }
-    }
-
-    neighborIdRef.current = null;
-  }
-
-  function undo() {
-    clearTimer();
-    undoState();
-    setIsShowUndo(false);
-    setIdToFocus(deletedCategoryId);
-  }
+  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo(
+    (id) => deleteCategory(id),
+    (index) => getNeighborId(state.categories, index),
+    setIdToFocus,
+    addCategoryButtonRef,
+  );
 
   function sortCategories(categories: Category[]): Category[] {
     return categories.toSorted((a, b) => a.order - b.order);
@@ -76,13 +48,6 @@ export default function CategoryList({
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-item");
   }
-
-  const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
-  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  const [deletedCategoryId, setDeletedCategoryId] = useState<
-    Category["id"] | null
-  >(null);
 
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
@@ -106,7 +71,7 @@ export default function CategoryList({
           key={category.id}
           category={category}
           shouldDisplayHints={shouldDisplayHints}
-          deleteCategory={handleDeleteCategory}
+          deleteCategory={deleteItem}
           setIdToFocus={setIdToFocus}
           initialFocusRef={index === 0 ? initialFocusRef : null}
         />
