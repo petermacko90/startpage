@@ -41,10 +41,10 @@ export default function CategoryForm({
   const [order, setOrder] = useState(orderInitial);
 
   const {
-    customIcon,
     customIconId,
-    customIconSrc,
-    previewUrl,
+    uploadedImage,
+    uploadedImageUrl,
+    savedIconUrl,
     shouldRemoveIcon,
     isError,
     errorMessage,
@@ -60,7 +60,7 @@ export default function CategoryForm({
           id="title"
           onChange={(e) => setTitle(e.target.value)}
           onPressEnter={() =>
-            handleCategorySave(title, order, customIcon, shouldRemoveIcon)
+            handleCategorySave(title, order, uploadedImage, shouldRemoveIcon)
           }
           value={title}
           inputRef={inputRef}
@@ -75,9 +75,9 @@ export default function CategoryForm({
       />
       <ImageUpload
         label="Upload Icon"
-        showDelete={!!customIconId || customIcon !== null}
+        showDelete={!!customIconId || uploadedImage !== null}
         deleteLabel="Remove Icon"
-        previewUrl={previewUrl ?? customIconSrc}
+        previewUrl={uploadedImageUrl ?? savedIconUrl}
         handleUpload={handleIconUpload}
         handleDelete={handleIconDelete}
         focusRef={uploadIconRef}
@@ -85,7 +85,7 @@ export default function CategoryForm({
       <div className="buttons-container">
         <Button
           action={() =>
-            handleCategorySave(title, order, customIcon, shouldRemoveIcon)
+            handleCategorySave(title, order, uploadedImage, shouldRemoveIcon)
           }
         >
           Save

@@ -43,10 +43,10 @@ export default function AddEditLink({
   const [order, setOrder] = useState(link ? link.order : linkCount);
 
   const {
-    customIcon,
     customIconId,
-    customIconSrc,
-    previewUrl,
+    uploadedImage,
+    uploadedImageUrl,
+    savedIconUrl,
     shouldRemoveIcon,
     isError,
     errorMessage,
@@ -87,7 +87,7 @@ export default function AddEditLink({
           title: title.trim() || formattedUrl,
           url: formattedUrl,
         },
-        customIcon,
+        uploadedImage,
         shouldRemoveIcon,
       );
 
@@ -98,7 +98,7 @@ export default function AddEditLink({
         order,
         title.trim() || formattedUrl,
         formattedUrl,
-        customIcon,
+        uploadedImage,
         linkCount,
       );
 
@@ -163,9 +163,9 @@ export default function AddEditLink({
         />
         <ImageUpload
           label="Upload Icon"
-          showDelete={!!customIconId || customIcon !== null}
+          showDelete={!!customIconId || uploadedImage !== null}
           deleteLabel="Remove Icon"
-          previewUrl={previewUrl ?? customIconSrc}
+          previewUrl={uploadedImageUrl ?? savedIconUrl}
           handleUpload={handleIconUpload}
           handleDelete={handleIconDelete}
           focusRef={uploadIconRef}

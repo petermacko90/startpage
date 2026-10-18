@@ -7,13 +7,13 @@ import { useErrorToast } from "./useErrorToast";
 export function useImageUpload<T extends Category | Link>(
   customIconIdInitial: T["customIconId"] | undefined,
 ) {
-  const [customIcon, setCustomIcon] = useState<File | null>(null);
   const [customIconId, setCustomIconId] = useState(customIconIdInitial);
-  const [customIconSrc, setCustomIconSrc] = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [savedIconUrl, setSavedIconUrl] = useState<string | null>(null);
   const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
-  const uploadIconRef = useRef<HTMLElement>(null);
   const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
+  const uploadIconRef = useRef<HTMLElement>(null);
 
   function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
     clearError();
@@ -26,21 +26,21 @@ export function useImageUpload<T extends Category | Link>(
       return;
     }
 
-    setCustomIcon(file);
+    setUploadedImage(file);
     setShouldRemoveIcon(false);
 
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
+    if (uploadedImageUrl) {
+      URL.revokeObjectURL(uploadedImageUrl);
     }
 
-    setPreviewUrl(URL.createObjectURL(file));
+    setUploadedImageUrl(URL.createObjectURL(file));
   }
 
   function handleIconDelete() {
-    setCustomIcon(null);
+    setUploadedImage(null);
     setCustomIconId(null);
-    setPreviewUrl(null);
-    setCustomIconSrc(null);
+    setUploadedImageUrl(null);
+    setSavedIconUrl(null);
     setShouldRemoveIcon(true);
     uploadIconRef.current?.focus();
   }
@@ -55,7 +55,7 @@ export function useImageUpload<T extends Category | Link>(
 
           if (blob) {
             objectUrl = URL.createObjectURL(blob);
-            setCustomIconSrc(objectUrl);
+            setSavedIconUrl(objectUrl);
           }
         } catch (e) {
           console.error("failed to fetch image from IndexedDB", e);
@@ -73,10 +73,10 @@ export function useImageUpload<T extends Category | Link>(
   }, [customIconId]);
 
   return {
-    customIcon,
     customIconId,
-    customIconSrc,
-    previewUrl,
+    uploadedImage,
+    uploadedImageUrl,
+    savedIconUrl,
     shouldRemoveIcon,
     isError,
     errorMessage,
