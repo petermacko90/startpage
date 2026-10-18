@@ -17,5 +17,5 @@
 
 .close-button:focus {
   background-color: var(--color-red);
-  outline: var(--outline) solid var(--color-light-1);
+  outline: var(--outline-width) solid var(--color-light-1);
 }

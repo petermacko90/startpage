@@ -5,7 +5,7 @@
 }
 
 .bookmark-item {
-  padding-left: var(--outline);
+  padding-left: var(--outline-width);
 }
 
 .folder-button {
@@ -30,7 +30,7 @@
 }
 
 .folder-button:focus {
-  outline: var(--outline) solid var(--color-primary);
+  outline: var(--outline-width) solid var(--color-primary);
 }
 
 input[type="checkbox"] {
@@ -68,5 +68,5 @@ input[type="checkbox"]:hover {
 }
 
 input[type="checkbox"]:focus {
-  outline: var(--outline) solid var(--color-primary);
+  outline: var(--outline-width) solid var(--color-primary);
 }

@@ -31,7 +31,7 @@
 }
 
 .edit-button:focus {
-  outline: var(--outline) solid var(--color-primary);
+  outline: var(--outline-width) solid var(--color-primary);
 }
 
 .edit-button:hover {

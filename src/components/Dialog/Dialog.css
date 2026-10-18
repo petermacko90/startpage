@@ -15,7 +15,7 @@ dialog {
 }
 
 dialog:focus {
-  outline: var(--outline) solid var(--color-primary);
+  outline: var(--outline-width) solid var(--color-primary);
 }
 
 dialog::backdrop {
