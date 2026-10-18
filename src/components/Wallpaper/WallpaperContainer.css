@@ -36,14 +36,16 @@
 }
 
 .expanding-button-text {
+  --transition-duration: 300ms;
+
   display: inline-block;
   max-width: 0;
   font-size: var(--font-size-m);
   white-space: nowrap;
   overflow: hidden;
   transition:
-    max-width var(--hover-duration),
-    margin-left var(--hover-duration);
+    max-width var(--transition-duration),
+    margin-left var(--transition-duration);
 }
 
 .expanding-button:hover .expanding-button-text,
