@@ -6,7 +6,7 @@
   justify-content: space-around;
   align-items: center;
   background-color: color-mix(in srgb, var(--color-dark-3) 90%, transparent);
-  backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur-radius));
   color: var(--color-light-1);
   font-size: var(--font-size-m);
   border: none;

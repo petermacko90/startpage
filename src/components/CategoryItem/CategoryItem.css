@@ -3,7 +3,7 @@
   height: var(--category-size);
   width: var(--category-size);
   background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
-  backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur-radius));
   border-radius: var(--border-radius-m);
   box-shadow: var(--box-shadow);
 }
