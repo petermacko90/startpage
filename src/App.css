@@ -1,3 +1,3 @@
 .spacer {
-  height: calc(var(--edit-button-size) + var(--spacing-m));
+  height: calc(var(--wallpaper-button-size) + var(--spacing-m));
 }
