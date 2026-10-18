@@ -1,18 +1,10 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type RefObject,
-} from "react";
+import { useContext, useState, type RefObject } from "react";
 import { StateContext } from "../../state/context";
 import { type Category, type Link } from "../../state/models";
-import { IMAGE_FILETYPE, LOCALHOST } from "../../constants";
+import { LOCALHOST } from "../../constants";
 import { selectLink, selectLinks } from "../../state/selectors";
 import { createLink, updateLink } from "../../storage/localStorage/links";
-import { getImage } from "../../storage/indexedDB";
-import { useErrorToast } from "../../hooks/useErrorToast";
+import { useImageUpload } from "../../hooks/useImageUpload";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
@@ -49,9 +41,19 @@ export default function AddEditLink({
   const [url, setUrl] = useState(link ? link.url : "");
   const [urlError, setUrlError] = useState("");
   const [order, setOrder] = useState(link ? link.order : linkCount);
-  const [customIcon, setCustomIcon] = useState<File | null>(null);
-  const [customIconId, setCustomIconId] = useState(link?.customIconId);
-  const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
+
+  const {
+    customIcon,
+    customIconId,
+    customIconSrc,
+    previewUrl,
+    shouldRemoveIcon,
+    isError,
+    errorMessage,
+    uploadIconRef,
+    handleIconUpload,
+    handleIconDelete,
+  } = useImageUpload(link?.customIconId);
 
   function isValidUrl(url: string): boolean {
     try {
@@ -124,69 +126,6 @@ export default function AddEditLink({
     if (url.startsWith(`${LOCALHOST}:`)) return `${http}${url}`;
     return `${https}${url}`;
   }
-
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
-
-  function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
-    clearError();
-
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      showErrorToast("Please select an image");
-      return;
-    }
-
-    setCustomIcon(file);
-    setShouldRemoveIcon(false);
-
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-    }
-
-    setPreviewUrl(URL.createObjectURL(file));
-  }
-
-  const uploadIconRef = useRef<HTMLElement>(null);
-  const [customIconSrc, setCustomIconSrc] = useState<string | null>(null);
-
-  function handleIconDelete() {
-    setCustomIcon(null);
-    setCustomIconId(null);
-    setPreviewUrl(null);
-    setCustomIconSrc(null);
-    setShouldRemoveIcon(true);
-    uploadIconRef.current?.focus();
-  }
-
-  useEffect(() => {
-    let objectUrl = "";
-
-    async function loadCustomIcon() {
-      if (link?.customIconId) {
-        try {
-          const blob = await getImage(link.customIconId);
-
-          if (blob) {
-            objectUrl = URL.createObjectURL(blob);
-            setCustomIconSrc(objectUrl);
-          }
-        } catch (e) {
-          console.error("failed to fetch image from IndexedDB", e);
-        }
-      }
-    }
-
-    loadCustomIcon();
-
-    return () => {
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
-    };
-  }, [link?.customIconId]);
 
   return (
     <div className="add-edit-link-container">

@@ -1,16 +1,7 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type RefObject,
-} from "react";
+import { useContext, useState, type RefObject } from "react";
 import type { Category } from "../../state/models";
-import { IMAGE_FILETYPE } from "../../constants";
 import { StateContext } from "../../state/context";
-import { getImage } from "../../storage/indexedDB";
-import { useErrorToast } from "../../hooks/useErrorToast";
+import { useImageUpload } from "../../hooks/useImageUpload";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
@@ -48,71 +39,19 @@ export default function CategoryForm({
   const state = useContext(StateContext);
   const [title, setTitle] = useState(titleInitial);
   const [order, setOrder] = useState(orderInitial);
-  const [customIcon, setCustomIcon] = useState<File | null>(null);
-  const [customIconId, setCustomIconId] = useState(customIconIdInitial);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
-  const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
 
-  function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
-    clearError();
-
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      showErrorToast("Please select an image");
-      return;
-    }
-
-    setCustomIcon(file);
-    setShouldRemoveIcon(false);
-
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-    }
-
-    setPreviewUrl(URL.createObjectURL(file));
-  }
-
-  const uploadIconRef = useRef<HTMLElement>(null);
-  const [customIconSrc, setCustomIconSrc] = useState<string | null>(null);
-
-  function handleIconDelete() {
-    setCustomIcon(null);
-    setCustomIconId(null);
-    setPreviewUrl(null);
-    setCustomIconSrc(null);
-    setShouldRemoveIcon(true);
-    uploadIconRef.current?.focus();
-  }
-
-  useEffect(() => {
-    let objectUrl = "";
-
-    async function loadCustomIcon() {
-      if (customIconId) {
-        try {
-          const blob = await getImage(customIconId);
-
-          if (blob) {
-            objectUrl = URL.createObjectURL(blob);
-            setCustomIconSrc(objectUrl);
-          }
-        } catch (e) {
-          console.error("failed to fetch image from IndexedDB", e);
-        }
-      }
-    }
-
-    loadCustomIcon();
-
-    return () => {
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
-    };
-  }, [customIconId]);
+  const {
+    customIcon,
+    customIconId,
+    customIconSrc,
+    previewUrl,
+    shouldRemoveIcon,
+    isError,
+    errorMessage,
+    uploadIconRef,
+    handleIconUpload,
+    handleIconDelete,
+  } = useImageUpload(customIconIdInitial);
 
   return (
     <Form>
