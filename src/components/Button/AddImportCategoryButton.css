@@ -11,7 +11,7 @@
   font-size: var(--font-size-m);
   border: none;
   border-radius: var(--border-radius-m);
-  box-shadow: var(--box-shadow-m);
+  box-shadow: var(--box-shadow);
 }
 
 .add-import-category:hover {

@@ -5,7 +5,7 @@
   background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
   backdrop-filter: blur(var(--blur));
   border-radius: var(--border-radius-m);
-  box-shadow: var(--box-shadow-m);
+  box-shadow: var(--box-shadow);
 }
 
 .category:hover {
@@ -19,7 +19,7 @@
 
 .category.is-dragging {
   opacity: 0.2;
-  box-shadow: var(--box-shadow-m);
+  box-shadow: var(--box-shadow);
 }
 
 .category-button {

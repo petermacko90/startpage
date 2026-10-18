@@ -38,7 +38,7 @@ export function useDragAndDrop<T extends HTMLDivElement | HTMLAnchorElement>(
               clone.style.height = `${element.offsetHeight}px`;
               clone.style.opacity = "0.7";
               clone.style.transform = "scale(1.05)";
-              clone.style.boxShadow = "var(--box-shadow-m)";
+              clone.style.boxShadow = "var(--box-shadow)";
               container.appendChild(clone);
 
               return () => {

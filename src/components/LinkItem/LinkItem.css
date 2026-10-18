@@ -27,7 +27,7 @@
 
 .link.is-dragging {
   opacity: 0.2;
-  box-shadow: var(--box-shadow-m);
+  box-shadow: var(--box-shadow);
 }
 
 .link-icon-container {
