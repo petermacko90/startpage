@@ -1,14 +1,15 @@
 import { type Dispatch, type RefObject, type SetStateAction } from "react";
 import type { Category, Link } from "../../state/models";
+import { MAX_INDEX_FOR_NUMBER_BADGE } from "../../constants";
 import { updateLinks } from "../../storage/localStorage/links";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
+import { sortItems } from "../../utils/sortItems";
 import EditButton from "../Button/EditButton";
 import LinkItem from "../LinkItem/LinkItem";
 import NumberBadge from "../NumberBadge/NumberBadge";
 import "./LinkList.css";
-import { MAX_INDEX_FOR_NUMBER_BADGE } from "../../constants";
 
 export default function LinkList({
   category,
@@ -25,10 +26,6 @@ export default function LinkList({
   shouldShowBadge: boolean;
   lastActiveLinkRef: RefObject<Link["id"] | null>;
 }) {
-  function sortLinks(links: Link[]): Link[] {
-    return links.toSorted((a, b) => a.order - b.order);
-  }
-
   const { containerRef, captureFirst } = useFlipAnimation(category.links);
 
   useDropMonitor(category.links, captureFirst, (updatedLinks) =>
@@ -47,7 +44,7 @@ export default function LinkList({
       ref={containerRef}
       onKeyDown={(e) => handleArrowKeys(e, containerRef, ".link")}
     >
-      {sortLinks(category.links).map((link, index) => (
+      {sortItems(category.links).map((link, index) => (
         <div key={link.id} className="link-container">
           {shouldShowBadge && index <= MAX_INDEX_FOR_NUMBER_BADGE && (
             <NumberBadge index={index} />

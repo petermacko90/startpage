@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
 import { StateContext } from "../../state/context";
-import type { Category } from "../../state/models";
 import {
   deleteCategory,
   updateCategories,
@@ -11,6 +10,7 @@ import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useFocusById } from "../../hooks/useFocusById";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
+import { sortItems } from "../../utils/sortItems";
 import AddCategory from "../AddEditCategory/AddCategory";
 import BookmarksImport from "../BookmarksImport/BookmarksImport";
 import CategoryItem from "../CategoryItem/CategoryItem";
@@ -34,10 +34,6 @@ export default function CategoryList({
     setIdToFocus,
     addCategoryButtonRef,
   );
-
-  function sortCategories(categories: Category[]): Category[] {
-    return categories.toSorted((a, b) => a.order - b.order);
-  }
 
   const { containerRef, captureFirst } = useFlipAnimation(state.categories);
 
@@ -66,7 +62,7 @@ export default function CategoryList({
 
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
-      {sortCategories(state.categories).map((category, index) => (
+      {sortItems(state.categories).map((category, index) => (
         <CategoryItem
           key={category.id}
           category={category}
