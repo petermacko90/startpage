@@ -1,3 +1,5 @@
+@import "../../../variables.css";
+
 .order-input-container {
   max-width: 100%;
   width: 100%;
@@ -7,7 +9,7 @@
   flex-wrap: wrap;
 }
 
-@media screen and (min-width: 30rem) {
+@media (--s-viewport) {
   .order-input-container {
     width: initial;
     flex-wrap: nowrap;

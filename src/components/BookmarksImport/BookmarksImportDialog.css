@@ -1,18 +1,20 @@
-@media screen and (min-width: 48rem) {
+@import "../../variables.css";
+
+@media (--m-viewport) {
   dialog.bookmarks-import {
-    width: 36rem;
+    width: var(--dialog-width-m);
   }
 }
 
-@media screen and (min-width: 80rem) {
+@media (--l-viewport) {
   dialog.bookmarks-import {
-    width: 50rem;
+    width: var(--dialog-width-l);
   }
 }
 
-@media screen and (min-width: 90rem) {
+@media (--xl-viewport) {
   dialog.bookmarks-import {
-    width: 60rem;
+    width: var(--dialog-width-xl);
   }
 }
 

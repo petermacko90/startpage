@@ -1,28 +1,30 @@
+@import "../../variables.css";
+
 main {
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: var(--spacing-m);
 }
 
-@media screen and (min-width: 30rem) {
+@media (--s-viewport) {
   main {
     grid-template-columns: repeat(4, auto);
   }
 }
 
-@media screen and (min-width: 48rem) {
+@media (--m-viewport) {
   main {
     grid-template-columns: repeat(6, auto);
   }
 }
 
-@media screen and (min-width: 80rem) {
+@media (--l-viewport) {
   main {
     grid-template-columns: repeat(8, auto);
   }
 }
 
-@media screen and (min-width: 90rem) {
+@media (--xl-viewport) {
   main {
     grid-template-columns: repeat(10, auto);
   }

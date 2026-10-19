@@ -1,3 +1,5 @@
+@import "../../variables.css";
+
 dialog {
   width: 90vw;
   max-height: 90vh;
@@ -8,9 +10,9 @@ dialog {
   background-color: color-mix(in srgb, var(--color-dark-2) 90%, transparent);
 }
 
-@media screen and (min-width: 30rem) {
+@media (--s-viewport) {
   dialog {
-    width: 24rem;
+    width: var(--dialog-width-s);
   }
 }
 

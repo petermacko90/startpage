@@ -1,4 +1,14 @@
+@custom-media --s-viewport (min-width: 30rem);
+@custom-media --m-viewport (min-width: 48rem);
+@custom-media --l-viewport (min-width: 80rem);
+@custom-media --xl-viewport (min-width: 90rem);
+
 :root {
+  --dialog-width-s: 24rem;
+  --dialog-width-m: 36rem;
+  --dialog-width-l: 50rem;
+  --dialog-width-xl: 60rem;
+
   --color-dark-1: #2e3440;
   --color-dark-2: #3b4252;
   --color-dark-3: #434c5e;
