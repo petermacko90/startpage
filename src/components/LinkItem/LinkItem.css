@@ -8,8 +8,8 @@
   text-decoration: none;
   border-radius: var(--border-radius-m);
   transition:
-    background-color 0.15s,
-    opacity 0.15s;
+    background-color var(--transition-duration),
+    opacity var(--transition-duration);
 }
 
 .link:hover .link-icon-container {
@@ -26,7 +26,7 @@
 }
 
 .link.is-dragging {
-  opacity: 0.2;
+  opacity: var(--dragging-opacity);
   box-shadow: var(--box-shadow);
 }
 

@@ -18,7 +18,7 @@
 }
 
 .category.is-dragging {
-  opacity: 0.2;
+  opacity: var(--dragging-opacity);
   box-shadow: var(--box-shadow);
 }
 

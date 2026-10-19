@@ -18,8 +18,8 @@
   visibility: hidden;
   opacity: 0%;
   transition:
-    visibility 0.15s ease-in-out,
-    opacity 0.15s ease-in-out;
+    visibility var(--transition-duration) ease-in-out,
+    opacity var(--transition-duration) ease-in-out;
 }
 
 .link-container:hover .edit-button,
