@@ -8,6 +8,7 @@ import EditButton from "../Button/EditButton";
 import LinkItem from "../LinkItem/LinkItem";
 import NumberBadge from "../NumberBadge/NumberBadge";
 import "./LinkList.css";
+import { MAX_INDEX_FOR_NUMBER_BADGE } from "../../constants";
 
 export default function LinkList({
   category,
@@ -48,7 +49,9 @@ export default function LinkList({
     >
       {sortLinks(category.links).map((link, index) => (
         <div key={link.id} className="link-container">
-          {shouldShowBadge && index <= 9 && <NumberBadge index={index} />}
+          {shouldShowBadge && index <= MAX_INDEX_FOR_NUMBER_BADGE && (
+            <NumberBadge index={index} />
+          )}
           <LinkItem key={link.id} link={link} />
           <EditButton
             action={() => {

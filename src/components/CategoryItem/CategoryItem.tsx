@@ -2,7 +2,7 @@ import type { Dispatch, RefObject, SetStateAction } from "react";
 import type { Category } from "../../state/models";
 import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-import { NO_TITLE } from "../../constants";
+import { MAX_INDEX_FOR_NUMBER_BADGE, NO_TITLE } from "../../constants";
 import { getHostname } from "../../utils/getHostname";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
@@ -72,7 +72,7 @@ export default function CategoryItem({
         </span>
         <span className="category-title overflow">{category.title}</span>
       </button>
-      {shouldDisplayHints && category.order <= 9 && (
+      {shouldDisplayHints && category.order <= MAX_INDEX_FOR_NUMBER_BADGE && (
         <NumberBadge index={category.order} />
       )}
       <EditButton action={() => setShowEditCategory(true)} />
