@@ -1,8 +1,10 @@
+import { areModKeysPressed } from "./areModKeysPressed";
+
 export function handleNumericKeys(
   e: React.KeyboardEvent<HTMLDialogElement> | KeyboardEvent,
   selectItems: () => NodeListOf<HTMLAnchorElement | HTMLButtonElement>,
 ) {
-  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  if (areModKeysPressed(e)) return;
 
   if (
     e.key !== "1" &&

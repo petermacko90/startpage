@@ -1,4 +1,5 @@
 import type { KeyboardEvent, RefObject } from "react";
+import { areModKeysPressed } from "./areModKeysPressed";
 
 export function handleArrowKeys<
   T extends HTMLAnchorElement | HTMLButtonElement,
@@ -7,7 +8,7 @@ export function handleArrowKeys<
   containerRef: RefObject<HTMLDivElement | null>,
   itemSelector: string,
 ) {
-  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  if (areModKeysPressed(e)) return;
 
   if (!isArrowKey(e.key)) return;
 
