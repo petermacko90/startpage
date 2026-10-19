@@ -1,10 +1,4 @@
 import type { KeyboardEvent, RefObject } from "react";
-import {
-  KEY_ARROW_DOWN,
-  KEY_ARROW_LEFT,
-  KEY_ARROW_RIGHT,
-  KEY_ARROW_UP,
-} from "../constants";
 
 export function handleArrowKeys<
   T extends HTMLAnchorElement | HTMLButtonElement,
@@ -15,13 +9,7 @@ export function handleArrowKeys<
 ) {
   if (e.altKey || e.ctrlKey || e.metaKey) return;
 
-  if (
-    ![KEY_ARROW_LEFT, KEY_ARROW_RIGHT, KEY_ARROW_UP, KEY_ARROW_DOWN].includes(
-      e.key,
-    )
-  ) {
-    return;
-  }
+  if (!isArrowKey(e.key)) return;
 
   const container = containerRef.current;
   if (!container) return;
@@ -47,18 +35,18 @@ export function handleArrowKeys<
   let nextIndex = currentIndex;
 
   switch (e.key) {
-    case KEY_ARROW_RIGHT:
+    case "ArrowRight":
       nextIndex = (currentIndex + 1) % items.length;
       break;
-    case KEY_ARROW_LEFT:
+    case "ArrowLeft":
       nextIndex = (currentIndex - 1 + items.length) % items.length;
       break;
-    case KEY_ARROW_DOWN:
+    case "ArrowDown":
       if (currentIndex + columnsCount < items.length) {
         nextIndex = currentIndex + columnsCount;
       }
       break;
-    case KEY_ARROW_UP:
+    case "ArrowUp":
       if (currentIndex - columnsCount >= 0) {
         nextIndex = currentIndex - columnsCount;
       }
@@ -66,4 +54,12 @@ export function handleArrowKeys<
   }
 
   items[nextIndex]?.focus();
+}
+
+const arrowkeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"] as const;
+
+type ArrowKey = (typeof arrowkeys)[number];
+
+function isArrowKey(key: string): key is ArrowKey {
+  return (arrowkeys as readonly string[]).includes(key);
 }
