@@ -6,20 +6,7 @@ export function handleNumericKeys(
 ) {
   if (areModKeysPressed(e)) return;
 
-  if (
-    e.key !== "1" &&
-    e.key !== "2" &&
-    e.key !== "3" &&
-    e.key !== "4" &&
-    e.key !== "5" &&
-    e.key !== "6" &&
-    e.key !== "7" &&
-    e.key !== "8" &&
-    e.key !== "9" &&
-    e.key !== "0"
-  ) {
-    return;
-  }
+  if (!isNumericKey(e.key)) return;
 
   const items = selectItems();
 
@@ -28,4 +15,12 @@ export function handleNumericKeys(
   const index = e.key === "0" ? 9 : Number(e.key) - 1;
   items[index]?.focus();
   items[index]?.click();
+}
+
+const numericKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] as const;
+
+type NumericKey = (typeof numericKeys)[number];
+
+function isNumericKey(key: string): key is NumericKey {
+  return (numericKeys as readonly string[]).includes(key);
 }
