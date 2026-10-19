@@ -1,4 +1,5 @@
 import type { ChangeEventHandler, KeyboardEvent, RefObject } from "react";
+import { KEY_ENTER } from "../../constants";
 import "./TextInput.css";
 
 export default function TextInput({
@@ -19,7 +20,7 @@ export default function TextInput({
   inputRef?: RefObject<HTMLInputElement | null>;
 }) {
   function handlePressEnter(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") {
+    if (e.key === KEY_ENTER) {
       e.preventDefault();
       onPressEnter();
     }

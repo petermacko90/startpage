@@ -1,4 +1,10 @@
 import type { KeyboardEvent, RefObject } from "react";
+import {
+  KEY_ARROW_DOWN,
+  KEY_ARROW_LEFT,
+  KEY_ARROW_RIGHT,
+  KEY_ARROW_UP,
+} from "../constants";
 
 export function handleArrowKeys<
   T extends HTMLAnchorElement | HTMLButtonElement,
@@ -9,7 +15,11 @@ export function handleArrowKeys<
 ) {
   if (e.altKey || e.ctrlKey || e.metaKey) return;
 
-  if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+  if (
+    ![KEY_ARROW_LEFT, KEY_ARROW_RIGHT, KEY_ARROW_UP, KEY_ARROW_DOWN].includes(
+      e.key,
+    )
+  ) {
     return;
   }
 
@@ -37,18 +47,18 @@ export function handleArrowKeys<
   let nextIndex = currentIndex;
 
   switch (e.key) {
-    case "ArrowRight":
+    case KEY_ARROW_RIGHT:
       nextIndex = (currentIndex + 1) % items.length;
       break;
-    case "ArrowLeft":
+    case KEY_ARROW_LEFT:
       nextIndex = (currentIndex - 1 + items.length) % items.length;
       break;
-    case "ArrowDown":
+    case KEY_ARROW_DOWN:
       if (currentIndex + columnsCount < items.length) {
         nextIndex = currentIndex + columnsCount;
       }
       break;
-    case "ArrowUp":
+    case KEY_ARROW_UP:
       if (currentIndex - columnsCount >= 0) {
         nextIndex = currentIndex - columnsCount;
       }

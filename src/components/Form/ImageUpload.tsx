@@ -1,4 +1,5 @@
 import { useRef, type ChangeEvent, type RefObject } from "react";
+import { KEY_ENTER, KEY_SPACE } from "../../constants";
 import Button from "../Button/Button";
 import "./ImageUpload.css";
 
@@ -30,7 +31,7 @@ export default function ImageUpload({
         role="button"
         ref={focusRef as RefObject<HTMLLabelElement>}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
+          if (e.key === KEY_ENTER || e.key === KEY_SPACE) {
             e.preventDefault();
             inputRef.current?.click();
           }
