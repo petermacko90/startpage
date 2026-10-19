@@ -1,4 +1,5 @@
 .add-edit-link-container {
+  margin-top: var(--spacing-m);
   padding: var(--spacing-m);
   border: var(--border-width) solid var(--color-dark-4);
   border-radius: var(--border-radius-m);

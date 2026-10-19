@@ -17,7 +17,3 @@
     width: var(--dialog-width-xl);
   }
 }
-
-.buttons-container.mb {
-  margin-bottom: var(--spacing-m);
-}

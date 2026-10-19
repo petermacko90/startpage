@@ -70,9 +70,7 @@ export default function CategoryModal({
         shouldShowBadge={shouldHandleNumericKeys()}
         lastActiveLinkRef={lastActiveLinkRef}
       />
-      <div
-        className={`buttons-container${isAddingLink || editLinkId ? " mb" : ""}`}
-      >
+      <div className="buttons-container">
         <Button action={() => handleAddLink()} buttonRef={addLinkButtonRef}>
           <span>Add Link</span>
         </Button>
