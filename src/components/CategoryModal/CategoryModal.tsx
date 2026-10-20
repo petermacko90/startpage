@@ -51,6 +51,12 @@ export default function CategoryModal({
     return !isAddingLink && !editLinkId;
   }
 
+  function openAllLinks() {
+    category.links.forEach((link) => {
+      browser.tabs.create({ url: link.url, active: false });
+    });
+  }
+
   const lastActiveLinkRef = useRef<Link["id"] | null>(null);
 
   return (
@@ -71,6 +77,9 @@ export default function CategoryModal({
         lastActiveLinkRef={lastActiveLinkRef}
       />
       <div className="buttons-container">
+        {category.links.length > 1 && (
+          <Button action={() => openAllLinks()}>Open All Links</Button>
+        )}
         <Button action={() => handleAddLink()} buttonRef={addLinkButtonRef}>
           <span>Add Link</span>
         </Button>
