@@ -28,11 +28,11 @@
   visibility: visible;
 }
 
+.toast.error {
+  border-color: var(--color-red);
+}
+
 .toast-text {
   color: var(--color-light-1);
   font-size: var(--font-size-m);
-}
-
-.toast-text.error {
-  color: var(--color-red);
 }

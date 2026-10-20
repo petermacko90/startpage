@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTimer } from "./useTimer";
 import { ERROR_TIMEOUT } from "../constants";
 
-export function useErrorToast() {
+export function useErrorToast(timeout?: number) {
   const { clearTimer, startTimer } = useTimer();
 
   const [isError, setIsError] = useState<boolean>(false);
@@ -11,7 +11,7 @@ export function useErrorToast() {
   function showErrorToast(message: string) {
     setIsError(true);
     setErrorMessage(message);
-    startTimer(() => setIsError(false), ERROR_TIMEOUT);
+    startTimer(() => setIsError(false), timeout ?? ERROR_TIMEOUT);
   }
 
   function clearError() {

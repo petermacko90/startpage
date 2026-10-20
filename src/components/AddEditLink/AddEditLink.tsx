@@ -5,6 +5,7 @@ import { LOCALHOST } from "../../constants";
 import { selectLink, selectLinks } from "../../state/selectors";
 import { createLink, updateLink } from "../../storage/localStorage/links";
 import { useImageUpload } from "../../hooks/useImageUpload";
+import { isBlockedUrl } from "../../utils/isBlockedUrl";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
@@ -115,11 +116,7 @@ export default function AddEditLink({
     const https = "https://";
     const http = "http://";
 
-    if (
-      url.startsWith(https) ||
-      url.startsWith(http) ||
-      url.startsWith("about:")
-    ) {
+    if (url.startsWith(https) || url.startsWith(http) || isBlockedUrl(url)) {
       return url;
     }
 

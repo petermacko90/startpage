@@ -19,10 +19,10 @@ interface ErrorToastProps extends ToastProps {
 
 export default function Toast(props: UndoToastProps | ErrorToastProps) {
   return (
-    <div className={`toast ${props.show ? "show" : "hide"}`}>
-      <span className={`toast-text${props.type === "error" ? " error" : ""}`}>
-        {props.text}
-      </span>
+    <div
+      className={`toast ${props.show ? "show" : "hide"}${props.type === "error" ? " error" : ""}`}
+    >
+      <span className="toast-text">{props.text}</span>
       {props.type === "undo" && (
         <Button action={() => props.undo()} buttonRef={props.undoButtonRef}>
           Undo

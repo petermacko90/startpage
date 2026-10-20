@@ -4,7 +4,9 @@ import { NO_TITLE } from "../../constants";
 import { deleteLink } from "../../storage/localStorage/links";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
+import { isBlockedUrl } from "../../utils/isBlockedUrl";
 import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
+import { useErrorToast } from "../../hooks/useErrorToast";
 import { useFocusById } from "../../hooks/useFocusById";
 import AddEditLink from "../AddEditLink/AddEditLink";
 import Button from "../Button/Button";
@@ -51,10 +53,24 @@ export default function CategoryModal({
     return !isAddingLink && !editLinkId;
   }
 
+  const { isError, errorMessage, clearError, showErrorToast } =
+    useErrorToast(10000);
+
   function openAllLinks() {
+    clearError();
+    let errorMessages = "";
+
     category.links.forEach((link) => {
-      browser.tabs.create({ url: link.url, active: false });
+      if (isBlockedUrl(link.url)) {
+        errorMessages += `Opening ${link.url} is blocked by browser. `;
+      } else {
+        browser.tabs.create({ url: link.url, active: false });
+      }
     });
+
+    if (errorMessages.length > 0) {
+      showErrorToast(errorMessages);
+    }
   }
 
   const lastActiveLinkRef = useRef<Link["id"] | null>(null);
@@ -122,6 +138,7 @@ export default function CategoryModal({
         undo={undo}
         undoButtonRef={undoButtonRef}
       />
+      <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>
   );
 }
