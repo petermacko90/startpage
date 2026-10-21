@@ -1,6 +1,6 @@
 import { useEffect, useState, type SyntheticEvent } from "react";
 import { LOCALHOST } from "../../constants";
-import type { Link } from "../../state/models";
+import type { Category, Link } from "../../state/models";
 import { getImage } from "../../storage/indexedDB";
 
 export default function PageIcon({
@@ -9,20 +9,13 @@ export default function PageIcon({
   size = "32px",
 }: {
   domain: string;
-  id: Link["customIconId"];
+  id: Category["customIconId"] | Link["customIconId"];
   size?: "32px" | "24px" | "48px";
 }) {
   const placeholderImage = "globe.svg";
   const url = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
-  const [imgSrc, setImgSrc] = useState(
-    shouldFetchIcon(domain) ? url : placeholderImage,
-  );
-
-  function shouldFetchIcon(domain: string): boolean {
-    if (domain === "" || domain === LOCALHOST || id) return false;
-    return true;
-  }
+  const [imgSrc, setImgSrc] = useState<string>(placeholderImage);
 
   function replacePlaceholderIcon(e: SyntheticEvent<HTMLImageElement, Event>) {
     const img = e.currentTarget;
@@ -33,35 +26,44 @@ export default function PageIcon({
 
   useEffect(() => {
     let objectUrl = "";
+    let isMounted = true;
 
-    async function loadCustomIcon() {
-      if (id) {
-        try {
-          const blob = await getImage(id);
+    async function setIcon() {
+      if (!id) {
+        if (!domain || domain === LOCALHOST) {
+          if (isMounted) setImgSrc(placeholderImage);
+        } else {
+          if (isMounted) setImgSrc(url);
+        }
 
-          if (blob) {
-            objectUrl = URL.createObjectURL(blob);
-            setImgSrc(objectUrl);
-          }
-        } catch (e) {
-          console.error("failed to fetch image from IndexedDB", e);
+        return;
+      }
+
+      try {
+        const blob = await getImage(id);
+
+        if (blob && isMounted) {
+          objectUrl = URL.createObjectURL(blob);
+          setImgSrc(objectUrl);
+        } else if (isMounted) {
           setImgSrc(placeholderImage);
         }
-      } else {
-        if (domain) {
-          setImgSrc(url);
-        }
+      } catch (e) {
+        console.error("failed to fetch image from IndexedDB", e);
+        if (isMounted) setImgSrc(placeholderImage);
       }
     }
 
-    loadCustomIcon();
+    setIcon();
 
     return () => {
+      isMounted = false;
+
       if (objectUrl) {
         URL.revokeObjectURL(objectUrl);
       }
     };
-  }, [id, url, domain]);
+  }, [id, domain, url]);
 
   return (
     <img
