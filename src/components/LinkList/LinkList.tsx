@@ -5,7 +5,6 @@ import { updateLinks } from "../../storage/localStorage/links";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
-import { sortItems } from "../../utils/sortItems";
 import EditButton from "../Button/EditButton";
 import LinkItem from "../LinkItem/LinkItem";
 import NumberBadge from "../NumberBadge/NumberBadge";
@@ -44,7 +43,7 @@ export default function LinkList({
       ref={containerRef}
       onKeyDown={(e) => handleArrowKeys(e, containerRef, ".link")}
     >
-      {sortItems(category.links).map((link, index) => (
+      {category.links.map((link, index) => (
         <div key={link.id} className="link-container">
           {shouldShowBadge && index <= MAX_INDEX_FOR_NUMBER_BADGE && (
             <NumberBadge index={index} />

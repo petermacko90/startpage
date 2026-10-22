@@ -10,7 +10,6 @@ import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { useFocusById } from "../../hooks/useFocusById";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
-import { sortItems } from "../../utils/sortItems";
 import AddCategory from "../AddEditCategory/AddCategory";
 import BookmarksImport from "../BookmarksImport/BookmarksImport";
 import CategoryItem from "../CategoryItem/CategoryItem";
@@ -62,7 +61,7 @@ export default function CategoryList({
 
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
-      {sortItems(state.categories).map((category, index) => (
+      {state.categories.map((category, index) => (
         <CategoryItem
           key={category.id}
           category={category}
