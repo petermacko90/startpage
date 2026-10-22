@@ -62,17 +62,17 @@ export async function updateLink({
   categoryId,
   link,
   customIcon,
-  shouldRemove,
+  shouldRemoveIcon,
 }: {
   categoryId: Category["id"];
   link: Link;
   customIcon: File | null;
-  shouldRemove: boolean;
+  shouldRemoveIcon: boolean;
 }) {
   const updatedCustomIconId = await updateCustomIcon(
     customIcon,
     link.customIconId,
-    shouldRemove,
+    shouldRemoveIcon,
   );
 
   const updatedLink: Link = {

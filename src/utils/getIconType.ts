@@ -1,11 +1,11 @@
-import type { Link } from "../state/models";
+import type { Category, Link } from "../state/models";
 
 export type IconType = "default" | "upload" | "emoji";
 
-export function getIconType(link: Link): IconType {
-  if (link.customIconId) {
+export function getIconType<T extends Category | Link>(item: T): IconType {
+  if (item.customIconId) {
     return "upload";
-  } else if (link.emoji) {
+  } else if (item.emoji) {
     return "emoji";
   } else {
     return "default";

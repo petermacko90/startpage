@@ -10,6 +10,7 @@ export type Link = {
 export type Category = {
   id: string;
   customIconId: string | null;
+  emoji: string | null;
   title: string;
   links: Link[];
   order: number;

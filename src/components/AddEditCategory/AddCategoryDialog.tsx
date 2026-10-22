@@ -22,10 +22,18 @@ export default function AddCategoryDialog({
   function handleCategorySave(
     title: string,
     order: number,
+    emoji: string | null,
     customIcon: File | null,
   ) {
     const id = uuidv4();
-    createCategory(id, order, title.trim(), customIcon, categoriesCount);
+    createCategory({
+      id,
+      order,
+      title: title.trim(),
+      emoji,
+      customIcon,
+      categoriesCount,
+    });
     close(id);
   }
 
@@ -39,6 +47,8 @@ export default function AddCategoryDialog({
       <CategoryForm
         titleInitial={""}
         orderInitial={categoriesCount}
+        emojiInitial={null}
+        iconTypeInitial="default"
         customIconIdInitial={null}
         maxOrder={categoriesCount}
         handleCategorySave={handleCategorySave}

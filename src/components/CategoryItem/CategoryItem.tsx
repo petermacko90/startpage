@@ -55,11 +55,11 @@ export default function CategoryItem({
         ref={initialFocusRef}
       >
         <span className="category-icon">
-          {category.customIconId ? (
+          {category.customIconId || category.emoji ? (
             <PageIcon
               domain=""
               id={category.customIconId}
-              emoji={null}
+              emoji={category.emoji}
               size="48px"
             />
           ) : (

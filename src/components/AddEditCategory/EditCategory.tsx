@@ -3,6 +3,7 @@ import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { updateCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
+import { getIconType } from "../../utils/getIconType";
 import Dialog from "../Dialog/Dialog";
 import CategoryForm from "./CategoryForm";
 
@@ -25,17 +26,19 @@ export default function EditCategory({
   function handleCategorySave(
     title: string,
     order: number,
+    emoji: string | null,
     customIcon: File | null,
     shouldRemoveIcon: boolean,
   ) {
-    updateCategory(
-      category.id,
-      title.trim(),
+    updateCategory({
+      categoryId: category.id,
+      title: title.trim(),
       order,
-      category.customIconId,
+      emoji,
+      customIconId: category.customIconId,
       customIcon,
       shouldRemoveIcon,
-    );
+    });
     close();
   }
 
@@ -49,6 +52,8 @@ export default function EditCategory({
       <CategoryForm
         titleInitial={category.title}
         orderInitial={category.order}
+        emojiInitial={category.emoji}
+        iconTypeInitial={getIconType(category)}
         customIconIdInitial={category.customIconId}
         maxOrder={categoriesCount - 1}
         handleCategorySave={handleCategorySave}

@@ -23,6 +23,7 @@ export async function importCategories(bookmarks: Array<[string, boolean]>) {
   const newCategories: Category[] = bookmarkItems.map((item) => {
     return {
       customIconId: null,
+      emoji: null,
       id: uuidv4(),
       links:
         item[0].children
@@ -48,18 +49,27 @@ export async function importCategories(bookmarks: Array<[string, boolean]>) {
   });
 }
 
-export async function createCategory(
-  id: Category["id"],
-  order: Category["order"],
-  title: Category["title"],
-  customIcon: File | null,
-  categoriesCount: number,
-) {
+export async function createCategory({
+  id,
+  order,
+  title,
+  emoji,
+  customIcon,
+  categoriesCount,
+}: {
+  id: Category["id"];
+  order: Category["order"];
+  title: Category["title"];
+  emoji: Category["emoji"];
+  customIcon: File | null;
+  categoriesCount: number;
+}) {
   const state = await getState();
   const customIconId = await saveCustomIcon(customIcon);
 
   const newCategory: Category = {
     customIconId,
+    emoji,
     id,
     links: [],
     order,
@@ -79,21 +89,30 @@ export async function createCategory(
   updateCategories(updatedCategories);
 }
 
-export async function updateCategory(
-  categoryId: Category["id"],
-  title: Category["title"],
-  order: Category["order"],
-  customIconId: Category["customIconId"],
-  customIcon: File | null,
-  shouldRemove: boolean,
-) {
+export async function updateCategory({
+  categoryId,
+  title,
+  order,
+  emoji,
+  customIconId,
+  customIcon,
+  shouldRemoveIcon,
+}: {
+  categoryId: Category["id"];
+  title: Category["title"];
+  order: Category["order"];
+  emoji: Category["emoji"];
+  customIconId: Category["customIconId"];
+  customIcon: File | null;
+  shouldRemoveIcon: boolean;
+}) {
   const state = await getState();
   const index = getCategoryIndex(state, categoryId);
 
   const updatedCustomIconId = await updateCustomIcon(
     customIcon,
     customIconId,
-    shouldRemove,
+    shouldRemoveIcon,
   );
 
   const updatedCategories = state.categories.map((category) => {
@@ -102,6 +121,7 @@ export async function updateCategory(
           ...state.categories[index],
           title,
           order,
+          emoji,
           customIconId: updatedCustomIconId,
         }
       : category;

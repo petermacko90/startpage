@@ -18,7 +18,6 @@ export function useImageUpload<T extends Category | Link>(
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [savedIconUrl, setSavedIconUrl] = useState<string | null>(null);
-  const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
   const uploadIconRef = useRef<HTMLElement>(null);
 
   function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
@@ -33,7 +32,6 @@ export function useImageUpload<T extends Category | Link>(
     }
 
     setUploadedImage(file);
-    setShouldRemoveIcon(false);
 
     if (uploadedImageUrl) {
       URL.revokeObjectURL(uploadedImageUrl);
@@ -47,7 +45,6 @@ export function useImageUpload<T extends Category | Link>(
     setCustomIconId(null);
     setUploadedImageUrl(null);
     setSavedIconUrl(null);
-    setShouldRemoveIcon(true);
     uploadIconRef.current?.focus();
   }
 
@@ -83,7 +80,6 @@ export function useImageUpload<T extends Category | Link>(
     uploadedImage,
     uploadedImageUrl,
     savedIconUrl,
-    shouldRemoveIcon,
     uploadIconRef,
     handleIconUpload,
     handleIconDelete,
