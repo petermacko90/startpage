@@ -1,6 +1,7 @@
 export type Link = {
   id: string;
   customIconId: string | null;
+  emoji: string | null;
   title: string;
   url: string;
   order: number;

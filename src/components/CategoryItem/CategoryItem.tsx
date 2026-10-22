@@ -56,7 +56,12 @@ export default function CategoryItem({
       >
         <span className="category-icon">
           {category.customIconId ? (
-            <PageIcon domain="" id={category.customIconId} size="48px" />
+            <PageIcon
+              domain=""
+              id={category.customIconId}
+              emoji={null}
+              size="48px"
+            />
           ) : (
             category.links
               .slice(0, 4)
@@ -65,6 +70,7 @@ export default function CategoryItem({
                   key={link.id}
                   domain={getHostname(link.url)}
                   id={link.customIconId}
+                  emoji={link.emoji}
                   size="24px"
                 />
               ))

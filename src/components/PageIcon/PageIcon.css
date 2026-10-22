@@ -1,0 +1,4 @@
+.emoji {
+  display: grid;
+  place-content: center;
+}

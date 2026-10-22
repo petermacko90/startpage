@@ -2,14 +2,17 @@ import { useEffect, useState, type SyntheticEvent } from "react";
 import { LOCALHOST } from "../../constants";
 import type { Category, Link } from "../../state/models";
 import { getImage } from "../../storage/indexedDB";
+import "./PageIcon.css";
 
 export default function PageIcon({
   domain,
   id,
+  emoji,
   size = "32px",
 }: {
   domain: string;
   id: Category["customIconId"] | Link["customIconId"];
+  emoji: Link["emoji"];
   size?: "32px" | "24px" | "48px";
 }) {
   const placeholderImage = "globe.svg";
@@ -25,6 +28,8 @@ export default function PageIcon({
   }
 
   useEffect(() => {
+    if (emoji) return;
+
     let objectUrl = "";
     let isMounted = true;
 
@@ -63,7 +68,18 @@ export default function PageIcon({
         URL.revokeObjectURL(objectUrl);
       }
     };
-  }, [id, domain, url]);
+  }, [emoji, id, domain, url]);
+
+  if (emoji) {
+    return (
+      <div
+        className="emoji"
+        style={{ width: size, height: size, fontSize: `calc(${size} * 0.75)` }}
+      >
+        {emoji}
+      </div>
+    );
+  }
 
   return (
     <img

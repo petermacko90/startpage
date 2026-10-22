@@ -8,7 +8,6 @@ import FormField from "../Form/FormField";
 import ImageUpload from "../Form/ImageUpload";
 import OrderInput from "../Form/OrderInput/OrderInput";
 import TextInput from "../Form/TextInput";
-import Toast from "../Toast/Toast";
 
 export default function CategoryForm({
   titleInitial,
@@ -39,6 +38,7 @@ export default function CategoryForm({
   const state = useContext(StateContext);
   const [title, setTitle] = useState(titleInitial);
   const [order, setOrder] = useState(orderInitial);
+  const [customIconError, setCustomIconError] = useState("");
 
   const {
     customIconId,
@@ -46,12 +46,10 @@ export default function CategoryForm({
     uploadedImageUrl,
     savedIconUrl,
     shouldRemoveIcon,
-    isError,
-    errorMessage,
     uploadIconRef,
     handleIconUpload,
     handleIconDelete,
-  } = useImageUpload(customIconIdInitial);
+  } = useImageUpload(customIconIdInitial, setCustomIconError);
 
   return (
     <Form>
@@ -82,6 +80,9 @@ export default function CategoryForm({
         handleDelete={handleIconDelete}
         focusRef={uploadIconRef}
       />
+      {customIconError.length > 0 && (
+        <div className="error-text">{customIconError}</div>
+      )}
       <div className="buttons-container">
         <Button
           action={() =>
@@ -97,7 +98,6 @@ export default function CategoryForm({
           </Button>
         )}
       </div>
-      <Toast type="error" show={isError} text={errorMessage} />
     </Form>
   );
 }

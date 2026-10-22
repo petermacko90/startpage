@@ -8,20 +8,30 @@ import {
   updateCustomIcon,
 } from "../customIcon";
 
-export async function createLink(
-  categoryId: Category["id"],
-  order: Link["order"],
-  title: Link["title"],
-  url: Link["url"],
-  customIcon: File | null,
-  linkCount: number,
-) {
+export async function createLink({
+  categoryId,
+  order,
+  title,
+  url,
+  emoji,
+  customIcon,
+  linkCount,
+}: {
+  categoryId: Category["id"];
+  order: Link["order"];
+  title: Link["title"];
+  url: Link["url"];
+  emoji: Link["emoji"];
+  customIcon: File | null;
+  linkCount: number;
+}) {
   const state = await getState();
   const id = uuidv4();
   const customIconId = await saveCustomIcon(customIcon);
 
   const newLink: Link = {
     customIconId,
+    emoji,
     id,
     order,
     title,
@@ -48,38 +58,44 @@ export async function createLink(
   });
 }
 
-export async function updateLink(
-  categoryId: Category["id"],
-  { customIconId, id, order, title, url }: Link,
-  customIcon: File | null,
-  shouldRemove: boolean,
-) {
+export async function updateLink({
+  categoryId,
+  link,
+  customIcon,
+  shouldRemove,
+}: {
+  categoryId: Category["id"];
+  link: Link;
+  customIcon: File | null;
+  shouldRemove: boolean;
+}) {
   const updatedCustomIconId = await updateCustomIcon(
     customIcon,
-    customIconId,
+    link.customIconId,
     shouldRemove,
   );
 
   const updatedLink: Link = {
     customIconId: updatedCustomIconId,
-    id,
-    order,
-    title,
-    url,
+    emoji: link.emoji,
+    id: link.id,
+    order: link.order,
+    title: link.title,
+    url: link.url,
   };
 
   const state = await getState();
   const index = getCategoryIndex(state, categoryId);
 
-  const updatedLinks = state.categories[index].links.map((link) => {
-    return link.id === id ? updatedLink : link;
+  const updatedLinks = state.categories[index].links.map((l) => {
+    return l.id === link.id ? updatedLink : l;
   });
 
   const reorderedLinks = reorderLinksOnUpdate(
     state,
     categoryId,
-    id,
-    order,
+    link.id,
+    link.order,
     updatedLinks,
   );
 

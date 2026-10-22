@@ -1,28 +1,34 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import type { Category, Link } from "../state/models";
 import { IMAGE_FILETYPE } from "../constants";
 import { getImage } from "../storage/indexedDB";
-import { useErrorToast } from "./useErrorToast";
 
 export function useImageUpload<T extends Category | Link>(
   customIconIdInitial: T["customIconId"] | undefined,
+  setError: Dispatch<SetStateAction<string>>,
 ) {
   const [customIconId, setCustomIconId] = useState(customIconIdInitial);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [savedIconUrl, setSavedIconUrl] = useState<string | null>(null);
   const [shouldRemoveIcon, setShouldRemoveIcon] = useState(false);
-  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
   const uploadIconRef = useRef<HTMLElement>(null);
 
   function handleIconUpload(e: ChangeEvent<HTMLInputElement>) {
-    clearError();
+    setError("");
 
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      showErrorToast("Please select an image");
+      setError("Please select an image");
       return;
     }
 
@@ -78,8 +84,6 @@ export function useImageUpload<T extends Category | Link>(
     uploadedImageUrl,
     savedIconUrl,
     shouldRemoveIcon,
-    isError,
-    errorMessage,
     uploadIconRef,
     handleIconUpload,
     handleIconDelete,

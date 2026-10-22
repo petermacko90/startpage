@@ -6,7 +6,8 @@
   align-items: baseline;
 }
 
-label {
+label,
+.label {
   height: var(--form-field-height);
   color: var(--color-light-1);
   font-size: var(--font-size-m);

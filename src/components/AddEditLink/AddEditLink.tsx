@@ -5,14 +5,15 @@ import { LOCALHOST } from "../../constants";
 import { selectLink, selectLinks } from "../../state/selectors";
 import { createLink, updateLink } from "../../storage/localStorage/links";
 import { useImageUpload } from "../../hooks/useImageUpload";
+import { getIconType, type IconType } from "../../utils/getIconType";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
+import { isValidEmoji } from "../../utils/isValidEmoji";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import ImageUpload from "../Form/ImageUpload";
 import OrderInput from "../Form/OrderInput/OrderInput";
 import TextInput from "../Form/TextInput";
-import Toast from "../Toast/Toast";
 import "./AddEditLink.css";
 
 export default function AddEditLink({
@@ -42,19 +43,23 @@ export default function AddEditLink({
   const [url, setUrl] = useState(link ? link.url : "");
   const [urlError, setUrlError] = useState("");
   const [order, setOrder] = useState(link ? link.order : linkCount);
+  const [emoji, setEmoji] = useState(link ? link.emoji : null);
+  const [emojiError, setEmojiError] = useState("");
+  const [customIconError, setCustomIconError] = useState("");
+
+  const [iconType, setIconType] = useState<IconType>(
+    link ? getIconType(link) : "default",
+  );
 
   const {
     customIconId,
     uploadedImage,
     uploadedImageUrl,
     savedIconUrl,
-    shouldRemoveIcon,
-    isError,
-    errorMessage,
     uploadIconRef,
     handleIconUpload,
     handleIconDelete,
-  } = useImageUpload(link?.customIconId);
+  } = useImageUpload(link?.customIconId, setCustomIconError);
 
   function isValidUrl(url: string): boolean {
     try {
@@ -78,30 +83,42 @@ export default function AddEditLink({
       return;
     }
 
+    if (iconType === "emoji" && !isValidEmoji(emoji?.trim() ?? "")) {
+      setEmojiError("Emoji is not valid");
+      return;
+    }
+
+    if (iconType === "upload" && !uploadedImage) {
+      setCustomIconError("Icon is not uploaded");
+      return;
+    }
+
     if (link) {
-      updateLink(
+      updateLink({
         categoryId,
-        {
+        link: {
           customIconId: link.customIconId,
+          emoji: iconType === "emoji" ? emoji : null,
           id: link.id,
           order,
           title: title.trim() || formattedUrl,
           url: formattedUrl,
         },
-        uploadedImage,
-        shouldRemoveIcon,
-      );
+        customIcon: iconType === "upload" ? uploadedImage : null,
+        shouldRemove: iconType !== "upload",
+      });
 
       cancel();
     } else {
-      createLink(
+      createLink({
         categoryId,
         order,
-        title.trim() || formattedUrl,
-        formattedUrl,
-        uploadedImage,
+        title: title.trim() || formattedUrl,
+        url: formattedUrl,
+        emoji: iconType === "emoji" ? emoji : null,
+        customIcon: iconType === "upload" ? uploadedImage : null,
         linkCount,
-      );
+      });
 
       setTitle("");
       setUrl("");
@@ -158,15 +175,68 @@ export default function AddEditLink({
           items={[...links!]}
           itemId={linkId}
         />
-        <ImageUpload
-          label="Upload Icon"
-          showDelete={!!customIconId || uploadedImage !== null}
-          deleteLabel="Remove Icon"
-          previewUrl={uploadedImageUrl ?? savedIconUrl}
-          handleUpload={handleIconUpload}
-          handleDelete={handleIconDelete}
-          focusRef={uploadIconRef}
-        />
+        <div className="form-field">
+          <div className="label">Icon:</div>
+          <label>
+            <input
+              type="radio"
+              name="iconType"
+              value="default"
+              checked={iconType === "default"}
+              onChange={() => setIconType("default")}
+            />
+            Defaut Web Icon
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="iconType"
+              value="upload"
+              checked={iconType === "upload"}
+              onChange={() => setIconType("upload")}
+            />
+            Upload Image
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="iconType"
+              value="emoji"
+              checked={iconType === "emoji"}
+              onChange={() => setIconType("emoji")}
+            />
+            Use Emoji
+          </label>
+        </div>
+        {iconType === "upload" && (
+          <>
+            <ImageUpload
+              label="Upload Icon"
+              showDelete={!!customIconId || uploadedImage !== null}
+              deleteLabel="Remove Icon"
+              previewUrl={uploadedImageUrl ?? savedIconUrl}
+              handleUpload={handleIconUpload}
+              handleDelete={handleIconDelete}
+              focusRef={uploadIconRef}
+            />
+            {customIconError.length > 0 && (
+              <div className="error-text">{customIconError}</div>
+            )}
+          </>
+        )}
+        {iconType === "emoji" && (
+          <FormField id="emoji" labelText="Emoji:" error={emojiError}>
+            <TextInput
+              id="emoji"
+              value={emoji ?? ""}
+              onChange={(e) => {
+                setEmoji(e.target.value);
+                setEmojiError("");
+              }}
+              onPressEnter={handleSave}
+            />
+          </FormField>
+        )}
         <div className="buttons-container">
           <Button action={() => handleSave()}>Save</Button>
           <Button action={cancel}>Cancel</Button>
@@ -183,7 +253,6 @@ export default function AddEditLink({
           )}
         </div>
       </Form>
-      <Toast type="error" show={isError} text={errorMessage} />
     </div>
   );
 }

@@ -30,6 +30,7 @@ export async function importCategories(bookmarks: Array<[string, boolean]>) {
           .map((item, index) => {
             return {
               customIconId: null,
+              emoji: null,
               id: uuidv4(),
               order: index,
               title: item.title,

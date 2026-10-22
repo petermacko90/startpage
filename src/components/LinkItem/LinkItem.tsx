@@ -41,7 +41,11 @@ export default function LinkItem({ link }: { link: Link }) {
         onAuxClick={handleClick}
       >
         <span className="link-icon-container">
-          <PageIcon domain={getHostname(link.url)} id={link.customIconId} />
+          <PageIcon
+            domain={getHostname(link.url)}
+            id={link.customIconId}
+            emoji={link.emoji}
+          />
         </span>
         <span className="link-title">{link.title}</span>
       </a>
