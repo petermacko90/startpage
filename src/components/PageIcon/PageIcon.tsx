@@ -72,12 +72,12 @@ export default function PageIcon({
 
   if (emoji) {
     return (
-      <div
+      <span
         className="emoji"
         style={{ width: size, height: size, fontSize: `calc(${size} * 0.75)` }}
       >
         {emoji}
-      </div>
+      </span>
     );
   }
 

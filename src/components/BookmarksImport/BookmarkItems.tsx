@@ -30,9 +30,12 @@ export default function BookmarkItems({
           <>
             <div className="bookmark-item overflow">
               {bookmarkItem.url ? (
-                <span title={`${bookmarkItem.title} | ${bookmarkItem.url}`}>
+                <div
+                  title={`${bookmarkItem.title} | ${bookmarkItem.url}`}
+                  className="bookmark-link"
+                >
                   {bookmarkItem.title} | {bookmarkItem.url}
-                </span>
+                </div>
               ) : (
                 <>
                   <input

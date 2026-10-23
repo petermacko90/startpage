@@ -5,20 +5,18 @@
 }
 
 .bookmark-item {
-  padding-left: var(--outline-width);
+  height: var(--form-field-height);
 }
 
 .folder-button {
+  height: var(--form-field-height);
   display: inline-flex;
   gap: var(--spacing-xs);
-  margin-top: var(--spacing-xs);
-  margin-bottom: var(--spacing-xs);
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: var(--spacing-xs);
   vertical-align: middle;
   background-color: transparent;
   color: var(--color-light-3);
-  border: none;
+  border: var(--outline-width) solid transparent;
   border-radius: var(--border-radius-s);
   font-size: var(--font-size-m);
   font-weight: bold;
@@ -30,7 +28,13 @@
 }
 
 .folder-button:focus {
-  outline: var(--outline-width) solid var(--color-primary);
+  outline: none;
+  border: var(--outline-width) solid var(--color-primary);
+}
+
+.bookmark-link {
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
 }
 
 input[type="checkbox"] {
