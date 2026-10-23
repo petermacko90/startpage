@@ -34,7 +34,7 @@ export default function OrderInput<T extends Category | Link>({
   }
 
   return (
-    <div className="order-input-container">
+    <div className="form-field order-input-container">
       <div className="order-form-field">
         <label htmlFor="order-input">Order:</label>
         <Button

@@ -4,16 +4,21 @@
   flex-wrap: wrap;
   column-gap: var(--spacing-s);
   align-items: baseline;
+  border-bottom: var(--border-width) solid var(--color-dark-4);
 }
 
 label,
 .label {
-  height: var(--form-field-height);
+  min-height: var(--form-field-height);
   color: var(--color-light-1);
   font-size: var(--font-size-m);
 }
 
 .error-text {
-  margin-top: var(--spacing-xs);
   color: var(--color-red);
+  font-weight: bold;
+}
+
+input + .error-text {
+  margin-top: var(--spacing-xs);
 }

@@ -3,9 +3,6 @@
 .order-input-container {
   max-width: 100%;
   width: 100%;
-  display: flex;
-  gap: var(--spacing-s);
-  align-items: baseline;
   flex-wrap: wrap;
 }
 
