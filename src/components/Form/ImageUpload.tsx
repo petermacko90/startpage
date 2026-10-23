@@ -11,6 +11,7 @@ export default function ImageUpload({
   handleDelete,
   previewUrl,
   focusRef,
+  customIconError,
 }: {
   label: string;
   showDelete: boolean;
@@ -19,6 +20,7 @@ export default function ImageUpload({
   handleDelete: () => void;
   previewUrl?: string | null;
   focusRef?: RefObject<HTMLElement | null>;
+  customIconError?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -54,6 +56,9 @@ export default function ImageUpload({
         <Button type="danger" action={handleDelete}>
           {deleteLabel}
         </Button>
+      )}
+      {(customIconError?.length ?? 0) > 0 && (
+        <div className="error-text">{customIconError}</div>
       )}
     </div>
   );

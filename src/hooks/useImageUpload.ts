@@ -41,6 +41,7 @@ export function useImageUpload<T extends Category | Link>(
   }
 
   function handleIconDelete() {
+    setError("");
     setUploadedImage(null);
     setCustomIconId(null);
     setUploadedImageUrl(null);

@@ -13,6 +13,7 @@ import EmojiInput from "../Form/EmojiInput";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import IconSelector from "../Form/IconSelector";
+import ImageUpload from "../Form/ImageUpload";
 import OrderInput from "../Form/OrderInput/OrderInput";
 import TextInput from "../Form/TextInput";
 import "./AddEditLink.css";
@@ -176,18 +177,19 @@ export default function AddEditLink({
           items={[...links!]}
           itemId={linkId}
         />
-        <IconSelector
-          iconType={iconType}
-          setIconType={setIconType}
-          customIconId={customIconId}
-          uploadedImage={uploadedImage}
-          uploadedImageUrl={uploadedImageUrl}
-          savedIconUrl={savedIconUrl}
-          handleIconUpload={handleIconUpload}
-          handleIconDelete={handleIconDelete}
-          uploadIconRef={uploadIconRef}
-          customIconError={customIconError}
-        />
+        <IconSelector iconType={iconType} setIconType={setIconType} />
+        {iconType === "upload" && (
+          <ImageUpload
+            label="Upload Icon"
+            showDelete={!!customIconId || uploadedImage !== null}
+            deleteLabel="Remove Icon"
+            previewUrl={uploadedImageUrl ?? savedIconUrl}
+            handleUpload={handleIconUpload}
+            handleDelete={handleIconDelete}
+            focusRef={uploadIconRef}
+            customIconError={customIconError}
+          />
+        )}
         {iconType === "emoji" && (
           <EmojiInput
             emoji={emoji}
