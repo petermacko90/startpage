@@ -1,9 +1,7 @@
 import type { ChangeEvent, Dispatch, RefObject, SetStateAction } from "react";
 import type { Category, Link } from "../../state/models";
 import type { IconType } from "../../utils/getIconType";
-import FormField from "./FormField";
 import ImageUpload from "./ImageUpload";
-import TextInput from "./TextInput";
 
 export default function IconSelector<T extends Category | Link>({
   iconType,
@@ -16,11 +14,6 @@ export default function IconSelector<T extends Category | Link>({
   handleIconDelete,
   uploadIconRef,
   customIconError,
-  emoji,
-  setEmoji,
-  emojiError,
-  setEmojiError,
-  handleSave,
 }: {
   iconType: IconType;
   setIconType: Dispatch<SetStateAction<IconType>>;
@@ -32,11 +25,6 @@ export default function IconSelector<T extends Category | Link>({
   handleIconDelete: () => void;
   uploadIconRef: RefObject<HTMLElement | null>;
   customIconError: string;
-  emoji: string | null;
-  setEmoji: Dispatch<SetStateAction<string | null>>;
-  emojiError: string;
-  setEmojiError: Dispatch<SetStateAction<string>>;
-  handleSave: () => void;
 }) {
   return (
     <>
@@ -88,19 +76,6 @@ export default function IconSelector<T extends Category | Link>({
             <div className="error-text">{customIconError}</div>
           )}
         </>
-      )}
-      {iconType === "emoji" && (
-        <FormField id="emoji" labelText="Emoji:" error={emojiError}>
-          <TextInput
-            id="emoji"
-            value={emoji ?? ""}
-            onChange={(e) => {
-              setEmoji(e.target.value);
-              setEmojiError("");
-            }}
-            onPressEnter={handleSave}
-          />
-        </FormField>
       )}
     </>
   );

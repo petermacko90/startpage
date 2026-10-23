@@ -5,6 +5,7 @@ import { StateContext } from "../../state/context";
 import { useImageUpload } from "../../hooks/useImageUpload";
 import { isValidEmoji } from "../../utils/isValidEmoji";
 import Button from "../Button/Button";
+import EmojiInput from "../Form/EmojiInput";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import IconSelector from "../Form/IconSelector";
@@ -109,12 +110,16 @@ export default function CategoryForm({
         handleIconDelete={handleIconDelete}
         uploadIconRef={uploadIconRef}
         customIconError={customIconError}
-        emoji={emoji}
-        setEmoji={setEmoji}
-        emojiError={emojiError}
-        setEmojiError={setEmojiError}
-        handleSave={validateAndSave}
       />
+      {iconType === "emoji" && (
+        <EmojiInput
+          emoji={emoji}
+          setEmoji={setEmoji}
+          emojiError={emojiError}
+          setEmojiError={setEmojiError}
+          handleSave={validateAndSave}
+        />
+      )}
       <div className="buttons-container">
         <Button action={validateAndSave}>Save</Button>
         <Button action={() => close()}>Close</Button>

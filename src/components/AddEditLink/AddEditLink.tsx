@@ -9,6 +9,7 @@ import { getIconType, type IconType } from "../../utils/getIconType";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
 import { isValidEmoji } from "../../utils/isValidEmoji";
 import Button from "../Button/Button";
+import EmojiInput from "../Form/EmojiInput";
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import IconSelector from "../Form/IconSelector";
@@ -186,12 +187,16 @@ export default function AddEditLink({
           handleIconDelete={handleIconDelete}
           uploadIconRef={uploadIconRef}
           customIconError={customIconError}
-          emoji={emoji}
-          setEmoji={setEmoji}
-          emojiError={emojiError}
-          setEmojiError={setEmojiError}
-          handleSave={handleSave}
         />
+        {iconType === "emoji" && (
+          <EmojiInput
+            emoji={emoji}
+            setEmoji={setEmoji}
+            emojiError={emojiError}
+            setEmojiError={setEmojiError}
+            handleSave={handleSave}
+          />
+        )}
         <div className="buttons-container">
           <Button action={() => handleSave()}>Save</Button>
           <Button action={cancel}>Cancel</Button>
