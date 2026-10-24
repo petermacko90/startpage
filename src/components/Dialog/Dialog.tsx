@@ -33,14 +33,10 @@ export default function Dialog({
       className={className}
       onKeyDown={onKeyDown}
     >
-      <div
-        className={`dialog-header${closedby === "any" ? " justify-center" : ""}`}
-      >
-        {closedby === "closerequest" && <div></div>}
-        <div className={`dialog-title overflow`}>{title}</div>
-        {closedby === "closerequest" && (
-          <CloseButton action={() => onClose()} />
-        )}
+      <div className="dialog-header">
+        <div></div>
+        <div className="dialog-title overflow">{title}</div>
+        <CloseButton action={() => onClose()} />
       </div>
       <div className="dialog-content">{children}</div>
     </dialog>,

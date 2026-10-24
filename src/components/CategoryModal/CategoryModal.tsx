@@ -1,4 +1,10 @@
-import { useRef, useState, type KeyboardEvent, type RefObject } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type RefObject,
+} from "react";
 import type { Category, Link } from "../../state/models";
 import { NO_TITLE } from "../../constants";
 import { deleteLink } from "../../storage/localStorage/links";
@@ -36,6 +42,7 @@ export default function CategoryModal({
 
   const setIdToFocus = useFocusById("link");
   const addLinkButtonRef = useRef<HTMLButtonElement | null>(null);
+  const lastActiveLinkRef = useRef<Link["id"] | null>(null);
 
   const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo(
     (linkId) => deleteLink(category.id, linkId),
@@ -73,11 +80,21 @@ export default function CategoryModal({
     }
   }
 
-  const lastActiveLinkRef = useRef<Link["id"] | null>(null);
+  useEffect(() => {
+    const firstLink = dialogRef.current?.querySelector(
+      ".link",
+    ) as HTMLAnchorElement;
+
+    if (firstLink) {
+      setTimeout(() => firstLink.focus());
+    } else {
+      setTimeout(() => addLinkButtonRef.current?.focus());
+    }
+  }, [dialogRef]);
 
   return (
     <Dialog
-      closedby="any"
+      closedby={isAddingLink || editLinkId ? "closerequest" : "any"}
       onClose={close}
       ref={dialogRef}
       onKeyDown={handleKeyDown}
