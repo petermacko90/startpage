@@ -61,6 +61,7 @@ input[type="checkbox"]::before {
   background-color: var(--color-primary);
   clip-path: polygon(14% 44%, 0 58%, 38% 96%, 100% 16%, 86% 2%, 38% 68%);
   transform: scale(0);
+  transition: transform 0.2s ease-in-out;
 }
 
 input[type="checkbox"]:checked::before {

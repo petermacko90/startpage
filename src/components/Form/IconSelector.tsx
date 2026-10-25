@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { IconType } from "../../utils/getIconType";
+import "./IconSelector.css";
 
 export default function IconSelector({
   iconType,
@@ -9,7 +10,7 @@ export default function IconSelector({
   setIconType: Dispatch<SetStateAction<IconType>>;
 }) {
   return (
-    <div className="form-field">
+    <div className="form-field radio-group">
       <div className="label">Icon:</div>
       <label>
         <input
@@ -19,7 +20,7 @@ export default function IconSelector({
           checked={iconType === "default"}
           onChange={() => setIconType("default")}
         />
-        Defaut
+        <span>Defaut</span>
       </label>
       <label>
         <input
@@ -29,7 +30,7 @@ export default function IconSelector({
           checked={iconType === "upload"}
           onChange={() => setIconType("upload")}
         />
-        Upload Image
+        <span>Upload Image</span>
       </label>
       <label>
         <input
@@ -39,7 +40,7 @@ export default function IconSelector({
           checked={iconType === "emoji"}
           onChange={() => setIconType("emoji")}
         />
-        Use Emoji
+        <span>Use Emoji</span>
       </label>
     </div>
   );
