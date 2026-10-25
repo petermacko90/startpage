@@ -1,3 +1,7 @@
+img {
+  object-fit: contain;
+}
+
 .emoji {
   display: grid;
   place-content: center;
