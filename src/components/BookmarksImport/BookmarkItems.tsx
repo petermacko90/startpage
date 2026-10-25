@@ -32,7 +32,7 @@ export default function BookmarkItems({
               {bookmarkItem.url ? (
                 <div
                   title={`${bookmarkItem.title} | ${bookmarkItem.url}`}
-                  className="bookmark-link"
+                  className="bookmark-link overflow"
                 >
                   {bookmarkItem.title} | {bookmarkItem.url}
                 </div>
