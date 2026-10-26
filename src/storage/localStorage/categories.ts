@@ -1,16 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link } from "../../state/models";
-import {
-  selectCategoriesCount,
-  selectCategory,
-  selectLinks,
-} from "../../state/selectors";
+import { selectCategoriesCount } from "../../state/selectors";
 import { getCategoryIndex, getState, reorderItems, setState } from "./common";
-import {
-  removeCustomIcon,
-  saveCustomIcon,
-  updateCustomIcon,
-} from "../customIcon";
+import { saveCustomIcon, updateCustomIcon } from "../customIcon";
 
 export async function importCategories(bookmarks: Array<[string, boolean]>) {
   const state = await getState();
@@ -143,12 +135,6 @@ export async function updateCategory({
 
 export async function deleteCategory(id: Category["id"]) {
   const state = await getState();
-  const links = selectLinks(state)(id);
-  await removeCustomIcon(selectCategory(state)(id)!.customIconId);
-
-  links?.forEach(async (link) => {
-    await removeCustomIcon(link.customIconId);
-  });
 
   const filteredCategories = state.categories.filter((category) => {
     return category.id !== id;

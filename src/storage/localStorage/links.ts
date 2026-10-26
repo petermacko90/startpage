@@ -2,11 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import type { Category, Link, State } from "../../state/models";
 import { selectLink } from "../../state/selectors";
 import { getCategoryIndex, getState, reorderItems, setState } from "./common";
-import {
-  removeCustomIcon,
-  saveCustomIcon,
-  updateCustomIcon,
-} from "../customIcon";
+import { saveCustomIcon, updateCustomIcon } from "../customIcon";
 
 export async function createLink({
   categoryId,
@@ -121,7 +117,6 @@ export async function deleteLink(
 ) {
   const state = await getState();
   const index = getCategoryIndex(state, categoryId);
-  await removeCustomIcon(selectLink(state)(categoryId, linkId)!.customIconId);
 
   const filteredLinks = state.categories[index].links.filter((link) => {
     return link.id !== linkId;

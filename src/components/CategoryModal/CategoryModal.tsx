@@ -1,4 +1,5 @@
 import {
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -6,8 +7,11 @@ import {
   type RefObject,
 } from "react";
 import type { Category, Link } from "../../state/models";
+import { StateContext } from "../../state/context";
+import { selectLink } from "../../state/selectors";
 import { NO_TITLE } from "../../constants";
 import { deleteLink } from "../../storage/localStorage/links";
+import { removeCustomIcon } from "../../storage/customIcon";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
@@ -40,16 +44,19 @@ export default function CategoryModal({
     setTimeout(() => textInputRef.current?.focus());
   }
 
+  const state = useContext(StateContext);
   const setIdToFocus = useFocusById("link");
   const addLinkButtonRef = useRef<HTMLButtonElement | null>(null);
   const lastActiveLinkRef = useRef<Link["id"] | null>(null);
 
-  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo(
-    (linkId) => deleteLink(category.id, linkId),
-    (index) => getNeighborId(category.links, index),
+  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo({
+    onDelete: (linkId) => deleteLink(category.id, linkId),
+    getNeighborId: (index) => getNeighborId(category.links, index),
     setIdToFocus,
-    addLinkButtonRef,
-  );
+    removeCustomIcons: (linkId) =>
+      removeCustomIcon(selectLink(state)(category.id, linkId)!.customIconId),
+    addItemButtonRef: addLinkButtonRef,
+  });
 
   function handleKeyDown(e: KeyboardEvent<HTMLDialogElement>) {
     if (!shouldHandleNumericKeys()) return;

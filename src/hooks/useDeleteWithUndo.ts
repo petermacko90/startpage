@@ -4,20 +4,28 @@ import { UNDO_TIMEOUT } from "../constants";
 import { undoState } from "../storage/localStorage/common";
 import { useTimer } from "./useTimer";
 
-export function useDeleteWithUndo<T extends Category | Link>(
-  onDelete: (id: T["id"]) => void,
-  getNeighborId: (index: number) => T["id"] | null,
-  setIdToFocus: (value: SetStateAction<string | null>) => void,
-  addItemButtonRef: RefObject<HTMLButtonElement | null>,
-) {
+export function useDeleteWithUndo<T extends Category | Link>({
+  onDelete,
+  getNeighborId,
+  setIdToFocus,
+  removeCustomIcons,
+  addItemButtonRef,
+}: {
+  onDelete: (id: T["id"]) => void;
+  getNeighborId: (index: number) => T["id"] | null;
+  setIdToFocus: (value: SetStateAction<string | null>) => void;
+  removeCustomIcons: (id: T["id"]) => void;
+  addItemButtonRef: RefObject<HTMLButtonElement | null>;
+}) {
   const [isShowUndo, setIsShowUndo] = useState(false);
   const [deletedItemId, setDeletedItemId] = useState<T["id"] | null>(null);
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
   const neighborIdRef = useRef<T["id"] | null>(null);
   const { clearTimer, startTimer } = useTimer();
 
-  function handleToastClose() {
+  function handleToastClose(id: T["id"]) {
     setIsShowUndo(false);
+    removeCustomIcons(id);
 
     if (document.activeElement === undoButtonRef.current) {
       if (neighborIdRef.current) {
@@ -35,7 +43,7 @@ export function useDeleteWithUndo<T extends Category | Link>(
     setDeletedItemId(id);
     onDelete(id);
     setIsShowUndo(true);
-    startTimer(() => handleToastClose(), UNDO_TIMEOUT);
+    startTimer(() => handleToastClose(id), UNDO_TIMEOUT);
     setTimeout(() => undoButtonRef.current?.focus(), 50);
   }
 

@@ -1,9 +1,11 @@
 import { useContext, useEffect, useRef } from "react";
 import { StateContext } from "../../state/context";
+import { selectCategory, selectLinks } from "../../state/selectors";
 import {
   deleteCategory,
   updateCategories,
 } from "../../storage/localStorage/categories";
+import { removeCustomIcon } from "../../storage/customIcon";
 import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
@@ -27,12 +29,19 @@ export default function CategoryList({
   const setIdToFocus = useFocusById("category");
   const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo(
-    (id) => deleteCategory(id),
-    (index) => getNeighborId(state.categories, index),
+  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo({
+    onDelete: (id) => deleteCategory(id),
+    getNeighborId: (index) => getNeighborId(state.categories, index),
     setIdToFocus,
-    addCategoryButtonRef,
-  );
+    removeCustomIcons: (id) => {
+      removeCustomIcon(selectCategory(state)(id)!.customIconId);
+
+      selectLinks(state)(id)?.forEach(async (link) => {
+        await removeCustomIcon(link.customIconId);
+      });
+    },
+    addItemButtonRef: addCategoryButtonRef,
+  });
 
   const { containerRef, captureFirst } = useFlipAnimation(state.categories);
 
