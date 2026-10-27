@@ -4,12 +4,12 @@ import { selectCategoriesCount } from "../../state/selectors";
 import { getCategoryIndex, getState, reorderItems, setState } from "./common";
 import { saveCustomIcon, updateCustomIcon } from "../customIcon";
 
-export async function importCategories(bookmarks: Array<[string, boolean]>) {
+export async function importCategories(bookmarks: string[]) {
   const state = await getState();
   let categoriesCount = selectCategoriesCount(state);
 
   const bookmarkItems = await Promise.all(
-    bookmarks.map(([key]) => browser.bookmarks.getSubTree(key)),
+    bookmarks.map((key) => browser.bookmarks.getSubTree(key)),
   );
 
   const newCategories: Category[] = bookmarkItems.map((item) => {

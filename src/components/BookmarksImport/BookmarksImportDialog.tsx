@@ -48,8 +48,8 @@ export default function BookmarksImportDialog({
   function handleImport() {
     clearError();
 
-    const bookmarks = Object.entries(selectedBookmarks).filter(
-      ([, value]) => value,
+    const bookmarks = Object.keys(selectedBookmarks).filter(
+      (key) => selectedBookmarks[key],
     );
 
     if (bookmarks.length === 0) {
