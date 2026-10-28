@@ -10,15 +10,23 @@ export default function WallpaperContainer() {
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    let objectUrl: string | null = null;
+
     async function loadBackground() {
       const blob = await getImage(BACKGROUND_KEY);
       if (blob) {
-        const objectUrl = URL.createObjectURL(blob);
+        objectUrl = URL.createObjectURL(blob);
         setBackgroundUrl(objectUrl);
       }
     }
 
     loadBackground();
+
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
   }, []);
 
   useEffect(() => {
