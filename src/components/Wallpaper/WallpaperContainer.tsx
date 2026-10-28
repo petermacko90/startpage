@@ -60,7 +60,7 @@ export default function WallpaperContainer() {
           setBackgroundUrl={setBackgroundUrl}
           close={() => {
             setShowDialog(false);
-            setTimeout(() => wallpaperButtonRef.current?.focus());
+            wallpaperButtonRef.current?.focus();
           }}
         />
       )}

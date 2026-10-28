@@ -23,7 +23,7 @@ export default function WallpaperDialog({
 }) {
   const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
   const uploadButtonRef = useRef<HTMLLabelElement | null>(null);
-  const { setDialogRef } = useDialog(".image-upload");
+  const { dialogRef, setDialogRef } = useDialog(".image-upload");
 
   async function handleBackgroundUpload(e: ChangeEvent<HTMLInputElement>) {
     clearError();
@@ -74,8 +74,8 @@ export default function WallpaperDialog({
 
   return (
     <Dialog
-      closedby="closerequest"
       onClose={close}
+      onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
       title="Wallpaper"
     >

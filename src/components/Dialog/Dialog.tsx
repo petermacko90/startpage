@@ -8,19 +8,21 @@ import CloseButton from "./CloseButton";
 import "./Dialog.css";
 
 export default function Dialog({
-  closedby,
   ref,
   onClose,
+  onCloseButtonClick,
   title,
   children,
+  closedby = "closerequest",
   className,
   onKeyDown,
 }: {
-  closedby: DialogHTMLAttributes<HTMLDialogElement>["closedby"];
   ref: (node: HTMLDialogElement | null) => void;
   onClose: () => void;
+  onCloseButtonClick: () => void;
   title: string;
   children: ReactNode;
+  closedby?: DialogHTMLAttributes<HTMLDialogElement>["closedby"];
   className?: string;
   onKeyDown?: KeyboardEventHandler<HTMLDialogElement>;
 }) {
@@ -35,7 +37,7 @@ export default function Dialog({
       <div className="dialog-header">
         <div></div>
         <div className="dialog-title overflow">{title}</div>
-        <CloseButton action={() => onClose()} />
+        <CloseButton action={() => onCloseButtonClick()} />
       </div>
       <div className="dialog-content">{children}</div>
     </dialog>,

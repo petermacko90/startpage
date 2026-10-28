@@ -85,6 +85,7 @@ export default function CategoryModal({
     <Dialog
       closedby={isAddingLink || editLinkId ? "closerequest" : "any"}
       onClose={close}
+      onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
       onKeyDown={handleKeyDown}
       title={category.title || NO_TITLE}

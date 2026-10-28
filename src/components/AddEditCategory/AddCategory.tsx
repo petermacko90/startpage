@@ -33,7 +33,7 @@ export default function AddCategory({
             if (categoryId) {
               setIdToFocus(categoryId);
             } else {
-              setTimeout(() => addCategoryButtonRef.current?.focus());
+              addCategoryButtonRef.current?.focus();
             }
           }}
         />

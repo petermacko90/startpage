@@ -19,7 +19,7 @@ export default function EditCategory({
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
-  const { setDialogRef } = useDialog("#title");
+  const { dialogRef, setDialogRef } = useDialog("#title");
 
   function handleCategorySave(
     title: string,
@@ -42,8 +42,8 @@ export default function EditCategory({
 
   return (
     <Dialog
-      closedby="closerequest"
       onClose={close}
+      onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
       title="Edit Category"
     >

@@ -59,15 +59,19 @@ export default function BookmarksImportDialog({
     }
 
     importCategories(bookmarks);
-    close();
+    handleCloseButtonClick();
+  }
+
+  function handleCloseButtonClick() {
+    dialogRef.current?.close();
   }
 
   return (
     <Dialog
-      closedby="closerequest"
       title="Import Bookmarks"
       ref={setDialogRef}
       onClose={close}
+      onCloseButtonClick={handleCloseButtonClick}
       className="bookmarks-import"
     >
       <BookmarkItems
@@ -77,7 +81,7 @@ export default function BookmarksImportDialog({
       />
       <div className="buttons-container mt">
         <Button action={() => handleImport()}>Import</Button>
-        <Button action={close}>Close</Button>
+        <Button action={handleCloseButtonClick}>Close</Button>
       </div>
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>

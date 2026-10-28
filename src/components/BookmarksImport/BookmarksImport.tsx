@@ -19,7 +19,7 @@ export default function BookmarksImport() {
         <BookmarksImportDialog
           close={() => {
             setShowDialog(false);
-            setTimeout(() => buttonRef.current?.focus());
+            buttonRef.current?.focus();
           }}
         />
       )}

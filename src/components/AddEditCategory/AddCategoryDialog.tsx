@@ -15,7 +15,7 @@ export default function AddCategoryDialog({
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
-  const { setDialogRef } = useDialog("#title");
+  const { dialogRef, setDialogRef } = useDialog("#title");
 
   function handleCategorySave(
     title: string,
@@ -35,10 +35,14 @@ export default function AddCategoryDialog({
     close(id);
   }
 
+  function handleCloseButtonClick() {
+    dialogRef.current?.close();
+  }
+
   return (
     <Dialog
-      closedby="closerequest"
       onClose={close}
+      onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
       title="Add Category"
     >
@@ -51,7 +55,7 @@ export default function AddCategoryDialog({
         maxOrder={categoriesCount}
         handleCategorySave={handleCategorySave}
         itemId={null}
-        close={close}
+        close={handleCloseButtonClick}
       />
     </Dialog>
   );
