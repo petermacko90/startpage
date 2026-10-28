@@ -1,27 +1,25 @@
-import { useContext, type RefObject } from "react";
+import { useContext } from "react";
 import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { updateCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
+import { useDialog } from "../../hooks/useDialog";
 import { getIconType } from "../../utils/getIconType";
 import Dialog from "../Dialog/Dialog";
 import CategoryForm from "./CategoryForm";
 
 export default function EditCategory({
   category,
-  dialogRef,
-  inputRef,
   close,
   handleDeleteCategory,
 }: {
   category: Category;
-  dialogRef: RefObject<HTMLDialogElement | null>;
-  inputRef: RefObject<HTMLInputElement | null>;
   close: () => void;
   handleDeleteCategory: (categoryId: Category["id"], index: number) => void;
 }) {
   const state = useContext(StateContext);
   const categoriesCount = selectCategoriesCount(state);
+  const { setDialogRef } = useDialog("#title");
 
   function handleCategorySave(
     title: string,
@@ -46,7 +44,7 @@ export default function EditCategory({
     <Dialog
       closedby="closerequest"
       onClose={close}
-      ref={dialogRef}
+      ref={setDialogRef}
       title="Edit Category"
     >
       <CategoryForm
@@ -58,7 +56,6 @@ export default function EditCategory({
         maxOrder={categoriesCount - 1}
         handleCategorySave={handleCategorySave}
         itemId={category.id}
-        inputRef={inputRef}
         close={close}
         handleDeleteCategory={() =>
           handleDeleteCategory(category.id, category.order)

@@ -1,6 +1,10 @@
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import {
+  useState,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+} from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
-import { useDialog } from "../../hooks/useDialog";
 import AddCategoryDialog from "./AddCategoryDialog";
 import AddImportCategoryButton from "../Button/AddImportCategoryButton";
 
@@ -11,7 +15,7 @@ export default function AddCategory({
   setIdToFocus: Dispatch<SetStateAction<string | null>>;
   addCategoryButtonRef: RefObject<HTMLButtonElement | null>;
 }) {
-  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
+  const [showDialog, setShowDialog] = useState(false);
 
   return (
     <>
@@ -23,8 +27,6 @@ export default function AddCategory({
       />
       {showDialog && (
         <AddCategoryDialog
-          dialogRef={dialogRef}
-          inputRef={focusRef as RefObject<HTMLInputElement>}
           close={(categoryId) => {
             setShowDialog(false);
 

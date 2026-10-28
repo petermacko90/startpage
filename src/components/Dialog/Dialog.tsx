@@ -2,7 +2,6 @@ import type {
   DialogHTMLAttributes,
   KeyboardEventHandler,
   ReactNode,
-  RefObject,
 } from "react";
 import { createPortal } from "react-dom";
 import CloseButton from "./CloseButton";
@@ -18,7 +17,7 @@ export default function Dialog({
   onKeyDown,
 }: {
   closedby: DialogHTMLAttributes<HTMLDialogElement>["closedby"];
-  ref: RefObject<HTMLDialogElement | null>;
+  ref: (node: HTMLDialogElement | null) => void;
   onClose: () => void;
   title: string;
   children: ReactNode;

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
 import { getImage } from "../../storage/indexedDB";
-import { useDialog } from "../../hooks/useDialog";
 import WallpaperDialog from "./WallpaperDialog";
 import "./WallpaperContainer.css";
 
@@ -37,7 +36,7 @@ export default function WallpaperContainer() {
     }
   }, [backgroundUrl]);
 
-  const { dialogRef, focusRef, setShowDialog, showDialog } = useDialog();
+  const [showDialog, setShowDialog] = useState(false);
   const wallpaperButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
@@ -59,8 +58,6 @@ export default function WallpaperContainer() {
         <WallpaperDialog
           backgroundUrl={backgroundUrl}
           setBackgroundUrl={setBackgroundUrl}
-          dialogRef={dialogRef}
-          focusRef={focusRef}
           close={() => {
             setShowDialog(false);
             setTimeout(() => wallpaperButtonRef.current?.focus());

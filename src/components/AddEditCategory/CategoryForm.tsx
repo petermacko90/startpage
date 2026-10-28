@@ -1,4 +1,4 @@
-import { useContext, useState, type RefObject } from "react";
+import { useContext, useState } from "react";
 import { type IconType } from "../../utils/getIconType";
 import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
@@ -22,7 +22,6 @@ export default function CategoryForm({
   maxOrder,
   handleCategorySave,
   itemId,
-  inputRef,
   close,
   handleDeleteCategory,
 }: {
@@ -40,7 +39,6 @@ export default function CategoryForm({
     shouldRemoveIcon: boolean,
   ) => void;
   itemId: Category["id"] | null;
-  inputRef: RefObject<HTMLInputElement | null>;
   close: () => void;
   handleDeleteCategory?: () => void;
 }) {
@@ -90,7 +88,6 @@ export default function CategoryForm({
           onChange={(e) => setTitle(e.target.value)}
           onPressEnter={validateAndSave}
           value={title}
-          inputRef={inputRef}
         />
       </FormField>
       <OrderInput

@@ -1,20 +1,38 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, type RefObject } from "react";
 
-export function useDialog() {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const focusRef = useRef<HTMLElement | null>(null);
-  const [showDialog, setShowDialog] = useState(false);
+export function useDialog(
+  itemSelector?: string,
+  fallbackRef?: RefObject<HTMLButtonElement | null>,
+) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
 
-  useEffect(() => {
-    if (!dialogRef.current) return;
+  const setDialogRef = useCallback(
+    (node: HTMLDialogElement | null) => {
+      if (node) {
+        dialogRef.current = node;
 
-    if (showDialog) {
-      dialogRef.current.showModal();
-      focusRef.current?.focus();
-    } else {
-      dialogRef.current.close();
-    }
-  }, [showDialog]);
+        if (!node.open) {
+          node.showModal();
+        }
 
-  return { dialogRef, focusRef, showDialog, setShowDialog };
+        if (!itemSelector) return;
+
+        const elementToFocus: HTMLAnchorElement | HTMLInputElement | null =
+          node.querySelector<HTMLAnchorElement | HTMLInputElement>(
+            itemSelector,
+          );
+
+        elementToFocus?.focus();
+
+        if (!elementToFocus) {
+          fallbackRef?.current?.focus();
+        }
+      } else {
+        dialogRef.current = null;
+      }
+    },
+    [itemSelector, fallbackRef],
+  );
+
+  return { setDialogRef, dialogRef };
 }

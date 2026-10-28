@@ -1,5 +1,6 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import { importCategories } from "../../storage/localStorage/categories";
+import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
 import BookmarkItems from "./BookmarkItems";
 import Button from "../Button/Button";
@@ -8,10 +9,8 @@ import Toast from "../Toast/Toast";
 import "./BookmarksImportDialog.css";
 
 export default function BookmarksImportDialog({
-  dialogRef,
   close,
 }: {
-  dialogRef: RefObject<HTMLDialogElement | null>;
   close: () => void;
 }) {
   const [bookmarks, setBookmarks] = useState<
@@ -26,6 +25,8 @@ export default function BookmarksImportDialog({
       setIsLoading(false);
     });
   }, []);
+
+  const { dialogRef, setDialogRef } = useDialog();
 
   useEffect(() => {
     if (isLoading || !dialogRef.current) return;
@@ -65,7 +66,7 @@ export default function BookmarksImportDialog({
     <Dialog
       closedby="closerequest"
       title="Import Bookmarks"
-      ref={dialogRef}
+      ref={setDialogRef}
       onClose={close}
       className="bookmarks-import"
     >

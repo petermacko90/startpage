@@ -1,11 +1,12 @@
 import {
+  useRef,
   type ChangeEvent,
   type Dispatch,
-  type RefObject,
   type SetStateAction,
 } from "react";
 import { removeImage, saveImage } from "../../storage/indexedDB";
 import { BACKGROUND_KEY, IMAGE_FILETYPE } from "../../constants";
+import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
 import Dialog from "../Dialog/Dialog";
 import ImageUpload from "../Form/ImageUpload";
@@ -14,17 +15,15 @@ import Toast from "../Toast/Toast";
 export default function WallpaperDialog({
   backgroundUrl,
   setBackgroundUrl,
-  dialogRef,
-  focusRef,
   close,
 }: {
   backgroundUrl: string | null;
   setBackgroundUrl: Dispatch<SetStateAction<string | null>>;
-  dialogRef: RefObject<HTMLDialogElement | null>;
-  focusRef: RefObject<HTMLElement | null>;
   close: () => void;
 }) {
   const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
+  const uploadButtonRef = useRef<HTMLLabelElement | null>(null);
+  const { setDialogRef } = useDialog(".image-upload");
 
   async function handleBackgroundUpload(e: ChangeEvent<HTMLInputElement>) {
     clearError();
@@ -58,7 +57,7 @@ export default function WallpaperDialog({
 
     try {
       await removeImage(BACKGROUND_KEY);
-      focusRef.current?.focus();
+      uploadButtonRef.current?.focus();
 
       setBackgroundUrl((prevValue) => {
         if (prevValue) {
@@ -77,7 +76,7 @@ export default function WallpaperDialog({
     <Dialog
       closedby="closerequest"
       onClose={close}
-      ref={dialogRef}
+      ref={setDialogRef}
       title="Wallpaper"
     >
       <ImageUpload
@@ -86,7 +85,7 @@ export default function WallpaperDialog({
         deleteLabel="Remove Wallpaper"
         handleUpload={handleBackgroundUpload}
         handleDelete={() => handleBackgroundRemove()}
-        focusRef={focusRef}
+        focusRef={uploadButtonRef}
       />
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>

@@ -1,6 +1,10 @@
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import {
+  useState,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+} from "react";
 import type { Category } from "../../state/models";
-import { useDialog } from "../../hooks/useDialog";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { MAX_INDEX_FOR_NUMBER_BADGE, NO_TITLE } from "../../constants";
 import { getHostname } from "../../utils/getHostname";
@@ -24,18 +28,8 @@ export default function CategoryItem({
   deleteCategory: (categoryId: Category["id"], index: number) => void;
   setIdToFocus: Dispatch<SetStateAction<Category["id"] | null>>;
 }) {
-  const {
-    dialogRef: categoryModalRef,
-    setShowDialog: setShowCategoryModal,
-    showDialog: showCategoryModal,
-  } = useDialog();
-
-  const {
-    dialogRef: editCategoryRef,
-    focusRef: editCategoryInputRef,
-    setShowDialog: setShowEditCategory,
-    showDialog: showEditCategory,
-  } = useDialog();
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showEditCategory, setShowEditCategory] = useState(false);
 
   const { isDragging, isOver, ref } = useDragAndDrop<HTMLDivElement>(
     category.id,
@@ -85,7 +79,6 @@ export default function CategoryItem({
       {showCategoryModal && (
         <CategoryModal
           category={category}
-          dialogRef={categoryModalRef}
           close={() => {
             setShowCategoryModal(false);
             setIdToFocus(category.id);
@@ -95,8 +88,6 @@ export default function CategoryItem({
       {showEditCategory && (
         <EditCategory
           category={category}
-          dialogRef={editCategoryRef}
-          inputRef={editCategoryInputRef as RefObject<HTMLInputElement>}
           close={() => {
             setShowEditCategory(false);
             setIdToFocus(category.id);

@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type KeyboardEvent,
-  type RefObject,
-} from "react";
+import { useContext, useRef, useState, type KeyboardEvent } from "react";
 import type { Category, Link } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { selectLink } from "../../state/selectors";
@@ -16,6 +9,7 @@ import { getNeighborId } from "../../utils/getNeighborId";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
 import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
+import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
 import { useFocusById } from "../../hooks/useFocusById";
 import AddEditLink from "../AddEditLink/AddEditLink";
@@ -27,11 +21,9 @@ import "./CategoryModal.css";
 
 export default function CategoryModal({
   category,
-  dialogRef,
   close,
 }: {
   category: Category;
-  dialogRef: RefObject<HTMLDialogElement | null>;
   close: () => void;
 }) {
   const [isAddingLink, setIsAddingLink] = useState(false);
@@ -57,6 +49,8 @@ export default function CategoryModal({
       removeCustomIcon(selectLink(state)(category.id, linkId)!.customIconId),
     addItemButtonRef: addLinkButtonRef,
   });
+
+  const { dialogRef, setDialogRef } = useDialog(".link", addLinkButtonRef);
 
   function handleKeyDown(e: KeyboardEvent<HTMLDialogElement>) {
     if (!shouldHandleNumericKeys()) return;
@@ -87,23 +81,11 @@ export default function CategoryModal({
     }
   }
 
-  useEffect(() => {
-    const firstLink = dialogRef.current?.querySelector(
-      ".link",
-    ) as HTMLAnchorElement;
-
-    if (firstLink) {
-      setTimeout(() => firstLink.focus());
-    } else {
-      setTimeout(() => addLinkButtonRef.current?.focus());
-    }
-  }, [dialogRef]);
-
   return (
     <Dialog
       closedby={isAddingLink || editLinkId ? "closerequest" : "any"}
       onClose={close}
-      ref={dialogRef}
+      ref={setDialogRef}
       onKeyDown={handleKeyDown}
       title={category.title || NO_TITLE}
       className="category-modal"
