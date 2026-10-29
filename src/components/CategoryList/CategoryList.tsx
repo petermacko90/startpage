@@ -30,19 +30,20 @@ export default function CategoryList({
   const { setIdToFocus, refCallback } = useFocusById();
   const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo({
-    onDelete: (id) => deleteCategory(id),
-    getNeighborId: (index) => getNeighborId(state.categories, index),
-    setIdToFocus,
-    removeCustomIcons: (id) => {
-      removeCustomIcon(selectCategory(state)(id)!.customIconId);
+  const { deleteItem, isShowUndo, undo, undoButtonRef, focusUndoButton } =
+    useDeleteWithUndo({
+      onDelete: (id) => deleteCategory(id),
+      getNeighborId: (index) => getNeighborId(state.categories, index),
+      setIdToFocus,
+      removeCustomIcons: (id) => {
+        removeCustomIcon(selectCategory(state)(id)!.customIconId);
 
-      selectLinks(state)(id)?.forEach(async (link) => {
-        await removeCustomIcon(link.customIconId);
-      });
-    },
-    addItemButtonRef: addCategoryButtonRef,
-  });
+        selectLinks(state)(id)?.forEach(async (link) => {
+          await removeCustomIcon(link.customIconId);
+        });
+      },
+      addItemButtonRef: addCategoryButtonRef,
+    });
 
   const { containerRef, captureFirst } = useFlipAnimation(state.categories);
 
@@ -84,6 +85,7 @@ export default function CategoryList({
         text="Category deleted"
         undo={undo}
         undoButtonRef={undoButtonRef}
+        focusUndoButton={focusUndoButton}
       />
     </main>
   );
