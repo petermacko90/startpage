@@ -17,6 +17,7 @@ export default function LinkList({
   textInputRef,
   shouldShowBadge,
   lastActiveLinkRef,
+  refCallback,
 }: {
   category: Category;
   setIsAddingLink: Dispatch<SetStateAction<boolean>>;
@@ -24,6 +25,7 @@ export default function LinkList({
   textInputRef: RefObject<HTMLInputElement | null>;
   shouldShowBadge: boolean;
   lastActiveLinkRef: RefObject<Link["id"] | null>;
+  refCallback: (node: HTMLElement | null, itemId: string) => void;
 }) {
   const { containerRef, captureFirst } = useFlipAnimation(category.links);
 
@@ -48,7 +50,7 @@ export default function LinkList({
           {shouldShowBadge && index <= MAX_INDEX_FOR_NUMBER_BADGE && (
             <NumberBadge index={index} />
           )}
-          <LinkItem key={link.id} link={link} />
+          <LinkItem key={link.id} link={link} refCallback={refCallback} />
           <EditButton
             action={() => {
               lastActiveLinkRef.current = link.id;

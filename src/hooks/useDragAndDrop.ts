@@ -9,12 +9,12 @@ import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/el
 export function useDragAndDrop<T extends HTMLDivElement | HTMLAnchorElement>(
   id: string,
 ) {
-  const ref = useRef<T>(null);
+  const dndRef = useRef<T>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isOver, setIsOver] = useState(false);
 
   useEffect(() => {
-    const element = ref.current;
+    const element = dndRef.current;
     if (!element) return;
 
     return combine(
@@ -58,5 +58,5 @@ export function useDragAndDrop<T extends HTMLDivElement | HTMLAnchorElement>(
     );
   }, [id]);
 
-  return { ref, isDragging, isOver };
+  return { dndRef, isDragging, isOver };
 }

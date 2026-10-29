@@ -26,7 +26,7 @@ export default function CategoryList({
   isLoading: boolean;
 }) {
   const state = useContext(StateContext);
-  const setIdToFocus = useFocusById("category");
+  const { setIdToFocus, refCallback } = useFocusById();
   const addCategoryButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo({
@@ -75,6 +75,7 @@ export default function CategoryList({
           shouldDisplayHints={shouldDisplayHints}
           deleteCategory={deleteItem}
           setIdToFocus={setIdToFocus}
+          refCallback={refCallback}
         />
       ))}
       <AddCategory

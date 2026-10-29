@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import type { Category, Link } from "../state/models";
 
-export function useFocusById(item: "link" | "category") {
+export function useFocusById() {
   const [idToFocus, setIdToFocus] = useState<
     Link["id"] | Category["id"] | null
   >(null);
 
-  useEffect(() => {
-    if (idToFocus) {
-      const timer = setTimeout(() => {
-        const element = document.getElementById(`${item}-${idToFocus}`);
-        if (element) {
-          element.focus();
-        }
+  const refCallback = useCallback(
+    (node: HTMLElement | null, itemId: string) => {
+      if (node && idToFocus === itemId) {
+        node.focus();
         setIdToFocus(null);
-      }, 50);
+      }
+    },
+    [idToFocus],
+  );
 
-      return () => clearTimeout(timer);
-    }
-  }, [item, idToFocus]);
-
-  return setIdToFocus;
+  return { setIdToFocus, refCallback };
 }

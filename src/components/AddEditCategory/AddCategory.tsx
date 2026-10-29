@@ -32,8 +32,6 @@ export default function AddCategory({
 
             if (categoryId) {
               setIdToFocus(categoryId);
-            } else {
-              addCategoryButtonRef.current?.focus();
             }
           }}
         />

@@ -37,7 +37,7 @@ export default function CategoryModal({
   }
 
   const state = useContext(StateContext);
-  const setIdToFocus = useFocusById("link");
+  const { setIdToFocus, refCallback } = useFocusById();
   const addLinkButtonRef = useRef<HTMLButtonElement | null>(null);
   const lastActiveLinkRef = useRef<Link["id"] | null>(null);
 
@@ -98,6 +98,7 @@ export default function CategoryModal({
         textInputRef={textInputRef}
         shouldShowBadge={shouldHandleNumericKeys()}
         lastActiveLinkRef={lastActiveLinkRef}
+        refCallback={refCallback}
       />
       <div className="buttons-container">
         {category.links.length > 1 && (
@@ -129,6 +130,7 @@ export default function CategoryModal({
           linkId={editLinkId}
           cancel={() => {
             setEditLinkId(null);
+
             if (lastActiveLinkRef.current) {
               setIdToFocus(lastActiveLinkRef.current);
               lastActiveLinkRef.current = null;

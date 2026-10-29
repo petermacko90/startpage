@@ -1,12 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { createCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
 import { useDialog } from "../../hooks/useDialog";
-import Dialog from "../Dialog/Dialog";
 import CategoryForm from "./CategoryForm";
-import type { Category } from "../../state/models";
+import Dialog from "../Dialog/Dialog";
 
 export default function AddCategoryDialog({
   close,
@@ -17,6 +17,10 @@ export default function AddCategoryDialog({
   const categoriesCount = selectCategoriesCount(state);
   const { dialogRef, setDialogRef } = useDialog("#title");
 
+  const [newCategoryId, setNewCategoryId] = useState<string | undefined>(
+    undefined,
+  );
+
   function handleCategorySave(
     title: string,
     order: number,
@@ -24,6 +28,8 @@ export default function AddCategoryDialog({
     customIcon: File | null,
   ) {
     const id = uuidv4();
+    setNewCategoryId(id);
+
     createCategory({
       id,
       order,
@@ -32,7 +38,8 @@ export default function AddCategoryDialog({
       customIcon,
       categoriesCount,
     });
-    close(id);
+
+    handleCloseButtonClick();
   }
 
   function handleCloseButtonClick() {
@@ -41,8 +48,8 @@ export default function AddCategoryDialog({
 
   return (
     <Dialog
-      onClose={close}
-      onCloseButtonClick={() => dialogRef.current?.close()}
+      onClose={() => close(newCategoryId)}
+      onCloseButtonClick={handleCloseButtonClick}
       ref={setDialogRef}
       title="Add Category"
     >

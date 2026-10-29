@@ -18,27 +18,37 @@ export function useDeleteWithUndo<T extends Category | Link>({
 }) {
   const [pendingDeletes, setPendingDeletes] = useState<T["id"][]>([]);
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
-  const neighborIdRef = useRef<T["id"] | null>(null);
+  const neighborsMapRef = useRef<Map<T["id"], T["id"] | null>>(new Map());
   const timersRef = useRef<Map<T["id"], number>>(new Map());
 
   function handleToastClose(id: T["id"]) {
-    setPendingDeletes((prev) => prev.filter((pendingId) => pendingId !== id));
+    const specificNeighborId = neighborsMapRef.current.get(id);
     removeCustomIcons(id);
     timersRef.current.delete(id);
+    neighborsMapRef.current.delete(id);
 
-    if (document.activeElement === undoButtonRef.current) {
-      if (neighborIdRef.current) {
-        setIdToFocus(neighborIdRef.current);
-      } else {
-        addItemButtonRef.current?.focus();
+    setPendingDeletes((prev) => {
+      const nextPendingDeletes = prev.filter((pendingId) => pendingId !== id);
+
+      if (document.activeElement === undoButtonRef.current) {
+        if (nextPendingDeletes.length > 0) {
+          return nextPendingDeletes;
+        }
+
+        if (specificNeighborId) {
+          setIdToFocus(specificNeighborId);
+        } else {
+          addItemButtonRef.current?.focus();
+        }
       }
-    }
 
-    neighborIdRef.current = null;
+      return nextPendingDeletes;
+    });
   }
 
   function deleteItem(id: T["id"], index: number) {
-    neighborIdRef.current = getNeighborId(index);
+    const neighborId = getNeighborId(index);
+    neighborsMapRef.current.set(id, neighborId);
     onDelete(id);
     setPendingDeletes((prev) => [...prev, id]);
 

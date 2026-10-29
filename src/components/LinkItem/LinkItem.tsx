@@ -8,8 +8,14 @@ import PageIcon from "../PageIcon/PageIcon";
 import Toast from "../Toast/Toast";
 import "./LinkItem.css";
 
-export default function LinkItem({ link }: { link: Link }) {
-  const { isDragging, isOver, ref } = useDragAndDrop<HTMLAnchorElement>(
+export default function LinkItem({
+  link,
+  refCallback,
+}: {
+  link: Link;
+  refCallback: (node: HTMLElement | null, itemId: string) => void;
+}) {
+  const { isDragging, isOver, dndRef } = useDragAndDrop<HTMLAnchorElement>(
     link.id,
   );
 
@@ -31,11 +37,16 @@ export default function LinkItem({ link }: { link: Link }) {
   return (
     <>
       <a
-        id={`link-${link.id}`}
         href={link.url}
         className={`link${isOver ? " is-over" : ""}${isDragging ? " is-dragging" : ""}`}
         title={link.title}
-        ref={ref}
+        ref={(node) => {
+          if (dndRef) {
+            dndRef.current = node;
+          }
+
+          refCallback(node, link.id);
+        }}
         data-flip-id={link.id}
         onClick={handleClick}
         onAuxClick={handleClick}

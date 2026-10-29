@@ -1,7 +1,7 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { MAX_INDEX_FOR_NUMBER_BADGE, NO_TITLE } from "../../constants";
 import type { Category } from "../../state/models";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-import { MAX_INDEX_FOR_NUMBER_BADGE, NO_TITLE } from "../../constants";
 import { getHostname } from "../../utils/getHostname";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
@@ -15,30 +15,32 @@ export default function CategoryItem({
   shouldDisplayHints,
   deleteCategory,
   setIdToFocus,
+  refCallback,
 }: {
   category: Category;
   shouldDisplayHints: boolean;
   deleteCategory: (categoryId: Category["id"], index: number) => void;
   setIdToFocus: Dispatch<SetStateAction<Category["id"] | null>>;
+  refCallback: (node: HTMLElement | null, itemId: string) => void;
 }) {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showEditCategory, setShowEditCategory] = useState(false);
 
-  const { isDragging, isOver, ref } = useDragAndDrop<HTMLDivElement>(
+  const { isDragging, isOver, dndRef } = useDragAndDrop<HTMLDivElement>(
     category.id,
   );
 
   return (
     <div
       className={`category${isOver ? " is-over" : ""}${isDragging ? " is-dragging" : ""}`}
-      ref={ref}
+      ref={dndRef}
       data-flip-id={category.id}
     >
       <button
-        id={`category-${category.id}`}
         className="category-button category-item"
         onClick={() => setShowCategoryModal(true)}
         title={category.title || NO_TITLE}
+        ref={(node) => refCallback(node, category.id)}
       >
         <span className="category-icon">
           {category.customIconId || category.emoji ? (
