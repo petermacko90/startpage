@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useRef } from "react";
 import { StateContext } from "../../state/context";
 import { selectCategory, selectLinks } from "../../state/selectors";
 import {
@@ -9,6 +9,7 @@ import { removeCustomIcon } from "../../storage/customIcon";
 import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
 import { useDropMonitor } from "../../hooks/useDropMonitor";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
+import { useFocusAfterLoading } from "../../hooks/useFocusAfterLoading";
 import { useFocusById } from "../../hooks/useFocusById";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
@@ -53,18 +54,12 @@ export default function CategoryList({
     handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-item");
   }
 
-  useEffect(() => {
-    if (isLoading || !containerRef.current) return;
-    const firstCategory = containerRef.current.querySelector(
-      ".category-button",
-    ) as HTMLButtonElement;
-
-    if (firstCategory) {
-      firstCategory.focus();
-    } else {
-      addCategoryButtonRef.current?.focus();
-    }
-  }, [isLoading, containerRef]);
+  useFocusAfterLoading({
+    isLoading,
+    containerRef,
+    itemSelector: ".category-button",
+    fallbackRef: addCategoryButtonRef,
+  });
 
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>

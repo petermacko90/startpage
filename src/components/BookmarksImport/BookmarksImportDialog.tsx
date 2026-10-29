@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { importCategories } from "../../storage/localStorage/categories";
 import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
+import { useFocusAfterLoading } from "../../hooks/useFocusAfterLoading";
 import BookmarkItems from "./BookmarkItems";
 import Button from "../Button/Button";
 import Dialog from "../Dialog/Dialog";
@@ -28,17 +29,11 @@ export default function BookmarksImportDialog({
 
   const { dialogRef, setDialogRef } = useDialog();
 
-  useEffect(() => {
-    if (isLoading || !dialogRef.current) return;
-
-    const firstBookmark = dialogRef.current.querySelector(
-      ".folder-button",
-    ) as HTMLButtonElement;
-
-    if (firstBookmark) {
-      firstBookmark.focus();
-    }
-  }, [isLoading, dialogRef]);
+  useFocusAfterLoading({
+    isLoading,
+    containerRef: dialogRef,
+    itemSelector: ".folder-button",
+  });
 
   const [selectedBookmarks, setSelectedBookmarks] = useState<
     Record<string, boolean>
