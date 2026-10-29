@@ -53,8 +53,6 @@ export default function CategoryList({
     handleArrowKeys<HTMLButtonElement>(e, containerRef, ".category-item");
   }
 
-  const initialFocusRef = useRef<HTMLButtonElement>(null);
-
   useEffect(() => {
     if (isLoading || !containerRef.current) return;
     const firstCategory = containerRef.current.querySelector(
@@ -70,14 +68,13 @@ export default function CategoryList({
 
   return (
     <main ref={containerRef} onKeyDown={handleKeyDown}>
-      {state.categories.map((category, index) => (
+      {state.categories.map((category) => (
         <CategoryItem
           key={category.id}
           category={category}
           shouldDisplayHints={shouldDisplayHints}
           deleteCategory={deleteItem}
           setIdToFocus={setIdToFocus}
-          initialFocusRef={index === 0 ? initialFocusRef : null}
         />
       ))}
       <AddCategory

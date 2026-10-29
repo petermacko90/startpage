@@ -1,9 +1,4 @@
-import {
-  useState,
-  type Dispatch,
-  type RefObject,
-  type SetStateAction,
-} from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import type { Category } from "../../state/models";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { MAX_INDEX_FOR_NUMBER_BADGE, NO_TITLE } from "../../constants";
@@ -18,13 +13,11 @@ import "./CategoryItem.css";
 export default function CategoryItem({
   category,
   shouldDisplayHints,
-  initialFocusRef,
   deleteCategory,
   setIdToFocus,
 }: {
   category: Category;
   shouldDisplayHints: boolean;
-  initialFocusRef: RefObject<HTMLButtonElement | null> | null;
   deleteCategory: (categoryId: Category["id"], index: number) => void;
   setIdToFocus: Dispatch<SetStateAction<Category["id"] | null>>;
 }) {
@@ -46,7 +39,6 @@ export default function CategoryItem({
         className="category-button category-item"
         onClick={() => setShowCategoryModal(true)}
         title={category.title || NO_TITLE}
-        ref={initialFocusRef}
       >
         <span className="category-icon">
           {category.customIconId || category.emoji ? (
