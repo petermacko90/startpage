@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 import { importCategories } from "../../storage/localStorage/categories";
 import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
@@ -19,12 +19,23 @@ export default function BookmarksImportDialog({
   >([]);
 
   const [isLoading, setIsLoading] = useState(true);
+  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
+
+  const onBookmarkLoadError = useEffectEvent(() => {
+    showErrorToast("Failed to load bookmarks");
+  });
 
   useEffect(() => {
-    browser.bookmarks.getTree().then((bookmarks) => {
-      setBookmarks(bookmarks.at(0)?.children ?? []);
-      setIsLoading(false);
-    });
+    browser.bookmarks
+      .getTree()
+      .then((bookmarks) => {
+        setBookmarks(bookmarks.at(0)?.children ?? []);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        onBookmarkLoadError();
+        console.error("Failed to load bookmarks", e);
+      });
   }, []);
 
   const { dialogRef, setDialogRef } = useDialog();
@@ -38,8 +49,6 @@ export default function BookmarksImportDialog({
   const [selectedBookmarks, setSelectedBookmarks] = useState<
     Record<string, boolean>
   >({});
-
-  const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
 
   function handleImport() {
     clearError();
