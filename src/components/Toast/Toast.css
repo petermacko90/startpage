@@ -13,9 +13,7 @@
   border-radius: var(--border-radius-s);
   font-weight: bold;
   box-shadow: var(--box-shadow);
-  transition:
-    bottom 0.5s ease,
-    opacity 0.5s ease;
+  transition: all 0.5s;
 }
 
 .toast.hide {

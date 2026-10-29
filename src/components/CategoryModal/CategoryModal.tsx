@@ -41,15 +41,14 @@ export default function CategoryModal({
   const addLinkButtonRef = useRef<HTMLButtonElement | null>(null);
   const lastActiveLinkRef = useRef<Link["id"] | null>(null);
 
-  const { deleteItem, isShowUndo, undo, undoButtonRef, focusUndoButton } =
-    useDeleteWithUndo({
-      onDelete: (linkId) => deleteLink(category.id, linkId),
-      getNeighborId: (index) => getNeighborId(category.links, index),
-      setIdToFocus,
-      removeCustomIcons: (linkId) =>
-        removeCustomIcon(selectLink(state)(category.id, linkId)!.customIconId),
-      addItemButtonRef: addLinkButtonRef,
-    });
+  const { deleteItem, isShowUndo, undo, undoButtonRef } = useDeleteWithUndo({
+    onDelete: (linkId) => deleteLink(category.id, linkId),
+    getNeighborId: (index) => getNeighborId(category.links, index),
+    setIdToFocus,
+    removeCustomIcons: (linkId) =>
+      removeCustomIcon(selectLink(state)(category.id, linkId)!.customIconId),
+    addItemButtonRef: addLinkButtonRef,
+  });
 
   const { dialogRef, setDialogRef } = useDialog(".link", addLinkButtonRef);
 
@@ -147,7 +146,6 @@ export default function CategoryModal({
         text="Link deleted"
         undo={undo}
         undoButtonRef={undoButtonRef}
-        focusUndoButton={focusUndoButton}
       />
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>

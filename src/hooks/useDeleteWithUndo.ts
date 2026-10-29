@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useRef,
-  useState,
-  type RefObject,
-  type SetStateAction,
-} from "react";
+import { useRef, useState, type RefObject, type SetStateAction } from "react";
 import type { Category, Link } from "../state/models";
 import { UNDO_TIMEOUT } from "../constants";
 import { undoState } from "../storage/localStorage/common";
@@ -63,6 +57,7 @@ export function useDeleteWithUndo<T extends Category | Link>({
     }, UNDO_TIMEOUT);
 
     timersRef.current.set(id, timer);
+    setTimeout(() => undoButtonRef.current?.focus(), 50);
   }
 
   function undo(id: T["id"]) {
@@ -78,10 +73,6 @@ export function useDeleteWithUndo<T extends Category | Link>({
     setIdToFocus(id);
   }
 
-  const focusUndoButton = useCallback(() => {
-    undoButtonRef.current?.focus();
-  }, []);
-
   const isShowUndo = pendingDeletes.length > 0;
   const deletedItemId = pendingDeletes[pendingDeletes.length - 1] || null;
 
@@ -89,7 +80,6 @@ export function useDeleteWithUndo<T extends Category | Link>({
     isShowUndo,
     undoButtonRef,
     deleteItem,
-    focusUndoButton,
     undo: () => deletedItemId && undo(deletedItemId),
   };
 }

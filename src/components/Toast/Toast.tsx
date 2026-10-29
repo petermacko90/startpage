@@ -11,7 +11,6 @@ interface UndoToastProps extends ToastProps {
   type: "undo";
   undo: () => void;
   undoButtonRef: RefObject<HTMLButtonElement | null>;
-  focusUndoButton: () => void;
 }
 
 interface ErrorToastProps extends ToastProps {
@@ -22,11 +21,6 @@ export default function Toast(props: UndoToastProps | ErrorToastProps) {
   return (
     <div
       className={`toast ${props.show ? "show" : "hide"}${props.type === "error" ? " error" : ""}`}
-      onTransitionEnd={() => {
-        if (props.type === "undo" && props.show) {
-          props.focusUndoButton();
-        }
-      }}
     >
       <span className="toast-text">{props.text}</span>
       {props.type === "undo" && (
