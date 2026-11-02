@@ -24,6 +24,7 @@ export default function LinkItem({
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     clearError();
+    if (e.button === 2) return;
 
     if (isBlockedUrl(link.url)) {
       e.preventDefault();
