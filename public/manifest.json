@@ -3,6 +3,7 @@
   "name": "Startpage",
   "version": "1.0.0",
   "description": "New Tab page",
+  "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
       "id": "startpage@localhost",

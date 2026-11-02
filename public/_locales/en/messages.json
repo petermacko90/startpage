@@ -1,0 +1,34 @@
+{
+  "addWallpaper": {
+    "message": "Add Wallpaper",
+    "description": "Label of add/change wallpaper button when there is no wallpaper set."
+  },
+  "changeWallpaper": {
+    "message": "Change Wallpaper",
+    "description": "Label of add/change wallpaper button when wallpaper is already set."
+  },
+  "failedToRemoveWallpaper": {
+    "message": "Failed to remove wallpaper",
+    "description": "Error message shown when removal of wallpaper fails."
+  },
+  "failedToSetWallpaper": {
+    "message": "Failed to set wallpaper",
+    "description": "Error message shown when uploading of wallpaper fails."
+  },
+  "fileIsNotImage": {
+    "message": "Please select an image",
+    "description": "Error message shown when user uploads a file that is not an image."
+  },
+  "removeWallpaper": {
+    "message": "Remove Wallpaper",
+    "description": "Label of remove wallpaper button in Wallpaper dialog."
+  },
+  "uploadImage": {
+    "message": "Upload Image",
+    "description": "Label of file select button in Wallpaper dialog."
+  },
+  "wallpaper": {
+    "message": "Wallpaper",
+    "description": "Title of Wallpaper dialog."
+  }
+}

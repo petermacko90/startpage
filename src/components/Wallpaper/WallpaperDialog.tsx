@@ -6,6 +6,7 @@ import {
 } from "react";
 import { removeImage, saveImage } from "../../storage/indexedDB";
 import { BACKGROUND_KEY, IMAGE_FILETYPE } from "../../constants";
+import { t } from "../../utils/i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
 import Dialog from "../Dialog/Dialog";
@@ -32,7 +33,7 @@ export default function WallpaperDialog({
     if (!file) return;
 
     if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      showErrorToast("Please select an image");
+      showErrorToast(t("fileIsNotImage"));
       return;
     }
 
@@ -46,8 +47,8 @@ export default function WallpaperDialog({
         return URL.createObjectURL(file);
       });
     } catch (error) {
-      console.error("failed to set wallpaper", error);
-      showErrorToast("Failed to set wallpaper");
+      console.error(t("failedToSetWallpaper"), error);
+      showErrorToast(t("failedToSetWallpaper"));
       return;
     }
   }
@@ -66,8 +67,8 @@ export default function WallpaperDialog({
         return null;
       });
     } catch (error) {
-      console.error("failed to remove wallpaper", error);
-      showErrorToast("Failed to remove wallpaper");
+      console.error(t("failedToRemoveWallpaper"), error);
+      showErrorToast(t("failedToRemoveWallpaper"));
       return;
     }
   }
@@ -77,12 +78,12 @@ export default function WallpaperDialog({
       onClose={close}
       onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
-      title="Wallpaper"
+      title={t("wallpaper")}
     >
       <ImageUpload
-        label="Upload Image"
+        label={t("uploadImage")}
         showDelete={backgroundUrl !== null}
-        deleteLabel="Remove Wallpaper"
+        deleteLabel={t("removeWallpaper")}
         handleUpload={handleBackgroundUpload}
         handleDelete={() => handleBackgroundRemove()}
         focusRef={uploadButtonRef}

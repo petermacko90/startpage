@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Wallpaper } from "@material-symbols-svg/react/icons/wallpaper";
 import { BACKGROUND_KEY } from "../../constants";
 import { getImage } from "../../storage/indexedDB";
+import { t } from "../../utils/i18n";
 import WallpaperDialog from "./WallpaperDialog";
 import "./WallpaperContainer.css";
 
@@ -50,7 +51,7 @@ export default function WallpaperContainer() {
           <Wallpaper />
         </span>
         <span className="expanding-button-text">
-          {backgroundUrl ? "Change Wallpaper" : "Add Wallpaper"}
+          {backgroundUrl ? t("changeWallpaper") : t("addWallpaper")}
         </span>
       </button>
 
