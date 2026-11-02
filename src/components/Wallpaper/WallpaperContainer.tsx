@@ -51,7 +51,7 @@ export default function WallpaperContainer() {
           <Wallpaper />
         </span>
         <span className="expanding-button-text">
-          {backgroundUrl ? t("changeWallpaper") : t("addWallpaper")}
+          {backgroundUrl ? t("wallpaperChange") : t("wallpaperAdd")}
         </span>
       </button>
 

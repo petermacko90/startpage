@@ -33,7 +33,7 @@ export default function WallpaperDialog({
     if (!file) return;
 
     if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      showErrorToast(t("fileIsNotImage"));
+      showErrorToast(t("pleaseSelectImage"));
       return;
     }
 
@@ -78,12 +78,12 @@ export default function WallpaperDialog({
       onClose={close}
       onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
-      title={t("wallpaper")}
+      title={t("wallpaperTitle")}
     >
       <ImageUpload
         label={t("uploadImage")}
         showDelete={backgroundUrl !== null}
-        deleteLabel={t("removeWallpaper")}
+        deleteLabel={t("wallpaperRemove")}
         handleUpload={handleBackgroundUpload}
         handleDelete={() => handleBackgroundRemove()}
         focusRef={uploadButtonRef}

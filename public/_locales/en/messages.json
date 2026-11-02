@@ -1,11 +1,19 @@
 {
-  "addWallpaper": {
-    "message": "Add Wallpaper",
-    "description": "Label of add/change wallpaper button when there is no wallpaper set."
+  "browsersBlockInternalPages": {
+    "message": "Browsers block opening of internal system pages. You can copy the link from right-click menu and paste it into the address bar.",
+    "description": "Error message shown when user clicks on internal system page like about:config, which are blocked from opening in extensions."
   },
-  "changeWallpaper": {
-    "message": "Change Wallpaper",
-    "description": "Label of add/change wallpaper button when wallpaper is already set."
+  "emoji": {
+    "message": "Emoji:",
+    "description": "Label of EmojiInput"
+  },
+  "failedToFetchImage": {
+    "message": "Failed to fetch image from IndexedDB",
+    "description": "Error message shown when fetching of image from IndexedDB fails."
+  },
+  "failedToRemoveIcon": {
+    "message": "Failed to remove custom icon",
+    "description": "Error message shown when removal of custom icon fails."
   },
   "failedToRemoveWallpaper": {
     "message": "Failed to remove wallpaper",
@@ -15,20 +23,63 @@
     "message": "Failed to set wallpaper",
     "description": "Error message shown when uploading of wallpaper fails."
   },
-  "fileIsNotImage": {
+  "failedToUploadIcon": {
+    "message": "Failed to upload custom icon",
+    "description": "Error message shown when uploading of custom icon fails."
+  },
+  "iconTypeDefault": {
+    "message": "Default",
+    "description": "Label of default option of radio button in IconSelector."
+  },
+  "iconTypeLabel": {
+    "message": "Icon:",
+    "description": "Label of IconSelector radio group."
+  },
+  "iconTypeUseEmoji": {
+    "message": "Use Emoji",
+    "description": "Label of Use Emoji option of radio button in IconSelector."
+  },
+  "pageIconCustom": {
+    "message": "Custom icon",
+    "description": "Alt text of uploaded icon image."
+  },
+  "pageIconDefault": {
+    "message": "Page icon",
+    "description": "Alt text of icon image of a page without domain."
+  },
+  "pageIconDomain": {
+    "message": "$domain$ icon",
+    "description": "Alt text of icon image of a page with domain.",
+    "placeholders": {
+      "domain": { "content": "$1", "example": "github.com" }
+    }
+  },
+  "pleaseSelectImage": {
     "message": "Please select an image",
     "description": "Error message shown when user uploads a file that is not an image."
   },
-  "removeWallpaper": {
-    "message": "Remove Wallpaper",
-    "description": "Label of remove wallpaper button in Wallpaper dialog."
+  "undo": {
+    "message": "Undo",
+    "description": "Label of undo button in undo toast."
   },
   "uploadImage": {
     "message": "Upload Image",
-    "description": "Label of file select button in Wallpaper dialog."
+    "description": "Label of file select button in Wallpaper dialog and upload image radio button in IconSelector."
   },
-  "wallpaper": {
+  "wallpaperTitle": {
     "message": "Wallpaper",
     "description": "Title of Wallpaper dialog."
+  },
+  "wallpaperAdd": {
+    "message": "Add Wallpaper",
+    "description": "Label of add/change wallpaper button when there is no wallpaper set."
+  },
+  "wallpaperChange": {
+    "message": "Change Wallpaper",
+    "description": "Label of add/change wallpaper button when wallpaper is already set."
+  },
+  "wallpaperRemove": {
+    "message": "Remove Wallpaper",
+    "description": "Label of remove wallpaper button in Wallpaper dialog."
   }
 }

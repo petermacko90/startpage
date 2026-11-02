@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
 import "./Toast.css";
 
@@ -25,7 +26,7 @@ export default function Toast(props: UndoToastProps | ErrorToastProps) {
       <span className="toast-text">{props.text}</span>
       {props.type === "undo" && (
         <Button action={() => props.undo()} buttonRef={props.undoButtonRef}>
-          Undo
+          {t("undo")}
         </Button>
       )}
     </div>

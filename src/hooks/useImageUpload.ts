@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { Category, Link } from "../state/models";
 import { IMAGE_FILETYPE } from "../constants";
+import { t } from "../utils/i18n";
 import { getImage } from "../storage/indexedDB";
 
 export function useImageUpload<T extends Category | Link>(
@@ -27,7 +28,7 @@ export function useImageUpload<T extends Category | Link>(
     if (!file) return;
 
     if (!file.type.startsWith(IMAGE_FILETYPE)) {
-      setError("Please select an image");
+      setError(t("pleaseSelectImage"));
       return;
     }
 
@@ -62,7 +63,7 @@ export function useImageUpload<T extends Category | Link>(
             setSavedIconUrl(objectUrl);
           }
         } catch (e) {
-          console.error("failed to fetch image from IndexedDB", e);
+          console.error(t("failedToFetchImage"), e);
         }
       }
     }

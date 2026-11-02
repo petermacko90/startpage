@@ -1,6 +1,7 @@
 import { useEffect, useState, type SyntheticEvent } from "react";
 import { LOCALHOST } from "../../constants";
 import type { Category, Link } from "../../state/models";
+import { t } from "../../utils/i18n";
 import { getImage } from "../../storage/indexedDB";
 import "./PageIcon.css";
 
@@ -54,7 +55,7 @@ export default function PageIcon({
           setImgSrc(placeholderImage);
         }
       } catch (e) {
-        console.error("failed to fetch image from IndexedDB", e);
+        console.error(t("failedToFetchImage"), e);
         if (isMounted) setImgSrc(placeholderImage);
       }
     }
@@ -81,11 +82,21 @@ export default function PageIcon({
     );
   }
 
+  function getAlt() {
+    if (id) {
+      return t("pageIconCustom");
+    } else if (domain.length > 0) {
+      return t("pageIconDomain", domain);
+    } else {
+      return t("pageIconDefault");
+    }
+  }
+
   return (
     <img
       src={imgSrc}
       style={{ width: size, height: size }}
-      alt={`${domain || "page"} icon`}
+      alt={getAlt()}
       draggable="false"
       onError={() => {
         if (imgSrc !== placeholderImage) {

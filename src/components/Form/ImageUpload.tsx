@@ -1,5 +1,6 @@
 import { useRef, type ChangeEvent, type RefObject } from "react";
 import { KEY_ENTER, KEY_SPACE } from "../../constants";
+import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
 import "./ImageUpload.css";
 
@@ -50,7 +51,11 @@ export default function ImageUpload({
         onChange={handleUpload}
       />
       {previewUrl && (
-        <img src={previewUrl} alt="custom icon" className="icon-preview" />
+        <img
+          src={previewUrl}
+          alt={t("pageIconCustom")}
+          className="icon-preview"
+        />
       )}
       {showDelete && (
         <Button type="danger" action={handleDelete}>

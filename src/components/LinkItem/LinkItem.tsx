@@ -3,6 +3,7 @@ import type { Link } from "../../state/models";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { useErrorToast } from "../../hooks/useErrorToast";
 import { getHostname } from "../../utils/getHostname";
+import { t } from "../../utils/i18n";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
 import PageIcon from "../PageIcon/PageIcon";
 import Toast from "../Toast/Toast";
@@ -29,9 +30,7 @@ export default function LinkItem({
     if (isBlockedUrl(link.url)) {
       e.preventDefault();
 
-      showErrorToast(
-        "Browsers block opening of internal system pages. You can copy the link from right-click menu and paste it into the address bar.",
-      );
+      showErrorToast(t("browsersBlockInternalPages"));
     }
   };
 

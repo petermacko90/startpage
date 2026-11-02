@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Category, Link } from "../state/models";
+import { t } from "../utils/i18n";
 import { removeImage, saveImage } from "./indexedDB";
 
 export async function saveCustomIcon(
@@ -12,7 +13,7 @@ export async function saveCustomIcon(
     await saveImage(customIconId, customIcon);
     return customIconId;
   } catch (e) {
-    console.error("failed to upload custom icon", e);
+    console.error(t("failedToUploadIcon"), e);
     return null;
   }
 }
@@ -27,7 +28,7 @@ export async function updateCustomIcon(
       await removeImage(customIconId);
       return null;
     } catch (e) {
-      console.error("failed to remove custom icon", e);
+      console.error(t("failedToRemoveIcon"), e);
       return null;
     }
   }
@@ -38,7 +39,7 @@ export async function updateCustomIcon(
         try {
           await removeImage(customIconId);
         } catch (e) {
-          console.error("failed to remove custom icon", e);
+          console.error(t("failedToRemoveIcon"), e);
         }
       }
 
@@ -46,7 +47,7 @@ export async function updateCustomIcon(
       await saveImage(updatedCustomIconId, customIcon);
       return updatedCustomIconId;
     } catch (e) {
-      console.error("failed to upload custom icon", e);
+      console.error(t("failedToUploadIcon"), e);
       return null;
     }
   }
@@ -61,7 +62,7 @@ export async function removeCustomIcon(
     try {
       await removeImage(customIconId);
     } catch (e) {
-      console.log("failed to remove custom icon", e);
+      console.log(t("failedToRemoveIcon"), e);
     }
   }
 }

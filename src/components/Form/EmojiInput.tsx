@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+import { t } from "../../utils/i18n";
 import FormField from "./FormField";
 import TextInput from "./TextInput";
 
@@ -16,7 +17,7 @@ export default function EmojiInput({
   handleSave: () => void;
 }) {
   return (
-    <FormField id="emoji" labelText="Emoji:" error={emojiError}>
+    <FormField id="emoji" labelText={t("emoji")} error={emojiError}>
       <TextInput
         id="emoji"
         value={emoji ?? ""}
