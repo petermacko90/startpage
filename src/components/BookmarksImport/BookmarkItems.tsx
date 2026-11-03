@@ -1,6 +1,7 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
 import { Remove } from "@material-symbols-svg/react/icons/remove";
+import { t } from "../../utils/i18n";
 import "./BookmarkItems.css";
 
 export default function BookmarkItems({
@@ -24,7 +25,7 @@ export default function BookmarkItems({
 
   return (
     <div className="bookmark-container">
-      {bookmarkItems.length === 0 && <div>No items</div>}
+      {bookmarkItems.length === 0 && <div>{t("noItems")}</div>}
       {bookmarkItems.map((bookmarkItem) => {
         return (
           <>

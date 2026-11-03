@@ -13,6 +13,7 @@ import { useFocusAfterLoading } from "../../hooks/useFocusAfterLoading";
 import { useFocusById } from "../../hooks/useFocusById";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleArrowKeys } from "../../utils/handleArrowKeys";
+import { t } from "../../utils/i18n";
 import AddCategory from "../AddEditCategory/AddCategory";
 import BookmarksImport from "../BookmarksImport/BookmarksImport";
 import CategoryItem from "../CategoryItem/CategoryItem";
@@ -81,7 +82,7 @@ export default function CategoryList({
       <Toast
         type="undo"
         show={isShowUndo}
-        text="Category deleted"
+        text={t("categoryDeleted")}
         undo={undo}
         undoButtonRef={undoButtonRef}
       />

@@ -5,6 +5,7 @@ import {
   type SetStateAction,
 } from "react";
 import { Add } from "@material-symbols-svg/react/icons/add";
+import { t } from "../../utils/i18n";
 import AddCategoryDialog from "./AddCategoryDialog";
 import AddImportCategoryButton from "../Button/AddImportCategoryButton";
 
@@ -22,7 +23,7 @@ export default function AddCategory({
       <AddImportCategoryButton
         action={() => setShowDialog(true)}
         icon={<Add />}
-        text="Add Category"
+        text={t("addCategory")}
         buttonRef={addCategoryButtonRef}
       />
       {showDialog && (

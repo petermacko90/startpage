@@ -1,5 +1,6 @@
 import { useEffect, useEffectEvent, useState } from "react";
 import { importCategories } from "../../storage/localStorage/categories";
+import { t } from "../../utils/i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
 import { useFocusAfterLoading } from "../../hooks/useFocusAfterLoading";
@@ -22,7 +23,7 @@ export default function BookmarksImportDialog({
   const { isError, errorMessage, showErrorToast, clearError } = useErrorToast();
 
   const onBookmarkLoadError = useEffectEvent(() => {
-    showErrorToast("Failed to load bookmarks");
+    showErrorToast(t("failedToLoadBookmarks"));
   });
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function BookmarksImportDialog({
       })
       .catch((e) => {
         onBookmarkLoadError();
-        console.error("Failed to load bookmarks", e);
+        console.error(t("failedToLoadBookmarks"), e);
       });
   }, []);
 
@@ -58,7 +59,7 @@ export default function BookmarksImportDialog({
     );
 
     if (bookmarks.length === 0) {
-      showErrorToast("No bookmarks selected.");
+      showErrorToast(t("noBookmarksSelected"));
       return;
     }
 
@@ -72,7 +73,7 @@ export default function BookmarksImportDialog({
 
   return (
     <Dialog
-      title="Import Bookmarks"
+      title={t("importBookmarks")}
       ref={setDialogRef}
       onClose={close}
       onCloseButtonClick={handleCloseButtonClick}
@@ -84,8 +85,8 @@ export default function BookmarksImportDialog({
         setSelectedBookmarks={setSelectedBookmarks}
       />
       <div className="buttons-container mt">
-        <Button action={() => handleImport()}>Import</Button>
-        <Button action={handleCloseButtonClick}>Close</Button>
+        <Button action={() => handleImport()}>{t("import")}</Button>
+        <Button action={handleCloseButtonClick}>{t("close")}</Button>
       </div>
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>

@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from "react";
 import { EditSquare } from "@material-symbols-svg/react/icons/edit-square";
+import { t } from "../../utils/i18n";
 import "./EditButton.css";
 
 export default function EditButton({
@@ -8,7 +9,7 @@ export default function EditButton({
   action: MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <button className="edit-button" title="Edit" onClick={action}>
+    <button className="edit-button" title={t("edit")} onClick={action}>
       <EditSquare size={20} />
     </button>
   );

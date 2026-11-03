@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
-import { createCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
+import { createCategory } from "../../storage/localStorage/categories";
+import { t } from "../../utils/i18n";
 import { useDialog } from "../../hooks/useDialog";
 import CategoryForm from "./CategoryForm";
 import Dialog from "../Dialog/Dialog";
@@ -51,7 +52,7 @@ export default function AddCategoryDialog({
       onClose={() => close(newCategoryId)}
       onCloseButtonClick={handleCloseButtonClick}
       ref={setDialogRef}
-      title="Add Category"
+      title={t("addCategory")}
     >
       <CategoryForm
         titleInitial={""}

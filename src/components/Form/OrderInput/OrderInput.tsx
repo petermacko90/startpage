@@ -2,6 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "@material-symbols-svg/react/icons/chevron-left";
 import { ChevronRight } from "@material-symbols-svg/react/icons/chevron-right";
 import type { Category, Link } from "../../../state/models";
+import { t } from "../../../utils/i18n";
 import Button from "../../Button/Button";
 import OrderHint from "./OrderHint";
 import "./OrderInput.css";
@@ -36,7 +37,7 @@ export default function OrderInput<T extends Category | Link>({
   return (
     <div className="form-field order-input-container">
       <div className="order-form-field">
-        <label htmlFor="order-input">Order:</label>
+        <label htmlFor="order-input">{t("orderLabel")}</label>
         <Button
           disabled={isDisabled()}
           action={() => {

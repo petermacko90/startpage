@@ -1,15 +1,63 @@
 {
+  "addCategory": {
+    "message": "Add Category",
+    "description": "Label of 'Add Category' button in AddCategory and title of AddCategoryDialog."
+  },
+  "addLink": {
+    "message": "Add Link",
+    "description": "Label of 'Add Link' button in CategoryModal and heading of AddEditLink."
+  },
   "browsersBlockInternalPages": {
     "message": "Browsers block opening of internal system pages. You can copy the link from right-click menu and paste it into the address bar.",
     "description": "Error message shown when user clicks on internal system page like about:config, which are blocked from opening in extensions."
   },
+  "cancel": {
+    "message": "Cancel",
+    "description": "Label of cancel button in AddEditLink."
+  },
+  "categoryDeleted": {
+    "message": "Category deleted",
+    "description": "Text of Undo Toast in CategoryList."
+  },
+  "close": {
+    "message": "Close",
+    "description": "Title or label of close button."
+  },
+  "deleteCategory": {
+    "message": "Delete Category",
+    "description": "Label of 'Delete Category' button in CategoryForm."
+  },
+  "deleteLink": {
+    "message": "Delete Link",
+    "description": "Label of 'Delete Link' button in AddEditLink."
+  },
+  "edit": {
+    "message": "Edit",
+    "description": "Title of EditButton."
+  },
+  "editCategory": {
+    "message": "Edit Category",
+    "description": "Title of EditCategory dialog."
+  },
+  "editLink": {
+    "message": "Edit Link",
+    "description": "Heading of AddEditLink."
+  },
   "emoji": {
     "message": "Emoji:",
-    "description": "Label of EmojiInput"
+    "description": "Label of EmojiInput."
+  },
+  "emojiNotValid": {
+    "message": "Emoji is not valid",
+    "description": "Error message shown when emoji doesn't pass validation in AddEditLink and CategoryForm."
   },
   "failedToFetchImage": {
     "message": "Failed to fetch image from IndexedDB",
     "description": "Error message shown when fetching of image from IndexedDB fails."
+  },
+  "failedToLoadBookmarks": {
+    "message": "Failed to load bookmarks",
+    "description": "Error message shown when loading of bookmarks fails."
   },
   "failedToRemoveIcon": {
     "message": "Failed to remove custom icon",
@@ -27,6 +75,10 @@
     "message": "Failed to upload custom icon",
     "description": "Error message shown when uploading of custom icon fails."
   },
+  "iconNotUploaded": {
+    "message": "Icon is not uploaded",
+    "description": "Error message shown when user selects 'Upload Image' without providing an icon."
+  },
   "iconTypeDefault": {
     "message": "Default",
     "description": "Label of default option of radio button in IconSelector."
@@ -38,6 +90,48 @@
   "iconTypeUseEmoji": {
     "message": "Use Emoji",
     "description": "Label of Use Emoji option of radio button in IconSelector."
+  },
+  "import": {
+    "message": "Import",
+    "description": "Label of 'Import' button in BookmarksImportDialog."
+  },
+  "importBookmarks": {
+    "message": "Import Bookmarks",
+    "description": "Label of 'Import Bookmarks' button in BookmarksImport and title of BookmarksImportDialog."
+  },
+  "linkDeleted": {
+    "message": "Link deleted",
+    "description": "Text of Undo Toast in CategoryModal."
+  },
+  "noBookmarksSelected": {
+    "message": "No bookmarks selected.",
+    "description": "Error message shown when user doesn't select any bookmark folder in BookmarksImportDialog."
+  },
+  "noItems": {
+    "message": "No items",
+    "description": "Text shown when there are no items in bookmark folder in BookmarkItems."
+  },
+  "noTitle": {
+    "message": "<No title>",
+    "description": "Placeholder text when user leaves category title empty."
+  },
+  "openAllLinks": {
+    "message": "Open All Links",
+    "description": "Label of 'Open All Links' button in CategoryModal."
+  },
+  "openingIsBlocked": {
+    "message": "Opening $url$ is blocked by browser. ",
+    "description": "Error message shown when user clicks on 'Open All Links' button and there is an internal system page among the links.",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "about:config"
+      }
+    }
+  },
+  "orderLabel": {
+    "message": "Order:",
+    "description": "Label of OrderInput."
   },
   "pageIconCustom": {
     "message": "Custom icon",
@@ -51,20 +145,55 @@
     "message": "$domain$ icon",
     "description": "Alt text of icon image of a page with domain.",
     "placeholders": {
-      "domain": { "content": "$1", "example": "github.com" }
+      "domain": {
+        "content": "$1",
+        "example": "github.com"
+      }
     }
   },
   "pleaseSelectImage": {
     "message": "Please select an image",
     "description": "Error message shown when user uploads a file that is not an image."
   },
+  "removeIcon": {
+    "message": "Remove Icon",
+    "description": "Label of delete button in ImageUpload in AddEditLink and CategoryForm."
+  },
+  "save": {
+    "message": "Save",
+    "description": "Label of save button."
+  },
+  "textLabel": {
+    "message": "Text:",
+    "description": "Label of text input in AddEditLink."
+  },
+  "titleLabel": {
+    "message": "Title:",
+    "description": "label of title input in CategoryForm."
+  },
   "undo": {
     "message": "Undo",
     "description": "Label of undo button in undo toast."
   },
+  "uploadIcon": {
+    "message": "Upload Icon",
+    "description": "Label of ImageUpload in AddEditLink and CategoryForm."
+  },
   "uploadImage": {
     "message": "Upload Image",
     "description": "Label of file select button in Wallpaper dialog and upload image radio button in IconSelector."
+  },
+  "urlLabel": {
+    "message": "URL:",
+    "description": "Label of URL input in AddEditLink."
+  },
+  "urlNotValid": {
+    "message": "URL is not valid",
+    "description": "Error message shown when URL doesn't pass validation in AddEditLink."
+  },
+  "urlRequired": {
+    "message": "URL is required",
+    "description": "Error message shown when user leaves empty URL in AddEditLink."
   },
   "wallpaperTitle": {
     "message": "Wallpaper",

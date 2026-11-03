@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from "react";
 import { Close } from "@material-symbols-svg/react/icons/close";
+import { t } from "../../utils/i18n";
 import "./CloseButton.css";
 
 export default function CloseButton({
@@ -8,7 +9,7 @@ export default function CloseButton({
   action: MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <button title="Close" className="close-button" onClick={action}>
+    <button title={t("close")} className="close-button" onClick={action}>
       <Close size={20} />
     </button>
   );

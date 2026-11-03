@@ -2,12 +2,12 @@ import { useContext, useRef, useState, type KeyboardEvent } from "react";
 import type { Category, Link } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { selectLink } from "../../state/selectors";
-import { NO_TITLE } from "../../constants";
 import { deleteLink } from "../../storage/localStorage/links";
 import { removeCustomIcon } from "../../storage/customIcon";
 import { getNeighborId } from "../../utils/getNeighborId";
 import { handleNumericKeys } from "../../utils/handleNumericKeys";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
+import { t } from "../../utils/i18n";
 import { useDeleteWithUndo } from "../../hooks/useDeleteWithUndo";
 import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
@@ -70,7 +70,7 @@ export default function CategoryModal({
 
     category.links.forEach((link) => {
       if (isBlockedUrl(link.url)) {
-        errorMessages += `Opening ${link.url} is blocked by browser. `;
+        errorMessages += t("openingIsBlocked", link.url);
       } else {
         browser.tabs.create({ url: link.url, active: false });
       }
@@ -88,7 +88,7 @@ export default function CategoryModal({
       onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
       onKeyDown={handleKeyDown}
-      title={category.title || NO_TITLE}
+      title={category.title || t("noTitle")}
       className="category-modal"
     >
       <LinkList
@@ -102,12 +102,12 @@ export default function CategoryModal({
       />
       <div className="buttons-container">
         {category.links.length > 1 && (
-          <Button action={() => openAllLinks()}>Open All Links</Button>
+          <Button action={() => openAllLinks()}>{t("openAllLinks")}</Button>
         )}
         <Button action={() => handleAddLink()} buttonRef={addLinkButtonRef}>
-          <span>Add Link</span>
+          <span>{t("addLink")}</span>
         </Button>
-        <Button action={close}>Close</Button>
+        <Button action={close}>{t("close")}</Button>
       </div>
       {isAddingLink && (
         <AddEditLink
@@ -143,7 +143,7 @@ export default function CategoryModal({
       <Toast
         type="undo"
         show={isShowUndo}
-        text="Link deleted"
+        text={t("linkDeleted")}
         undo={undo}
         undoButtonRef={undoButtonRef}
       />

@@ -4,6 +4,7 @@ import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { useImageUpload } from "../../hooks/useImageUpload";
 import { isValidEmoji } from "../../utils/isValidEmoji";
+import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
 import EmojiInput from "../Form/EmojiInput";
 import Form from "../Form/Form";
@@ -62,12 +63,12 @@ export default function CategoryForm({
 
   function validateAndSave() {
     if (iconType === "emoji" && !isValidEmoji(emoji?.trim() ?? "")) {
-      setEmojiError("Emoji is not valid");
+      setEmojiError(t("emojiNotValid"));
       return;
     }
 
     if (iconType === "upload" && !uploadedImage) {
-      setCustomIconError("Icon is not uploaded");
+      setCustomIconError(t("iconNotUploaded"));
       return;
     }
 
@@ -82,7 +83,7 @@ export default function CategoryForm({
 
   return (
     <Form>
-      <FormField id="title" labelText="Title:">
+      <FormField id="title" labelText={t("titleLabel")}>
         <TextInput
           id="title"
           onChange={(e) => setTitle(e.target.value)}
@@ -100,9 +101,9 @@ export default function CategoryForm({
       <IconSelector iconType={iconType} setIconType={setIconType} />
       {iconType === "upload" && (
         <ImageUpload
-          label="Upload Icon"
+          label={t("uploadIcon")}
           showDelete={!!customIconId || uploadedImage !== null}
-          deleteLabel="Remove Icon"
+          deleteLabel={t("removeIcon")}
           previewUrl={uploadedImageUrl ?? savedIconUrl}
           handleUpload={handleIconUpload}
           handleDelete={handleIconDelete}
@@ -120,11 +121,11 @@ export default function CategoryForm({
         />
       )}
       <div className="buttons-container">
-        <Button action={validateAndSave}>Save</Button>
-        <Button action={() => close()}>Close</Button>
+        <Button action={validateAndSave}>{t("save")}</Button>
+        <Button action={() => close()}>{t("close")}</Button>
         {handleDeleteCategory && (
           <Button type="danger" action={handleDeleteCategory}>
-            Delete Category
+            {t("deleteCategory")}
           </Button>
         )}
       </div>

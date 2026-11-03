@@ -1,8 +1,9 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { MAX_INDEX_FOR_NUMBER_BADGE, NO_TITLE } from "../../constants";
+import { MAX_INDEX_FOR_NUMBER_BADGE } from "../../constants";
 import type { Category } from "../../state/models";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { getHostname } from "../../utils/getHostname";
+import { t } from "../../utils/i18n";
 import CategoryModal from "../CategoryModal/CategoryModal";
 import EditCategory from "../AddEditCategory/EditCategory";
 import EditButton from "../Button/EditButton";
@@ -39,7 +40,7 @@ export default function CategoryItem({
       <button
         className="category-button category-item"
         onClick={() => setShowCategoryModal(true)}
-        title={category.title || NO_TITLE}
+        title={category.title || t("noTitle")}
         ref={(node) => refCallback(node, category.id)}
       >
         <span className="category-icon">

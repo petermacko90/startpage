@@ -9,4 +9,3 @@ export const KEY_SPACE = " ";
 export const BACKGROUND_KEY = "background";
 export const IMAGE_FILETYPE = "image/";
 export const LOCALHOST = "localhost";
-export const NO_TITLE = "No title";

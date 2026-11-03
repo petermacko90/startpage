@@ -8,6 +8,7 @@ import { useImageUpload } from "../../hooks/useImageUpload";
 import { getIconType, type IconType } from "../../utils/getIconType";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
 import { isValidEmoji } from "../../utils/isValidEmoji";
+import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
 import EmojiInput from "../Form/EmojiInput";
 import Form from "../Form/Form";
@@ -74,24 +75,24 @@ export default function AddEditLink({
 
   function handleSave() {
     if (!url.trim()) {
-      setUrlError("URL is required");
+      setUrlError(t("urlRequired"));
       return;
     }
 
     const formattedUrl = formatUrl(url.trim());
 
     if (!isValidUrl(formattedUrl)) {
-      setUrlError("URL is not valid");
+      setUrlError(t("urlNotValid"));
       return;
     }
 
     if (iconType === "emoji" && !isValidEmoji(emoji?.trim() ?? "")) {
-      setEmojiError("Emoji is not valid");
+      setEmojiError(t("emojiNotValid"));
       return;
     }
 
     if (iconType === "upload" && !uploadedImage) {
-      setCustomIconError("Icon is not uploaded");
+      setCustomIconError(t("iconNotUploaded"));
       return;
     }
 
@@ -146,10 +147,10 @@ export default function AddEditLink({
   return (
     <div className="add-edit-link-container">
       <h1 className="add-edit-link-heading">
-        {link ? "Edit Link" : "Add Link"}
+        {link ? t("editLink") : t("addLink")}
       </h1>
       <Form>
-        <FormField id="title" labelText="Text:">
+        <FormField id="title" labelText={t("textLabel")}>
           <TextInput
             id="title"
             onChange={(e) => setTitle(e.target.value)}
@@ -158,7 +159,7 @@ export default function AddEditLink({
             inputRef={textInputRef}
           />
         </FormField>
-        <FormField id="url" labelText="URL:" error={urlError}>
+        <FormField id="url" labelText={t("urlLabel")} error={urlError}>
           <TextInput
             id="url"
             onChange={(e) => {
@@ -180,9 +181,9 @@ export default function AddEditLink({
         <IconSelector iconType={iconType} setIconType={setIconType} />
         {iconType === "upload" && (
           <ImageUpload
-            label="Upload Icon"
+            label={t("uploadIcon")}
             showDelete={!!customIconId || uploadedImage !== null}
-            deleteLabel="Remove Icon"
+            deleteLabel={t("removeIcon")}
             previewUrl={uploadedImageUrl ?? savedIconUrl}
             handleUpload={handleIconUpload}
             handleDelete={handleIconDelete}
@@ -200,8 +201,8 @@ export default function AddEditLink({
           />
         )}
         <div className="buttons-container">
-          <Button action={() => handleSave()}>Save</Button>
-          <Button action={cancel}>Cancel</Button>
+          <Button action={() => handleSave()}>{t("save")}</Button>
+          <Button action={cancel}>{t("cancel")}</Button>
           {linkId && (
             <Button
               type="danger"
@@ -210,7 +211,7 @@ export default function AddEditLink({
                 cancel();
               }}
             >
-              Delete Link
+              {t("deleteLink")}
             </Button>
           )}
         </div>

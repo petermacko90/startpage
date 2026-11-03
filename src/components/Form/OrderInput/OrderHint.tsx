@@ -1,5 +1,5 @@
-import { NO_TITLE } from "../../../constants";
 import type { Category, Link } from "../../../state/models";
+import { t } from "../../../utils/i18n";
 import "./OrderHint.css";
 
 export default function OrderHint<T extends Category | Link>({
@@ -21,7 +21,7 @@ export default function OrderHint<T extends Category | Link>({
         : `${value + 1} (before ${getTitle(itemAfter)})`;
 
   function getTitle(item: T): string {
-    return item.title || NO_TITLE;
+    return item.title || t("noTitle");
   }
 
   return (

@@ -5,6 +5,7 @@ import { updateCategory } from "../../storage/localStorage/categories";
 import { selectCategoriesCount } from "../../state/selectors";
 import { useDialog } from "../../hooks/useDialog";
 import { getIconType } from "../../utils/getIconType";
+import { t } from "../../utils/i18n";
 import Dialog from "../Dialog/Dialog";
 import CategoryForm from "./CategoryForm";
 
@@ -45,7 +46,7 @@ export default function EditCategory({
       onClose={close}
       onCloseButtonClick={() => dialogRef.current?.close()}
       ref={setDialogRef}
-      title="Edit Category"
+      title={t("editCategory")}
     >
       <CategoryForm
         titleInitial={category.title}

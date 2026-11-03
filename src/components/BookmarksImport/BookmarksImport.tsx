@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Bookmarks } from "@material-symbols-svg/react/icons/bookmarks";
+import { t } from "../../utils/i18n";
 import AddImportCategoryButton from "../Button/AddImportCategoryButton";
 import BookmarksImportDialog from "./BookmarksImportDialog";
 
@@ -12,7 +13,7 @@ export default function BookmarksImport() {
       <AddImportCategoryButton
         action={() => setShowDialog(true)}
         icon={<Bookmarks />}
-        text="Import Bookmarks"
+        text={t("importBookmarks")}
         buttonRef={buttonRef}
       />
       {showDialog && (
