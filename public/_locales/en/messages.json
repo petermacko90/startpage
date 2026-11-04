@@ -129,6 +129,64 @@
       }
     }
   },
+  "orderHintAfter": {
+    "message": "after",
+    "description": "Text displayed in OrderHint when the item is last."
+  },
+  "orderHintAnd": {
+    "message": "and",
+    "description": "Text displayed in OrderHint when the item is between two other items."
+  },
+  "orderHintBefore": {
+    "message": "before",
+    "description": "Text displayed in OrderHint when the item is first."
+  },
+  "orderHintBetween": {
+    "message": "between",
+    "description": "Text displayed in OrderHint when the item is between two other items."
+  },
+  "orderHintItemBetween": {
+    "message": "$order$ (between $itemBefore$ and $itemAfter$)",
+    "description": "Text displayed in OrderHint when the item is between two other items.",
+    "placeholders": {
+      "order": {
+        "content": "$1",
+        "example": "2"
+      },
+      "itemBefore": {
+        "content": "$2",
+        "example": "News"
+      },
+      "itemAfter": {
+        "content": "$3",
+        "example": "Games"
+      }
+    }
+  },
+  "orderHintItemFirst": {
+    "message": "1 (before $itemAfter$)",
+    "description": "Text displayed in OrderHint when the item is first.",
+    "placeholders": {
+      "itemAfter": {
+        "content": "$1",
+        "example": "News"
+      }
+    }
+  },
+  "orderHintItemLast": {
+    "message": "$order$ (after $itemBefore$)",
+    "description": "Text displayed in OrderHint when the item is last.",
+    "placeholders": {
+      "order": {
+        "content": "$1",
+        "example": "4"
+      },
+      "itemBefore": {
+        "content": "$2",
+        "example": "Games"
+      }
+    }
+  },
   "orderLabel": {
     "message": "Order:",
     "description": "Label of OrderInput."

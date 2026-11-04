@@ -15,10 +15,14 @@ export default function OrderHint<T extends Category | Link>({
 
   const titleText =
     itemBefore && itemAfter
-      ? `${value + 1} (between ${getTitle(itemBefore)} and ${getTitle(itemAfter)})`
+      ? t("orderHintItemBetween", [
+          value + 1,
+          getTitle(itemBefore),
+          getTitle(itemAfter),
+        ])
       : itemBefore
-        ? `${value + 1} (after ${getTitle(itemBefore)})`
-        : `${value + 1} (before ${getTitle(itemAfter)})`;
+        ? t("orderHintItemLast", [value + 1, getTitle(itemBefore)])
+        : t("orderHintItemFirst", getTitle(itemAfter));
 
   function getTitle(item: T): string {
     return item.title || t("noTitle");
@@ -29,16 +33,16 @@ export default function OrderHint<T extends Category | Link>({
       {value + 1}{" "}
       {itemBefore && itemAfter ? (
         <>
-          (between <strong>{getTitle(itemBefore)}</strong> and{" "}
-          <strong>{getTitle(itemAfter)}</strong>)
+          ({t("orderHintBetween")} <strong>{getTitle(itemBefore)}</strong>{" "}
+          {t("orderHintAnd")} <strong>{getTitle(itemAfter)}</strong>)
         </>
       ) : itemBefore ? (
         <>
-          (after <strong>{getTitle(itemBefore)}</strong>)
+          ({t("orderHintAfter")} <strong>{getTitle(itemBefore)}</strong>)
         </>
       ) : (
         <>
-          (before <strong>{getTitle(itemAfter)}</strong>)
+          ({t("orderHintBefore")} <strong>{getTitle(itemAfter)}</strong>)
         </>
       )}
     </div>
