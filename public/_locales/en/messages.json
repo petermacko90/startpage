@@ -8,7 +8,7 @@
     "description": "Label of 'Add Link' button in CategoryModal and heading of AddEditLink."
   },
   "browsersBlockInternalPages": {
-    "message": "Browsers block opening of internal system pages. You can copy the link from right-click menu and paste it into the address bar.",
+    "message": "Browsers block opening of internal system pages. You can copy the link from context menu and paste it into the address bar.",
     "description": "Error message shown when user clicks on internal system page like about:config, which are blocked from opening in extensions."
   },
   "cancel": {
@@ -72,11 +72,11 @@
     "description": "Error message shown when uploading of wallpaper fails."
   },
   "failedToUploadIcon": {
-    "message": "Failed to upload custom icon",
+    "message": "Failed to set custom icon",
     "description": "Error message shown when uploading of custom icon fails."
   },
   "iconNotUploaded": {
-    "message": "Icon is not uploaded",
+    "message": "Please upload an icon",
     "description": "Error message shown when user selects 'Upload Image' without providing an icon."
   },
   "iconTypeDefault": {
@@ -131,19 +131,19 @@
   },
   "orderHintAfter": {
     "message": "after",
-    "description": "Text displayed in OrderHint when the item is last."
+    "description": "Text displayed in OrderHint (after)."
   },
   "orderHintAnd": {
     "message": "and",
-    "description": "Text displayed in OrderHint when the item is between two other items."
+    "description": "Text displayed in OrderHint (and)."
   },
   "orderHintBefore": {
     "message": "before",
-    "description": "Text displayed in OrderHint when the item is first."
+    "description": "Text displayed in OrderHint (before)."
   },
   "orderHintBetween": {
     "message": "between",
-    "description": "Text displayed in OrderHint when the item is between two other items."
+    "description": "Text displayed in OrderHint (between)."
   },
   "orderHintItemBetween": {
     "message": "$order$ (between $itemBefore$ and $itemAfter$)",

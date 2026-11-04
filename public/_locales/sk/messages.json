@@ -1,0 +1,272 @@
+{
+  "addCategory": {
+    "message": "Pridať kategóriu",
+    "description": "Label of 'Add Category' button in AddCategory and title of AddCategoryDialog."
+  },
+  "addLink": {
+    "message": "Pridať odkaz",
+    "description": "Label of 'Add Link' button in CategoryModal and heading of AddEditLink."
+  },
+  "browsersBlockInternalPages": {
+    "message": "Prehliadače blokujú otváranie systémových stránok. Môžete skopírovať odkaz z kontextového menu a prilepiť ho do adresného riadku.",
+    "description": "Error message shown when user clicks on internal system page like about:config, which are blocked from opening in extensions."
+  },
+  "cancel": {
+    "message": "Zrušiť",
+    "description": "Label of cancel button in AddEditLink."
+  },
+  "categoryDeleted": {
+    "message": "Kategória vymazaná",
+    "description": "Text of Undo Toast in CategoryList."
+  },
+  "close": {
+    "message": "Zavrieť",
+    "description": "Title or label of close button."
+  },
+  "deleteCategory": {
+    "message": "Vymazať kategóriu",
+    "description": "Label of 'Delete Category' button in CategoryForm."
+  },
+  "deleteLink": {
+    "message": "Vymazať odkaz",
+    "description": "Label of 'Delete Link' button in AddEditLink."
+  },
+  "edit": {
+    "message": "Upraviť",
+    "description": "Title of EditButton."
+  },
+  "editCategory": {
+    "message": "Upraviť kategóriu",
+    "description": "Title of EditCategory dialog."
+  },
+  "editLink": {
+    "message": "Upraviť odkaz",
+    "description": "Heading of AddEditLink."
+  },
+  "emoji": {
+    "message": "Emoji:",
+    "description": "Label of EmojiInput."
+  },
+  "emojiNotValid": {
+    "message": "Vložte prosím jedno Emoji",
+    "description": "Error message shown when emoji doesn't pass validation in AddEditLink and CategoryForm."
+  },
+  "failedToFetchImage": {
+    "message": "Nepodarilo sa načítať obrázok z IndexedDB",
+    "description": "Error message shown when fetching of image from IndexedDB fails."
+  },
+  "failedToLoadBookmarks": {
+    "message": "Nepodarilo sa načítať záložky",
+    "description": "Error message shown when loading of bookmarks fails."
+  },
+  "failedToRemoveIcon": {
+    "message": "Nepodarilo sa vymazať ikonu",
+    "description": "Error message shown when removal of custom icon fails."
+  },
+  "failedToRemoveWallpaper": {
+    "message": "Nepodarilo sa vymazať tapetu",
+    "description": "Error message shown when removal of wallpaper fails."
+  },
+  "failedToSetWallpaper": {
+    "message": "Nepodarilo sa nastaviť tapetu",
+    "description": "Error message shown when uploading of wallpaper fails."
+  },
+  "failedToUploadIcon": {
+    "message": "Nepodarilo sa nastaviť ikonu",
+    "description": "Error message shown when uploading of custom icon fails."
+  },
+  "iconNotUploaded": {
+    "message": "Nahrajte prosím ikonu",
+    "description": "Error message shown when user selects 'Upload Image' without providing an icon."
+  },
+  "iconTypeDefault": {
+    "message": "Predvolená",
+    "description": "Label of default option of radio button in IconSelector."
+  },
+  "iconTypeLabel": {
+    "message": "Ikona:",
+    "description": "Label of IconSelector radio group."
+  },
+  "iconTypeUseEmoji": {
+    "message": "Emoji",
+    "description": "Label of Use Emoji option of radio button in IconSelector."
+  },
+  "import": {
+    "message": "Importovať",
+    "description": "Label of 'Import' button in BookmarksImportDialog."
+  },
+  "importBookmarks": {
+    "message": "Importovať záložky",
+    "description": "Label of 'Import Bookmarks' button in BookmarksImport and title of BookmarksImportDialog."
+  },
+  "linkDeleted": {
+    "message": "Odkaz vymazaný",
+    "description": "Text of Undo Toast in CategoryModal."
+  },
+  "noBookmarksSelected": {
+    "message": "Nie sú vybrané žiadne záložky.",
+    "description": "Error message shown when user doesn't select any bookmark folder in BookmarksImportDialog."
+  },
+  "noItems": {
+    "message": "Žiadne položky",
+    "description": "Text shown when there are no items in bookmark folder in BookmarkItems."
+  },
+  "noTitle": {
+    "message": "<Bez názvu>",
+    "description": "Placeholder text when user leaves category title empty."
+  },
+  "openAllLinks": {
+    "message": "Otvoriť všetky odkazy",
+    "description": "Label of 'Open All Links' button in CategoryModal."
+  },
+  "openingIsBlocked": {
+    "message": "Otvorenie $url$ je blokované prehliadačom. ",
+    "description": "Error message shown when user clicks on 'Open All Links' button and there is an internal system page among the links.",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "about:config"
+      }
+    }
+  },
+  "orderHintAfter": {
+    "message": "za",
+    "description": "Text displayed in OrderHint (after)."
+  },
+  "orderHintAnd": {
+    "message": "a",
+    "description": "Text displayed in OrderHint (and)."
+  },
+  "orderHintBefore": {
+    "message": "pred",
+    "description": "Text displayed in OrderHint (before)."
+  },
+  "orderHintBetween": {
+    "message": "medzi",
+    "description": "Text displayed in OrderHint (between)."
+  },
+  "orderHintItemBetween": {
+    "message": "$order$ (medzi $itemBefore$ a $itemAfter$)",
+    "description": "Text displayed in OrderHint when the item is between two other items.",
+    "placeholders": {
+      "order": {
+        "content": "$1",
+        "example": "2"
+      },
+      "itemBefore": {
+        "content": "$2",
+        "example": "News"
+      },
+      "itemAfter": {
+        "content": "$3",
+        "example": "Games"
+      }
+    }
+  },
+  "orderHintItemFirst": {
+    "message": "1 (pred $itemAfter$)",
+    "description": "Text displayed in OrderHint when the item is first.",
+    "placeholders": {
+      "itemAfter": {
+        "content": "$1",
+        "example": "News"
+      }
+    }
+  },
+  "orderHintItemLast": {
+    "message": "$order$ (za $itemBefore$)",
+    "description": "Text displayed in OrderHint when the item is last.",
+    "placeholders": {
+      "order": {
+        "content": "$1",
+        "example": "4"
+      },
+      "itemBefore": {
+        "content": "$2",
+        "example": "Games"
+      }
+    }
+  },
+  "orderLabel": {
+    "message": "Poradie:",
+    "description": "Label of OrderInput."
+  },
+  "pageIconCustom": {
+    "message": "Vlastná ikona",
+    "description": "Alt text of uploaded icon image."
+  },
+  "pageIconDefault": {
+    "message": "Ikona stránky",
+    "description": "Alt text of icon image of a page without domain."
+  },
+  "pageIconDomain": {
+    "message": "$domain$ ikona",
+    "description": "Alt text of icon image of a page with domain.",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "github.com"
+      }
+    }
+  },
+  "pleaseSelectImage": {
+    "message": "Vyberte prosím obrázok",
+    "description": "Error message shown when user uploads a file that is not an image."
+  },
+  "removeIcon": {
+    "message": "Vymazať ikonu",
+    "description": "Label of delete button in ImageUpload in AddEditLink and CategoryForm."
+  },
+  "save": {
+    "message": "Uložiť",
+    "description": "Label of save button."
+  },
+  "textLabel": {
+    "message": "Text:",
+    "description": "Label of text input in AddEditLink."
+  },
+  "titleLabel": {
+    "message": "Názov:",
+    "description": "label of title input in CategoryForm."
+  },
+  "undo": {
+    "message": "Vrátiť späť",
+    "description": "Label of undo button in undo toast."
+  },
+  "uploadIcon": {
+    "message": "Nahrať ikonu",
+    "description": "Label of ImageUpload in AddEditLink and CategoryForm."
+  },
+  "uploadImage": {
+    "message": "Nahrať obrázok",
+    "description": "Label of file select button in Wallpaper dialog and upload image radio button in IconSelector."
+  },
+  "urlLabel": {
+    "message": "URL:",
+    "description": "Label of URL input in AddEditLink."
+  },
+  "urlNotValid": {
+    "message": "URL nie je platná",
+    "description": "Error message shown when URL doesn't pass validation in AddEditLink."
+  },
+  "urlRequired": {
+    "message": "URL je povinná",
+    "description": "Error message shown when user leaves empty URL in AddEditLink."
+  },
+  "wallpaperTitle": {
+    "message": "Tapeta",
+    "description": "Title of Wallpaper dialog."
+  },
+  "wallpaperAdd": {
+    "message": "Pridať tapetu",
+    "description": "Label of add/change wallpaper button when there is no wallpaper set."
+  },
+  "wallpaperChange": {
+    "message": "Zmeniť tapetu",
+    "description": "Label of add/change wallpaper button when wallpaper is already set."
+  },
+  "wallpaperRemove": {
+    "message": "Vymazať tapetu",
+    "description": "Label of remove wallpaper button in Wallpaper dialog."
+  }
+}
