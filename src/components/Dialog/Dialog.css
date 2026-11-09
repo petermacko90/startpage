@@ -16,6 +16,12 @@ dialog {
   }
 }
 
+@media (--m-viewport) {
+  dialog {
+    width: var(--dialog-width-m);
+  }
+}
+
 dialog:focus {
   outline: var(--outline-width) solid var(--color-primary);
 }

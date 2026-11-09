@@ -1,11 +1,5 @@
 @import "../../variables.css";
 
-@media (--m-viewport) {
-  dialog.bookmarks-import {
-    width: var(--dialog-width-m);
-  }
-}
-
 @media (--l-viewport) {
   dialog.bookmarks-import {
     width: var(--dialog-width-l);

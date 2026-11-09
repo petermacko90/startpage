@@ -1,11 +1,5 @@
 @import "../../variables.css";
 
-@media (--m-viewport) {
-  dialog.category-modal {
-    width: var(--dialog-width-m);
-  }
-}
-
 @media (--l-viewport) {
   dialog.category-modal {
     width: var(--dialog-width-l);
