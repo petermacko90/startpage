@@ -8,7 +8,7 @@
     "description": "Label of 'Add Link' button in CategoryModal and heading of AddEditLink."
   },
   "browsersBlockInternalPages": {
-    "message": "Browsers block opening of internal system pages. You can copy the link from context menu and paste it into the address bar.",
+    "message": "Browsers block opening of system pages. You can copy the link from context menu and paste it into the address bar.",
     "description": "Error message shown when user clicks on internal system page like about:config, which are blocked from opening in extensions."
   },
   "cancel": {
@@ -48,7 +48,7 @@
     "description": "Label of EmojiInput."
   },
   "emojiNotValid": {
-    "message": "Emoji is not valid",
+    "message": "Please enter single Emoji",
     "description": "Error message shown when emoji doesn't pass validation in AddEditLink and CategoryForm."
   },
   "failedToFetchImage": {
@@ -88,7 +88,7 @@
     "description": "Label of IconSelector radio group."
   },
   "iconTypeUseEmoji": {
-    "message": "Use Emoji",
+    "message": "Emoji",
     "description": "Label of Use Emoji option of radio button in IconSelector."
   },
   "import": {
