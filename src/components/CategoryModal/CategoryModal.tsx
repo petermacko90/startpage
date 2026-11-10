@@ -29,6 +29,7 @@ export default function CategoryModal({
   const [isAddingLink, setIsAddingLink] = useState(false);
   const [editLinkId, setEditLinkId] = useState<Link["id"] | null>(null);
   const textInputRef = useRef<HTMLInputElement | null>(null);
+  const iconSelectorRef = useRef<HTMLInputElement | null>(null);
 
   function handleAddLink() {
     setEditLinkId(null);
@@ -96,6 +97,7 @@ export default function CategoryModal({
         setIsAddingLink={setIsAddingLink}
         setEditLinkId={setEditLinkId}
         textInputRef={textInputRef}
+        iconSelectorRef={iconSelectorRef}
         shouldShowBadge={shouldHandleNumericKeys()}
         lastActiveLinkRef={lastActiveLinkRef}
         refCallback={refCallback}
@@ -142,6 +144,7 @@ export default function CategoryModal({
           textInputRef={textInputRef}
           handleDeleteLink={deleteItem}
           isSynced={!!category.bookmarkFolderId}
+          iconSelectorRef={iconSelectorRef}
         />
       )}
       <Toast

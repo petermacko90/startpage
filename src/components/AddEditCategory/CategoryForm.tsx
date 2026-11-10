@@ -100,7 +100,6 @@ export default function CategoryForm({
         setValue={setOrder}
         items={[...state.categories]}
         itemId={itemId}
-        isDisabled={isSynced}
       />
       <IconSelector iconType={iconType} setIconType={setIconType} />
       {iconType === "upload" && (

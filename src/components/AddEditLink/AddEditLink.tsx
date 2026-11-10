@@ -27,6 +27,7 @@ export default function AddEditLink({
   textInputRef,
   handleDeleteLink,
   isSynced = false,
+  iconSelectorRef,
 }: {
   categoryId: Category["id"];
   linkCount: number;
@@ -35,6 +36,7 @@ export default function AddEditLink({
   textInputRef: RefObject<HTMLInputElement | null>;
   handleDeleteLink?: (linkId: Link["id"], index: number) => void;
   isSynced?: boolean;
+  iconSelectorRef?: RefObject<HTMLInputElement | null>;
 }) {
   const state = useContext(StateContext);
   const links = selectLinks(state)(categoryId);
@@ -183,7 +185,11 @@ export default function AddEditLink({
           itemId={linkId}
           isDisabled={isSynced}
         />
-        <IconSelector iconType={iconType} setIconType={setIconType} />
+        <IconSelector
+          iconType={iconType}
+          setIconType={setIconType}
+          focusRef={iconSelectorRef}
+        />
         {iconType === "upload" && (
           <ImageUpload
             label={t("uploadIcon")}

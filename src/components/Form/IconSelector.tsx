@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, RefObject, SetStateAction } from "react";
 import type { IconType } from "../../utils/getIconType";
 import { t } from "../../utils/i18n";
 import "./IconSelector.css";
@@ -6,9 +6,11 @@ import "./IconSelector.css";
 export default function IconSelector({
   iconType,
   setIconType,
+  focusRef,
 }: {
   iconType: IconType;
   setIconType: Dispatch<SetStateAction<IconType>>;
+  focusRef?: RefObject<HTMLInputElement | null>;
 }) {
   return (
     <div className="form-field radio-group">
@@ -20,6 +22,7 @@ export default function IconSelector({
           value="default"
           checked={iconType === "default"}
           onChange={() => setIconType("default")}
+          ref={focusRef}
         />
         <span>{t("iconTypeDefault")}</span>
       </label>

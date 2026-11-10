@@ -15,6 +15,7 @@ export default function LinkList({
   setIsAddingLink,
   setEditLinkId,
   textInputRef,
+  iconSelectorRef,
   shouldShowBadge,
   lastActiveLinkRef,
   refCallback,
@@ -24,6 +25,7 @@ export default function LinkList({
   setIsAddingLink: Dispatch<SetStateAction<boolean>>;
   setEditLinkId: Dispatch<SetStateAction<Link["id"] | null>>;
   textInputRef: RefObject<HTMLInputElement | null>;
+  iconSelectorRef: RefObject<HTMLInputElement | null>;
   shouldShowBadge: boolean;
   lastActiveLinkRef: RefObject<Link["id"] | null>;
   refCallback: (node: HTMLElement | null, itemId: string) => void;
@@ -41,7 +43,13 @@ export default function LinkList({
   function handleEditLink(linkId: Link["id"]) {
     setIsAddingLink(false);
     setEditLinkId(linkId);
-    setTimeout(() => textInputRef.current?.focus());
+    setTimeout(() => {
+      if (isSynced) {
+        iconSelectorRef.current?.focus();
+      } else {
+        textInputRef.current?.focus();
+      }
+    });
   }
 
   return (

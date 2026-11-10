@@ -96,6 +96,7 @@ browser.bookmarks.onRemoved.addListener(async (id, removeInfo) => {
 
 browser.bookmarks.onChanged.addListener(async (id) => {
   try {
+    await syncFolder(id);
     const [bookmark] = await browser.bookmarks.get(id);
     if (bookmark.parentId) await syncFolder(bookmark.parentId);
   } catch (e) {
