@@ -4,7 +4,10 @@ import { selectCategoriesCount } from "../../state/selectors";
 import { getCategoryIndex, getState, reorderItems, setState } from "./common";
 import { saveCustomIcon, updateCustomIcon } from "../customIcon";
 
-export async function importCategories(bookmarks: string[]) {
+export async function importCategories(
+  bookmarks: string[],
+  isSyncBookmarks: boolean,
+) {
   const state = await getState();
   let categoriesCount = selectCategoriesCount(state);
 
@@ -19,19 +22,20 @@ export async function importCategories(bookmarks: string[]) {
       id: uuidv4(),
       links:
         item[0].children
-          ?.filter((item) => item.url)
-          .map((item, index) => {
+          ?.filter((link) => link.url)
+          .map((link, index) => {
             return {
               customIconId: null,
               emoji: null,
-              id: uuidv4(),
+              id: link.id,
               order: index,
-              title: item.title,
-              url: item.url!,
+              title: link.title,
+              url: link.url!,
             } as Link;
           }) ?? [],
       order: categoriesCount++,
       title: item[0].title,
+      bookmarkFolderId: isSyncBookmarks ? item[0].id : undefined,
     };
   });
 

@@ -99,6 +99,10 @@
     "message": "Importovať záložky",
     "description": "Label of 'Import Bookmarks' button in BookmarksImport and title of BookmarksImportDialog."
   },
+  "keepInSync": {
+    "message": "Synchronizovať s prehliadačom",
+    "description": "Label of 'Keep in sync' checkbox in BookmarksImportDialog."
+  },
   "linkDeleted": {
     "message": "Odkaz vymazaný",
     "description": "Text of Undo Toast in CategoryModal."

@@ -99,6 +99,10 @@
     "message": "Import Bookmarks",
     "description": "Label of 'Import Bookmarks' button in BookmarksImport and title of BookmarksImportDialog."
   },
+  "keepInSync": {
+    "message": "Keep in sync with browser",
+    "description": "Label of 'Keep in sync' checkbox in BookmarksImportDialog."
+  },
   "linkDeleted": {
     "message": "Link deleted",
     "description": "Text of Undo Toast in CategoryModal."

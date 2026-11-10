@@ -51,6 +51,8 @@ export default function BookmarksImportDialog({
     Record<string, boolean>
   >({});
 
+  const [isSyncBookmarks, setIsSyncBookmarks] = useState<boolean>(false);
+
   function handleImport() {
     clearError();
 
@@ -63,7 +65,7 @@ export default function BookmarksImportDialog({
       return;
     }
 
-    importCategories(bookmarks);
+    importCategories(bookmarks, isSyncBookmarks);
     handleCloseButtonClick();
   }
 
@@ -84,6 +86,14 @@ export default function BookmarksImportDialog({
         selectedBookmarks={selectedBookmarks}
         setSelectedBookmarks={setSelectedBookmarks}
       />
+      <label className="keep-in-sync-checkbox">
+        <input
+          type="checkbox"
+          checked={isSyncBookmarks}
+          onChange={(e) => setIsSyncBookmarks(e.target.checked)}
+        />
+        <span>{t("keepInSync")}</span>
+      </label>
       <div className="buttons-container mt">
         <Button action={() => handleImport()}>{t("import")}</Button>
         <Button action={handleCloseButtonClick}>{t("close")}</Button>

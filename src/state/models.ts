@@ -14,6 +14,7 @@ export type Category = {
   title: string;
   links: Link[];
   order: number;
+  bookmarkFolderId?: string;
 };
 
 export type State = {
