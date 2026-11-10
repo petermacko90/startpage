@@ -10,6 +10,7 @@ export default function TextInput({
   maxLength,
   inputRef,
   type = "text",
+  disabled,
 }: {
   id: string;
   value: string;
@@ -18,6 +19,7 @@ export default function TextInput({
   type?: "text" | "url";
   maxLength?: number;
   inputRef?: RefObject<HTMLInputElement | null>;
+  disabled?: boolean;
 }) {
   function handlePressEnter(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === KEY_ENTER) {
@@ -35,6 +37,7 @@ export default function TextInput({
       onKeyDown={handlePressEnter}
       maxLength={maxLength}
       ref={inputRef}
+      disabled={disabled}
     />
   );
 }

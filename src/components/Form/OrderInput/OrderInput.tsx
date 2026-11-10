@@ -13,12 +13,14 @@ export default function OrderInput<T extends Category | Link>({
   setValue,
   items,
   itemId,
+  isDisabled = false,
 }: {
   value: number;
   max: number;
   setValue: Dispatch<SetStateAction<number>>;
   items: T[];
   itemId: T["id"] | null;
+  isDisabled?: boolean;
 }) {
   const min = 0;
   let hintItems = [...items];
@@ -28,7 +30,7 @@ export default function OrderInput<T extends Category | Link>({
     hintItems = hintItems.toSpliced(oldIndex, 1);
   }
 
-  function isDisabled(): boolean {
+  function isOnlyOneItem(): boolean {
     if (itemId && items.length <= 1) return true;
     if (!itemId && items.length <= 0) return true;
     return false;
@@ -39,7 +41,7 @@ export default function OrderInput<T extends Category | Link>({
       <div className="order-form-field">
         <label htmlFor="order-input">{t("orderLabel")}</label>
         <Button
-          disabled={isDisabled()}
+          disabled={isDisabled || isOnlyOneItem()}
           action={() => {
             if (value <= min) return;
             setValue((prevValue) => prevValue - 1);
@@ -57,7 +59,7 @@ export default function OrderInput<T extends Category | Link>({
           hidden
         />
         <Button
-          disabled={isDisabled()}
+          disabled={isDisabled || isOnlyOneItem()}
           action={() => {
             if (value >= max) return;
             setValue((prevValue) => prevValue + 1);

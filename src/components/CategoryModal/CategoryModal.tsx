@@ -99,14 +99,17 @@ export default function CategoryModal({
         shouldShowBadge={shouldHandleNumericKeys()}
         lastActiveLinkRef={lastActiveLinkRef}
         refCallback={refCallback}
+        isSynced={!!category.bookmarkFolderId}
       />
       <div className="buttons-container">
         {category.links.length > 1 && (
           <Button action={() => openAllLinks()}>{t("openAllLinks")}</Button>
         )}
-        <Button action={() => handleAddLink()} buttonRef={addLinkButtonRef}>
-          <span>{t("addLink")}</span>
-        </Button>
+        {!category.bookmarkFolderId && (
+          <Button action={() => handleAddLink()} buttonRef={addLinkButtonRef}>
+            <span>{t("addLink")}</span>
+          </Button>
+        )}
         <Button action={close}>{t("close")}</Button>
       </div>
       {isAddingLink && (
@@ -138,6 +141,7 @@ export default function CategoryModal({
           }}
           textInputRef={textInputRef}
           handleDeleteLink={deleteItem}
+          isSynced={!!category.bookmarkFolderId}
         />
       )}
       <Toast

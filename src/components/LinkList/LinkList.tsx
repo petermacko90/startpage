@@ -18,6 +18,7 @@ export default function LinkList({
   shouldShowBadge,
   lastActiveLinkRef,
   refCallback,
+  isSynced,
 }: {
   category: Category;
   setIsAddingLink: Dispatch<SetStateAction<boolean>>;
@@ -26,11 +27,15 @@ export default function LinkList({
   shouldShowBadge: boolean;
   lastActiveLinkRef: RefObject<Link["id"] | null>;
   refCallback: (node: HTMLElement | null, itemId: string) => void;
+  isSynced: boolean;
 }) {
   const { containerRef, captureFirst } = useFlipAnimation(category.links);
 
-  useDropMonitor(category.links, captureFirst, (updatedLinks) =>
-    updateLinks(category.id, updatedLinks),
+  useDropMonitor(
+    category.links,
+    captureFirst,
+    (updatedLinks) => updateLinks(category.id, updatedLinks),
+    isSynced,
   );
 
   function handleEditLink(linkId: Link["id"]) {
@@ -50,7 +55,12 @@ export default function LinkList({
           {shouldShowBadge && index <= MAX_INDEX_FOR_NUMBER_BADGE && (
             <NumberBadge index={index} />
           )}
-          <LinkItem key={link.id} link={link} refCallback={refCallback} />
+          <LinkItem
+            key={link.id}
+            link={link}
+            isSynced={isSynced}
+            refCallback={refCallback}
+          />
           <EditButton
             action={() => {
               lastActiveLinkRef.current = link.id;

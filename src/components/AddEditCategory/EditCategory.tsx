@@ -58,6 +58,7 @@ export default function EditCategory({
         handleCategorySave={handleCategorySave}
         itemId={category.id}
         close={close}
+        isSynced={!!category.bookmarkFolderId}
         handleDeleteCategory={() =>
           handleDeleteCategory(category.id, category.order)
         }

@@ -11,13 +11,16 @@ import "./LinkItem.css";
 
 export default function LinkItem({
   link,
+  isSynced,
   refCallback,
 }: {
   link: Link;
+  isSynced: boolean;
   refCallback: (node: HTMLElement | null, itemId: string) => void;
 }) {
   const { isDragging, isOver, dndRef } = useDragAndDrop<HTMLAnchorElement>(
     link.id,
+    isSynced,
   );
 
   const { isError, errorMessage, clearError, showErrorToast } =

@@ -24,6 +24,7 @@ export default function CategoryForm({
   handleCategorySave,
   itemId,
   close,
+  isSynced = false,
   handleDeleteCategory,
 }: {
   titleInitial: string;
@@ -41,6 +42,7 @@ export default function CategoryForm({
   ) => void;
   itemId: Category["id"] | null;
   close: () => void;
+  isSynced?: boolean;
   handleDeleteCategory?: () => void;
 }) {
   const state = useContext(StateContext);
@@ -89,6 +91,7 @@ export default function CategoryForm({
           onChange={(e) => setTitle(e.target.value)}
           onPressEnter={validateAndSave}
           value={title}
+          disabled={isSynced}
         />
       </FormField>
       <OrderInput
@@ -97,6 +100,7 @@ export default function CategoryForm({
         setValue={setOrder}
         items={[...state.categories]}
         itemId={itemId}
+        isDisabled={isSynced}
       />
       <IconSelector iconType={iconType} setIconType={setIconType} />
       {iconType === "upload" && (

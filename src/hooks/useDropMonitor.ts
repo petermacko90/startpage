@@ -7,6 +7,7 @@ export function useDropMonitor<T extends Category | Link>(
   items: T[],
   captureFirst: () => void,
   updateAction: (items: T[]) => void,
+  disabled: boolean = false,
 ) {
   const eventCache = useRef({ items, captureFirst, updateAction });
 
@@ -15,6 +16,8 @@ export function useDropMonitor<T extends Category | Link>(
   }, [items, captureFirst, updateAction]);
 
   useEffect(() => {
+    if (disabled) return;
+
     return monitorForElements({
       onDrop({ source, location }) {
         const dropTargets = location.current.dropTargets;
@@ -44,5 +47,5 @@ export function useDropMonitor<T extends Category | Link>(
         }
       },
     });
-  }, []);
+  }, [disabled]);
 }

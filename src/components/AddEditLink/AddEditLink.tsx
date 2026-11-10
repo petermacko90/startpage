@@ -26,6 +26,7 @@ export default function AddEditLink({
   cancel,
   textInputRef,
   handleDeleteLink,
+  isSynced = false,
 }: {
   categoryId: Category["id"];
   linkCount: number;
@@ -33,6 +34,7 @@ export default function AddEditLink({
   cancel: () => void;
   textInputRef: RefObject<HTMLInputElement | null>;
   handleDeleteLink?: (linkId: Link["id"], index: number) => void;
+  isSynced?: boolean;
 }) {
   const state = useContext(StateContext);
   const links = selectLinks(state)(categoryId);
@@ -157,6 +159,7 @@ export default function AddEditLink({
             onPressEnter={handleSave}
             value={title}
             inputRef={textInputRef}
+            disabled={isSynced}
           />
         </FormField>
         <FormField id="url" labelText={t("urlLabel")} error={urlError}>
@@ -169,6 +172,7 @@ export default function AddEditLink({
             onPressEnter={handleSave}
             value={url}
             type="url"
+            disabled={isSynced}
           />
         </FormField>
         <OrderInput
@@ -177,6 +181,7 @@ export default function AddEditLink({
           setValue={setOrder}
           items={[...links!]}
           itemId={linkId}
+          isDisabled={isSynced}
         />
         <IconSelector iconType={iconType} setIconType={setIconType} />
         {iconType === "upload" && (
@@ -203,7 +208,7 @@ export default function AddEditLink({
         <div className="buttons-container">
           <Button action={() => handleSave()}>{t("save")}</Button>
           <Button action={cancel}>{t("cancel")}</Button>
-          {linkId && (
+          {linkId && !isSynced && (
             <Button
               type="danger"
               action={() => {
