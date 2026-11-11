@@ -9,6 +9,7 @@ import { BACKGROUND_KEY, IMAGE_FILETYPE } from "../../constants";
 import { t } from "../../utils/i18n";
 import { useDialog } from "../../hooks/useDialog";
 import { useErrorToast } from "../../hooks/useErrorToast";
+import Button from "../Button/Button";
 import Dialog from "../Dialog/Dialog";
 import ImageUpload from "../Form/ImageUpload";
 import Toast from "../Toast/Toast";
@@ -87,7 +88,9 @@ export default function WallpaperDialog({
         handleUpload={handleBackgroundUpload}
         handleDelete={() => handleBackgroundRemove()}
         focusRef={uploadButtonRef}
-      />
+      >
+        <Button action={close}>Close</Button>
+      </ImageUpload>
       <Toast type="error" show={isError} text={errorMessage} />
     </Dialog>
   );

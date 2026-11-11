@@ -1,4 +1,9 @@
-import { useRef, type ChangeEvent, type RefObject } from "react";
+import {
+  useRef,
+  type ChangeEvent,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import { KEY_ENTER, KEY_SPACE } from "../../constants";
 import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
@@ -13,6 +18,7 @@ export default function ImageUpload({
   previewUrl,
   focusRef,
   customIconError,
+  children,
 }: {
   label: string;
   showDelete: boolean;
@@ -22,6 +28,7 @@ export default function ImageUpload({
   previewUrl?: string | null;
   focusRef?: RefObject<HTMLElement | null>;
   customIconError?: string;
+  children?: ReactNode;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,6 +69,7 @@ export default function ImageUpload({
           {deleteLabel}
         </Button>
       )}
+      {children}
       {(customIconError?.length ?? 0) > 0 && (
         <div className="error-text">{customIconError}</div>
       )}
