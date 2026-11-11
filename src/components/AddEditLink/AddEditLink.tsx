@@ -177,14 +177,6 @@ export default function AddEditLink({
             disabled={isSynced}
           />
         </FormField>
-        <OrderInput
-          value={order}
-          max={link ? linkCount - 1 : linkCount}
-          setValue={setOrder}
-          items={[...links!]}
-          itemId={linkId}
-          isDisabled={isSynced}
-        />
         <IconSelector
           iconType={iconType}
           setIconType={setIconType}
@@ -211,6 +203,14 @@ export default function AddEditLink({
             handleSave={handleSave}
           />
         )}
+        <OrderInput
+          value={order}
+          max={link ? linkCount - 1 : linkCount}
+          setValue={setOrder}
+          items={[...links!]}
+          itemId={linkId}
+          isDisabled={isSynced}
+        />
         <div className="buttons-container">
           <Button action={() => handleSave()}>{t("save")}</Button>
           <Button action={cancel}>{t("cancel")}</Button>

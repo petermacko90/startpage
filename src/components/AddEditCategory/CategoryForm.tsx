@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { type IconType } from "../../utils/getIconType";
 import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
@@ -52,6 +52,13 @@ export default function CategoryForm({
   const [emojiError, setEmojiError] = useState("");
   const [customIconError, setCustomIconError] = useState("");
   const [iconType, setIconType] = useState<IconType>(iconTypeInitial);
+  const iconSelectorRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (isSynced) {
+      iconSelectorRef.current?.focus();
+    }
+  }, [isSynced]);
 
   const {
     customIconId,
@@ -94,14 +101,11 @@ export default function CategoryForm({
           disabled={isSynced}
         />
       </FormField>
-      <OrderInput
-        value={order}
-        max={maxOrder}
-        setValue={setOrder}
-        items={[...state.categories]}
-        itemId={itemId}
+      <IconSelector
+        iconType={iconType}
+        setIconType={setIconType}
+        focusRef={iconSelectorRef}
       />
-      <IconSelector iconType={iconType} setIconType={setIconType} />
       {iconType === "upload" && (
         <ImageUpload
           label={t("uploadIcon")}
@@ -123,6 +127,13 @@ export default function CategoryForm({
           handleSave={validateAndSave}
         />
       )}
+      <OrderInput
+        value={order}
+        max={maxOrder}
+        setValue={setOrder}
+        items={[...state.categories]}
+        itemId={itemId}
+      />
       <div className="buttons-container">
         <Button action={validateAndSave}>{t("save")}</Button>
         <Button action={() => close()}>{t("close")}</Button>
