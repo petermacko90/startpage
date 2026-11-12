@@ -225,6 +225,14 @@
     "message": "Save",
     "description": "Label of save button."
   },
+  "syncedInfoCategory": {
+    "message": "This category is synced with your bookmark folder. You can change the title in your bookmarks. Clicking on 'Delete Category' will only remove the category from this extension.",
+    "description": "Info text used in CategoryForm in case the category is synced with bookmark folder."
+  },
+  "syncedInfoLink": {
+    "message": "This category is synced with your bookmark folder. You can only change icon of the link here. You can make other changes in browser bookmarks.",
+    "description": "Info text used in AddEditLink in case the category is synced with bookmark folder."
+  },
   "textLabel": {
     "message": "Text:",
     "description": "Label of text input in AddEditLink."

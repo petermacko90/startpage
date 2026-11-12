@@ -225,6 +225,14 @@
     "message": "Uložiť",
     "description": "Label of save button."
   },
+  "syncedInfoCategory": {
+    "message": "Táto kategória je synchronizovaná s vaším priečinkom v záložkách. Názov kategórie môžete upraviť vo vašich záložkách. Kliknutím na 'Vymazať kategóriu' odstránite príslušnú kategóriu iba z tohto rozširenia.",
+    "description": "Info text used in EditCategory in case the category is synced with bookmark folder."
+  },
+  "syncedInfoLink": {
+    "message": "Táto kategória je synchronizovaná s vaším priečinkom v záložkách. Tu môžete zmeniť iba ikonu odkazu. Ostatné zmeny môžete uskutočniť v záložkách prehliadača.",
+    "description": "Info text used in AddEditLink in case the category is synced with bookmark folder."
+  },
   "textLabel": {
     "message": "Text:",
     "description": "Label of text input in AddEditLink."

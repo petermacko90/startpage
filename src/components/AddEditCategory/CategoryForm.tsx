@@ -11,6 +11,7 @@ import Form from "../Form/Form";
 import FormField from "../Form/FormField";
 import IconSelector from "../Form/IconSelector";
 import ImageUpload from "../Form/ImageUpload";
+import InfoText from "../InfoText/InfoText";
 import OrderInput from "../Form/OrderInput/OrderInput";
 import TextInput from "../Form/TextInput";
 
@@ -92,6 +93,7 @@ export default function CategoryForm({
 
   return (
     <Form>
+      {isSynced && <InfoText text={t("syncedInfoCategory")} />}
       <FormField id="title" labelText={t("titleLabel")}>
         <TextInput
           id="title"
