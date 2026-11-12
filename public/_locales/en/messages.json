@@ -99,6 +99,10 @@
     "message": "Import Bookmarks",
     "description": "Label of 'Import Bookmarks' button in BookmarksImport and title of BookmarksImportDialog."
   },
+  "importBookmarksInfo": {
+    "message": "Check bookmark folders that you want to import. Subfolders won't be imported. Checking 'Keep in sync with browser' will follow changes you make in bookmarks.",
+    "description": "Info text displayed in BookmarksImportDialog"
+  },
   "keepInSync": {
     "message": "Keep in sync with browser",
     "description": "Label of 'Keep in sync' checkbox in BookmarksImportDialog."

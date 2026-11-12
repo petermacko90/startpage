@@ -7,6 +7,7 @@ import { useFocusAfterLoading } from "../../hooks/useFocusAfterLoading";
 import BookmarkItems from "./BookmarkItems";
 import Button from "../Button/Button";
 import Dialog from "../Dialog/Dialog";
+import InfoText from "../InfoText/InfoText";
 import Toast from "../Toast/Toast";
 import "./BookmarksImportDialog.css";
 
@@ -94,6 +95,7 @@ export default function BookmarksImportDialog({
         />
         <span>{t("keepInSync")}</span>
       </label>
+      <InfoText text={t("importBookmarksInfo")} />
       <div className="buttons-container mt">
         <Button action={() => handleImport()}>{t("import")}</Button>
         <Button action={handleCloseButtonClick}>{t("close")}</Button>

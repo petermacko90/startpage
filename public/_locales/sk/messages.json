@@ -99,6 +99,10 @@
     "message": "Importovať záložky",
     "description": "Label of 'Import Bookmarks' button in BookmarksImport and title of BookmarksImportDialog."
   },
+  "importBookmarksInfo": {
+    "message": "Zaškrtnite priečinky so záložkami, ktoré chcete importovať. Podpriečinky sa neimportujú. Ak zaškrtnete 'Synchronizovať s prehliadačom', toto rozšírenie bude synchronizovať zmeny, ktoré urobíte v príslušných priečinkoch.",
+    "description": "Info text displayed in BookmarksImportDialog"
+  },
   "keepInSync": {
     "message": "Synchronizovať s prehliadačom",
     "description": "Label of 'Keep in sync' checkbox in BookmarksImportDialog."

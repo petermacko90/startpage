@@ -57,9 +57,12 @@ input[type="checkbox"]:focus {
 
 .keep-in-sync-checkbox {
   margin-top: var(--spacing-xs);
+  margin-bottom: var(--spacing-s);
   display: flex;
   gap: var(--spacing-xs);
   align-items: baseline;
   padding-top: var(--spacing-s);
+  padding-bottom: var(--spacing-s);
   border-top: var(--border-width) solid var(--color-dark-4);
+  border-bottom: var(--border-width) solid var(--color-dark-4);
 }
