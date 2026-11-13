@@ -3,6 +3,7 @@ export const ERROR_TIMEOUT = 5000;
 
 export const MAX_INDEX_FOR_NUMBER_BADGE = 9;
 
+export const KEY_BACKSPACE = "Backspace";
 export const KEY_ENTER = "Enter";
 export const KEY_SPACE = " ";
 

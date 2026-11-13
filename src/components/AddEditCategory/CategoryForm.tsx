@@ -3,7 +3,7 @@ import { type IconType } from "../../utils/getIconType";
 import type { Category } from "../../state/models";
 import { StateContext } from "../../state/context";
 import { useImageUpload } from "../../hooks/useImageUpload";
-import { isValidEmoji } from "../../utils/isValidEmoji";
+import { isValidEmoji } from "../../utils/emojiUtils";
 import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
 import EmojiInput from "../Form/EmojiInput";

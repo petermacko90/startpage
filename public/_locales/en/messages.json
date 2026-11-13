@@ -48,7 +48,7 @@
     "description": "Label of EmojiInput."
   },
   "emojiNotValid": {
-    "message": "Please enter single Emoji",
+    "message": "Please insert one emoji",
     "description": "Error message shown when emoji doesn't pass validation in AddEditLink and CategoryForm."
   },
   "failedToFetchImage": {

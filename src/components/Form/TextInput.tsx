@@ -11,6 +11,7 @@ export default function TextInput({
   inputRef,
   type = "text",
   disabled,
+  onKeyDown,
 }: {
   id: string;
   value: string;
@@ -20,13 +21,14 @@ export default function TextInput({
   maxLength?: number;
   inputRef?: RefObject<HTMLInputElement | null>;
   disabled?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }) {
-  function handlePressEnter(e: KeyboardEvent<HTMLInputElement>) {
+  const handlePressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === KEY_ENTER) {
       e.preventDefault();
       onPressEnter();
     }
-  }
+  };
 
   return (
     <input
@@ -34,7 +36,10 @@ export default function TextInput({
       id={id}
       value={value}
       onChange={onChange}
-      onKeyDown={handlePressEnter}
+      onKeyDown={(e) => {
+        handlePressEnter(e);
+        onKeyDown?.(e);
+      }}
       maxLength={maxLength}
       ref={inputRef}
       disabled={disabled}

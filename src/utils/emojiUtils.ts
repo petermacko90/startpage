@@ -7,3 +7,8 @@ export function isValidEmoji(input: string): boolean {
 
   return emojiRegex.test(segments[0].segment);
 }
+
+export function getLastGrapheme(text: string): string {
+  const segments = [...segmenter.segment(text)];
+  return segments.at(-1)?.segment ?? "";
+}

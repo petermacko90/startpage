@@ -7,7 +7,7 @@ import { createLink, updateLink } from "../../storage/localStorage/links";
 import { useImageUpload } from "../../hooks/useImageUpload";
 import { getIconType, type IconType } from "../../utils/getIconType";
 import { isBlockedUrl } from "../../utils/isBlockedUrl";
-import { isValidEmoji } from "../../utils/isValidEmoji";
+import { isValidEmoji } from "../../utils/emojiUtils";
 import { t } from "../../utils/i18n";
 import Button from "../Button/Button";
 import EmojiInput from "../Form/EmojiInput";

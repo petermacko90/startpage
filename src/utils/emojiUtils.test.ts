@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isValidEmoji } from "./isValidEmoji";
+import { isValidEmoji } from "./emojiUtils";
 
 describe("isValidEmoji", () => {
   it("should return false given an empty string", () => {

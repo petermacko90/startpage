@@ -1,4 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
+import { KEY_BACKSPACE } from "../../constants";
+import { getLastGrapheme } from "../../utils/emojiUtils";
 import { t } from "../../utils/i18n";
 import FormField from "./FormField";
 import TextInput from "./TextInput";
@@ -22,10 +24,19 @@ export default function EmojiInput({
         id="emoji"
         value={emoji ?? ""}
         onChange={(e) => {
-          setEmoji(e.target.value);
+          setEmoji(getLastGrapheme(e.target.value));
           setEmojiError("");
         }}
         onPressEnter={handleSave}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+          if (
+            e.key === KEY_BACKSPACE &&
+            e.currentTarget.selectionStart === e.currentTarget.selectionEnd
+          ) {
+            e.preventDefault();
+            setEmoji("");
+          }
+        }}
       />
     </FormField>
   );

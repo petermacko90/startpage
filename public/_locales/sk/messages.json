@@ -48,7 +48,7 @@
     "description": "Label of EmojiInput."
   },
   "emojiNotValid": {
-    "message": "Vložte prosím jedno Emoji",
+    "message": "Vložte prosím jedno emoji",
     "description": "Error message shown when emoji doesn't pass validation in AddEditLink and CategoryForm."
   },
   "failedToFetchImage": {
