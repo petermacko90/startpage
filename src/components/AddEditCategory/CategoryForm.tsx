@@ -85,7 +85,7 @@ export default function CategoryForm({
     handleCategorySave(
       title,
       order,
-      iconType === "emoji" ? emoji : null,
+      iconType === "emoji" ? emoji!.trim() : null,
       iconType === "upload" ? uploadedImage : null,
       iconType !== "upload",
     );

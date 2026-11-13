@@ -1,6 +1,9 @@
-export function isValidEmoji(input: string): boolean {
-  const emojiRegex =
-    /^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)(\u200D(\p{Emoji_Presentation}|\p{Emoji}\uFE0F))*$/u;
+const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+const emojiRegex = /^\p{RGI_Emoji}$/v;
 
-  return emojiRegex.test(input);
+export function isValidEmoji(input: string): boolean {
+  const segments = [...segmenter.segment(input)];
+  if (segments.length !== 1) return false;
+
+  return emojiRegex.test(segments[0].segment);
 }

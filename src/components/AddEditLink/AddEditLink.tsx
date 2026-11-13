@@ -106,7 +106,7 @@ export default function AddEditLink({
         categoryId,
         link: {
           customIconId: link.customIconId,
-          emoji: iconType === "emoji" ? emoji : null,
+          emoji: iconType === "emoji" ? emoji!.trim() : null,
           id: link.id,
           order,
           title: title.trim() || formattedUrl,
@@ -123,7 +123,7 @@ export default function AddEditLink({
         order,
         title: title.trim() || formattedUrl,
         url: formattedUrl,
-        emoji: iconType === "emoji" ? emoji : null,
+        emoji: iconType === "emoji" ? emoji!.trim() : null,
         customIcon: iconType === "upload" ? uploadedImage : null,
         linkCount,
       });
