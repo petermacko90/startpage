@@ -13,19 +13,21 @@
   border-radius: var(--border-radius-s);
   font-weight: bold;
   box-shadow: var(--box-shadow);
-  transition: all 0.5s;
+  transition:
+    bottom 0.5s,
+    opacity 0.5s;
 }
 
 .toast.hide {
   bottom: 0;
-  opacity: 0%;
-  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .toast.show {
   bottom: 4rem;
-  opacity: 100%;
-  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .toast.error {

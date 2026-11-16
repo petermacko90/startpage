@@ -22,6 +22,7 @@ export default function Toast(props: UndoToastProps | ErrorToastProps) {
   return (
     <div
       className={`toast ${props.show ? "show" : "hide"}${props.type === "error" ? " error" : ""}`}
+      inert={!props.show}
     >
       <span className="toast-text">{props.text}</span>
       {props.type === "undo" && (

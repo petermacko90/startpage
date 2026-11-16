@@ -1,4 +1,10 @@
-import { useRef, useState, type RefObject, type SetStateAction } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type RefObject,
+  type SetStateAction,
+} from "react";
 import type { Category, Link } from "../state/models";
 import { UNDO_TIMEOUT } from "../constants";
 import { undoState } from "../storage/localStorage/common";
@@ -20,6 +26,14 @@ export function useDeleteWithUndo<T extends Category | Link>({
   const undoButtonRef = useRef<HTMLButtonElement | null>(null);
   const neighborsMapRef = useRef<Map<T["id"], T["id"] | null>>(new Map());
   const timersRef = useRef<Map<T["id"], number>>(new Map());
+  const isShowUndo = pendingDeletes.length > 0;
+  const deletedItemId = pendingDeletes[pendingDeletes.length - 1] || null;
+
+  useEffect(() => {
+    if (!isShowUndo) return;
+
+    undoButtonRef.current?.focus();
+  }, [isShowUndo, deletedItemId]);
 
   function handleToastClose(id: T["id"]) {
     const specificNeighborId = neighborsMapRef.current.get(id);
@@ -57,7 +71,6 @@ export function useDeleteWithUndo<T extends Category | Link>({
     }, UNDO_TIMEOUT);
 
     timersRef.current.set(id, timer);
-    setTimeout(() => undoButtonRef.current?.focus(), 50);
   }
 
   function undo(id: T["id"]) {
@@ -72,9 +85,6 @@ export function useDeleteWithUndo<T extends Category | Link>({
     setPendingDeletes((prev) => prev.filter((pendingId) => pendingId !== id));
     setIdToFocus(id);
   }
-
-  const isShowUndo = pendingDeletes.length > 0;
-  const deletedItemId = pendingDeletes[pendingDeletes.length - 1] || null;
 
   return {
     isShowUndo,

@@ -84,10 +84,13 @@ export default function CategoryItem({
         <EditCategory
           category={category}
           close={() => {
-            setShowEditCategory(false);
             setIdToFocus(category.id);
+            setShowEditCategory(false);
           }}
-          handleDeleteCategory={deleteCategory}
+          handleDeleteCategory={(id, index) => {
+            deleteCategory(id, index);
+            setShowEditCategory(false);
+          }}
         />
       )}
     </div>
